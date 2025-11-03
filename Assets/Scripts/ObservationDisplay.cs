@@ -209,4 +209,34 @@ public class ObservationDisplay : MonoBehaviour
     {
         return observationData;
     }
+    
+    /// <summary>
+    /// Show the info canvas UI (called by trigger or proximity systems)
+    /// </summary>
+    public void ShowCanvas()
+    {
+        if (infoCanvas != null)
+        {
+            infoCanvas.gameObject.SetActive(true);
+        }
+    }
+    
+    /// <summary>
+    /// Hide the info canvas UI
+    /// </summary>
+    public void HideCanvas()
+    {
+        if (infoCanvas != null)
+        {
+            infoCanvas.gameObject.SetActive(false);
+        }
+    }
+    
+    /// <summary>
+    /// Check if canvas is currently showing
+    /// </summary>
+    public bool IsCanvasVisible()
+    {
+        return infoCanvas != null && infoCanvas.gameObject.activeSelf;
+    }
 }

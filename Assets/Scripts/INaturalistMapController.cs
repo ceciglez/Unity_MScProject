@@ -217,6 +217,13 @@ public class INaturalistMapController : MonoBehaviour
                 ObservationPositionTracker tracker = prefabInstance.AddComponent<ObservationPositionTracker>();
                 tracker.Initialize(map, latLng);
                 
+                // Add trigger interaction for collision detection
+                ObservationTriggerInteraction trigger = prefabInstance.GetComponent<ObservationTriggerInteraction>();
+                if (trigger == null)
+                {
+                    trigger = prefabInstance.AddComponent<ObservationTriggerInteraction>();
+                }
+                
                 spawnedPrefabs.Add(prefabInstance);
             }
         }
