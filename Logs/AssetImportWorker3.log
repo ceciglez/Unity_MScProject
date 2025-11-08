@@ -1,0 +1,1256 @@
+Unity Editor version:    2022.3.57f1 (9d8bd91adc0a)
+Branch:                  2022.3/staging
+Build type:              Release
+Batch mode:              YES
+macOS version:           Version 15.6 (Build 24G84)
+Darwin version:          24.6.0
+Architecture:            arm64
+Running under Rosetta:   NO
+Available memory:        32768 MB
+Using pre-set license
+Pro License: YES
+
+COMMAND LINE ARGUMENTS:
+/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/MacOS/Unity
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker3
+-projectPath
+/Users/ceci/Documents/UAL/THESIS/PROTOTYPE/UNITY PROTOTYPE THESIS/MapBoxiNaturalistTest_02
+-logFile
+Logs/AssetImportWorker3.log
+-srvPort
+64730
+Successfully changed project path to: /Users/ceci/Documents/UAL/THESIS/PROTOTYPE/UNITY PROTOTYPE THESIS/MapBoxiNaturalistTest_02
+/Users/ceci/Documents/UAL/THESIS/PROTOTYPE/UNITY PROTOTYPE THESIS/MapBoxiNaturalistTest_02
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [8583372992]  Target information:
+
+Player connection [8583372992]  * "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 932903878 [EditorId] 932903878 [Version] 1048832 [Id] OSXEditor(0,Mac) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" 
+
+Player connection [8583372992] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [8583372992] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+Refreshing native plugins compatible for Editor in 23.73 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.57f1 (9d8bd91adc0a)
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Users/ceci/Documents/UAL/THESIS/PROTOTYPE/UNITY PROTOTYPE THESIS/MapBoxiNaturalistTest_02/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+ preferred device: Apple M2 Pro (high power)
+Metal devices available: 1
+0: Apple M2 Pro (high power)
+Using device Apple M2 Pro (high power)
+Initializing Metal device caps: Apple M2 Pro
+Initialize mono
+Mono path[0] = '/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/Managed'
+Mono path[1] = '/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
+Mono config path = '/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56479
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/2022.3.57f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/2022.3.57f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Registered in 0.003128 seconds.
+- Loaded All Assemblies, in  0.224 seconds
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+[usbmuxd] Send listen message
+Native extension for iOS target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 71 ms
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.272 seconds
+Domain Reload Profiling: 496ms
+	BeginReloadAssembly (70ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (0ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (29ms)
+	LoadAllAssembliesAndSetupDomain (95ms)
+		LoadAssemblies (71ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (93ms)
+			TypeCache.Refresh (92ms)
+				TypeCache.ScanAssembly (83ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (272ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (243ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (153ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (1ms)
+			ProcessInitializeOnLoadAttributes (61ms)
+			ProcessInitializeOnLoadMethodAttributes (24ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.378 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.450 seconds
+Domain Reload Profiling: 828ms
+	BeginReloadAssembly (73ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (17ms)
+	RebuildCommonClasses (21ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (256ms)
+		LoadAssemblies (170ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (119ms)
+			TypeCache.Refresh (107ms)
+				TypeCache.ScanAssembly (95ms)
+			ScanForSourceGeneratedMonoScriptInfo (7ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (450ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (359ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (15ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (29ms)
+			ProcessInitializeOnLoadAttributes (302ms)
+			ProcessInitializeOnLoadMethodAttributes (10ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Launching external process: /Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.03 seconds
+Refreshing native plugins compatible for Editor in 2.43 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3781 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 26 unused Assets / (52.8 KB). Loaded Objects now: 4251.
+Memory consumption went from 161.5 MB to 161.5 MB.
+Total: 2.642833 ms (FindLiveObjects: 0.111458 ms CreateObjectMapping: 0.059458 ms MarkObjects: 2.383917 ms  DeleteObjects: 0.087459 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 159547.926152 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_BushTree_m_03_LOD.prefab
+  artifactKey: Guid(abaa904ba11e55d4a941eeca5737e23c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_BushTree_m_03_LOD.prefab using Guid(abaa904ba11e55d4a941eeca5737e23c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b46931b04cbaad43b6c92ca91effdd10') in 0.069728 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_Tree_crk_m_02_LOD.prefab
+  artifactKey: Guid(99ea9bf5fb6c9494882cfee6823ad64e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_Tree_crk_m_02_LOD.prefab using Guid(99ea9bf5fb6c9494882cfee6823ad64e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '9a1982bdb792c4bca93fa9e679355eaa') in 0.005516 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000089 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_Tree_s_07_LOD.prefab
+  artifactKey: Guid(a53f03876a3b963408358654d399b6c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_Tree_s_07_LOD.prefab using Guid(a53f03876a3b963408358654d399b6c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '668ab8623bd5f366d248528d657f5892') in 0.005052 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_Tree_m_05_LOD.prefab
+  artifactKey: Guid(53504ab6484bc994a80b836c53210773) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_Tree_m_05_LOD.prefab using Guid(53504ab6484bc994a80b836c53210773) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'aab48f12c18df1eef9dafe95329a7879') in 0.004947 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_BushTree_m_04_LOD.prefab
+  artifactKey: Guid(ad4f989db1ced714ea69ac19b5168d72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Thuja_Trees/Thuja_BushTree_m_04_LOD.prefab using Guid(ad4f989db1ced714ea69ac19b5168d72) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a50f741ad96842097464bb1806e4b583') in 0.005097 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 6.761535 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_crk_m_03_LOD.prefab
+  artifactKey: Guid(0d772beb8bb6edb458c6736f6f7c566d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_crk_m_03_LOD.prefab using Guid(0d772beb8bb6edb458c6736f6f7c566d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '87873ee293667bcb46eaac314a21575a') in 0.006949 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_m_01_LOD.prefab
+  artifactKey: Guid(242b5ac79a15a894cb768d5ca7c05006) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_m_01_LOD.prefab using Guid(242b5ac79a15a894cb768d5ca7c05006) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '9b3a3ac6618f836213ff23c5ddbc1fe7') in 0.006067 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 46
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_m_09_LOD.prefab
+  artifactKey: Guid(5c7dc9bba8bb18d4f896bac936e26f87) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_m_09_LOD.prefab using Guid(5c7dc9bba8bb18d4f896bac936e26f87) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'f58e41a2f3af1f1c035dafd549f8b2c5') in 0.006649 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_m_11_LOD.prefab
+  artifactKey: Guid(e4702d89e78710145b4800a672a2aeca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_m_11_LOD.prefab using Guid(e4702d89e78710145b4800a672a2aeca) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '4720d31dcfaa31ccd1530a5ded41a824') in 0.005158 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_m_01_LOD.prefab
+  artifactKey: Guid(e717eadbbf5390748a375d70b3244808) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_m_01_LOD.prefab using Guid(e717eadbbf5390748a375d70b3244808) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '7550766bfb9e359696c6873d6c14afdb') in 0.005569 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 46
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_s_03_LOD.prefab
+  artifactKey: Guid(ea096f662d3e7b64ab629566089de779) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_s_03_LOD.prefab using Guid(ea096f662d3e7b64ab629566089de779) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a92bf997a47389d69a13585dc4c378cf') in 0.004305 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_m_08_LOD.prefab
+  artifactKey: Guid(c7720acbd801294409e8f43fb9177cbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_m_08_LOD.prefab using Guid(c7720acbd801294409e8f43fb9177cbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '787f4561198eea6de042397cf7805688') in 0.005330 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_m_02_LOD.prefab
+  artifactKey: Guid(d6e511abc6df05f4db4fd3356f68a0fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_m_02_LOD.prefab using Guid(d6e511abc6df05f4db4fd3356f68a0fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '873f1b061023ec488ef169e9c4a5a6f9') in 0.004656 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_m_04_LOD.prefab
+  artifactKey: Guid(26675c38417b1df488606f597afbea51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_m_04_LOD.prefab using Guid(26675c38417b1df488606f597afbea51) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'aea8ef68a6ef2fd0f906759d53b2d2df') in 0.005287 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_s_01_LOD.prefab
+  artifactKey: Guid(14955428a78b9754f8b00309efb09f9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_s_01_LOD.prefab using Guid(14955428a78b9754f8b00309efb09f9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '59779533dfc8312bf3da92230ea07db3') in 0.005654 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_crk_s_01_LOD.prefab
+  artifactKey: Guid(bf0a9d3ae06ac7f489b3ffefee19bb09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_crk_s_01_LOD.prefab using Guid(bf0a9d3ae06ac7f489b3ffefee19bb09) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'bd00cf4cecc5e296530d896b369b855d') in 0.004436 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_crk_s_02_LOD.prefab
+  artifactKey: Guid(29800271ab445af49b7a26da5db91ae9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_crk_s_02_LOD.prefab using Guid(29800271ab445af49b7a26da5db91ae9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '41f3fa89913f86d0e369093f371f43ee') in 0.006837 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_crk_m_05_LOD.prefab
+  artifactKey: Guid(2359b733618108e4abf6bd7bfde69a08) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_crk_m_05_LOD.prefab using Guid(2359b733618108e4abf6bd7bfde69a08) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '2a9417e2f855c12b7a5e3cffd66bd00e') in 0.005228 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_m_10_LOD.prefab
+  artifactKey: Guid(1f4578036c8c7d947937df06b811e752) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Random_Trees/Random_Tree_NoLeaves_m_10_LOD.prefab using Guid(1f4578036c8c7d947937df06b811e752) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'c9b730b3e1f40761cb5b645f14aa1099') in 0.004409 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 7.370588 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_m_03_LOD.prefab
+  artifactKey: Guid(46100f42314ce604a9dd8b4c5d9d9fe5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_m_03_LOD.prefab using Guid(46100f42314ce604a9dd8b4c5d9d9fe5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3be225825c2f61efa21bc0fb8fb9c29f') in 0.005008 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_m_04_LOD.prefab
+  artifactKey: Guid(dc8a6c876c3474f4bb14f6380815bde5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_m_04_LOD.prefab using Guid(dc8a6c876c3474f4bb14f6380815bde5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '4d6d32598ad0a38e0f0eecd1d8003160') in 0.004725 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_m_05_LOD.prefab
+  artifactKey: Guid(07b1ca0ea94bd37438671c2c7d898fd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_m_05_LOD.prefab using Guid(07b1ca0ea94bd37438671c2c7d898fd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '53a5d473776bd47f4ba779ab2c43a298') in 0.004826 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_m_08_LOD.prefab
+  artifactKey: Guid(541ca731d79e52643a20fb2bdc37d3df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_m_08_LOD.prefab using Guid(541ca731d79e52643a20fb2bdc37d3df) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '6980c0dd41d4143d174b9d9e374d1ff2') in 0.005537 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_s_01_LOD.prefab
+  artifactKey: Guid(d9bb14a5b705f144e9a6450e7a2c502e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_s_01_LOD.prefab using Guid(d9bb14a5b705f144e9a6450e7a2c502e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '23e1eac51c8c2c1691b1d77e4b4084bf') in 0.003954 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_s_04_LOD.prefab
+  artifactKey: Guid(d212401b76fabd54f9f9eddfcb8a4710) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_s_04_LOD.prefab using Guid(d212401b76fabd54f9f9eddfcb8a4710) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3ad3e3efe5906e81de826e5b0d04aa58') in 0.004395 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_s_07_LOD.prefab
+  artifactKey: Guid(df50c8fb3be72244c8386065e6d8ee1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_s_07_LOD.prefab using Guid(df50c8fb3be72244c8386065e6d8ee1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '2ba5b555f47960749b05d757545f4177') in 0.003863 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000044 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_s_08_LOD.prefab
+  artifactKey: Guid(6dd68aa1dbe133b42b5f7f0572bd11e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_s_08_LOD.prefab using Guid(6dd68aa1dbe133b42b5f7f0572bd11e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a15fef0ccafeec6541c2f90a3e57fc10') in 0.003836 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_m_06_LOD.prefab
+  artifactKey: Guid(44d8db01c6e7abe4c80dba77f4f5540c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_m_06_LOD.prefab using Guid(44d8db01c6e7abe4c80dba77f4f5540c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '42ed781bbc4aa26002db66fd4ab88a8a') in 0.004974 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_s_04_LOD.prefab
+  artifactKey: Guid(802497cae191bee438714f05bff93a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_s_04_LOD.prefab using Guid(802497cae191bee438714f05bff93a0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'c6b00c214163b675ccf45d62f9cb653d') in 0.003880 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 20.247079 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/LOD/Acacia_Firewood/Acacia_Firewood_01_LOD.prefab
+  artifactKey: Guid(297817ceced361446bcc3514e62d357a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/LOD/Acacia_Firewood/Acacia_Firewood_01_LOD.prefab using Guid(297817ceced361446bcc3514e62d357a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b76fe27447abc19201c49fcc750f5bb2') in 0.005521 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/LOD/Acacia_Firewood/Acacia_Firewood_03_LOD.prefab
+  artifactKey: Guid(574450976a30a1646898da1c74a8e073) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/LOD/Acacia_Firewood/Acacia_Firewood_03_LOD.prefab using Guid(574450976a30a1646898da1c74a8e073) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '754f842470ead37f90121c214f65bf6f') in 0.003688 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Mesh_Colliders/Acacia_Firewood/Acacia_Firewood_05.prefab
+  artifactKey: Guid(1faf013bc06ca784f8f8d45ea6059651) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Mesh_Colliders/Acacia_Firewood/Acacia_Firewood_05.prefab using Guid(1faf013bc06ca784f8f8d45ea6059651) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b761b636d0ea428a8259bf91f5317ce9') in 0.004079 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Mesh_Colliders/Acacia_Firewood/Acacia_Firewood_06.prefab
+  artifactKey: Guid(7142c9b10d1079c47b33a0077325f208) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Mesh_Colliders/Acacia_Firewood/Acacia_Firewood_06.prefab using Guid(7142c9b10d1079c47b33a0077325f208) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '7b77c9d807024ab508f4cfd5e3b8b1dd') in 0.004299 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Mesh_Colliders/Acacia_Firewood/Acacia_Firewood_Pile_01.prefab
+  artifactKey: Guid(c631259b6abb5bd47b9cf5708b6e5bc1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Mesh_Colliders/Acacia_Firewood/Acacia_Firewood_Pile_01.prefab using Guid(c631259b6abb5bd47b9cf5708b6e5bc1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'cd43e2771c8e9b8446a595295be3711f') in 0.004622 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Capsule_Colliders/Acacia_Firewood/Acacia_Firewood_Pile_01.prefab
+  artifactKey: Guid(65ec94fbda77ec64fb7bc9753ecb08d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Capsule_Colliders/Acacia_Firewood/Acacia_Firewood_Pile_01.prefab using Guid(65ec94fbda77ec64fb7bc9753ecb08d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a0bcdc7dfabc731d096a9d193ded2ced') in 0.004092 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000045 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Mesh_Colliders/Acacia_Firewood/Acacia_Firewood_03.prefab
+  artifactKey: Guid(19e9f4b649e9a244da1ae44cd05d470e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/NoLOD/Mesh_Colliders/Acacia_Firewood/Acacia_Firewood_03.prefab using Guid(19e9f4b649e9a244da1ae44cd05d470e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '75b4fcf2d4ca01569087845cfb85fddb') in 0.003754 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 13.001691 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_crk_l_03.prefab
+  artifactKey: Guid(4787efd142631134f95704cd171a1886) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_crk_l_03.prefab using Guid(4787efd142631134f95704cd171a1886) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b82ba6d8bcbe6e181d0c000fc059cd93') in 0.008333 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000063 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_l_02.prefab
+  artifactKey: Guid(62e9798421ea526408d0785f335c001b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_l_02.prefab using Guid(62e9798421ea526408d0785f335c001b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'fcb2469864911d02f7e9db09f734b5db') in 0.006367 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000122 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_m_02.prefab
+  artifactKey: Guid(24cf68fe216606147b4d54be4d84c1ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_m_02.prefab using Guid(24cf68fe216606147b4d54be4d84c1ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '9e717d9bafed6b8ec64399f6b42866c3') in 0.005118 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_s_01.prefab
+  artifactKey: Guid(f12dd7dbebd99cc4b8a0857f13316bf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_s_01.prefab using Guid(f12dd7dbebd99cc4b8a0857f13316bf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'd9c58b01a9a78d3efb65b3fe2ff7f920') in 0.006374 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_crk_m_01.prefab
+  artifactKey: Guid(703116b7e34ef964a9ece9a509e0bf1b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_crk_m_01.prefab using Guid(703116b7e34ef964a9ece9a509e0bf1b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '13079016e93336201fb4c71a1191a429') in 0.006376 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_l_03.prefab
+  artifactKey: Guid(086db1b5b6ec27e4892bd07532354b5d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_l_03.prefab using Guid(086db1b5b6ec27e4892bd07532354b5d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '8f7ebab56fac80bfea20390780be7cf7') in 0.005546 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000052 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_m_05.prefab
+  artifactKey: Guid(e27843d928bdcd445a25ff4e65de6f2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_m_05.prefab using Guid(e27843d928bdcd445a25ff4e65de6f2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '1142d9bf7e928168fe3adf0f5c43e10f') in 0.004756 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_m_03.prefab
+  artifactKey: Guid(43e63d8519a7b7740a06d49738c403a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_m_03.prefab using Guid(43e63d8519a7b7740a06d49738c403a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'be089bd46025fbc2619eaf88c3836779') in 0.004824 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 0.000054 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_crk_m_03.prefab
+  artifactKey: Guid(61e2c453bc6d5474db61a1dd83cf2072) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Acacia_Trees/Acacia_Tree_NoLeaves_crk_m_03.prefab using Guid(61e2c453bc6d5474db61a1dd83cf2072) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3594a401f9b07ce39fa468412d09857f') in 0.004963 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 42.820775 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Mesh_Colliders/Fir_Trees/TwoSided/Fir_Tree_crk_m_01.prefab
+  artifactKey: Guid(f1d6ad7054be0e443b28e9064236e5e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Mesh_Colliders/Fir_Trees/TwoSided/Fir_Tree_crk_m_01.prefab using Guid(f1d6ad7054be0e443b28e9064236e5e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'e5b84c0ffdc26a0ab1c19d73e7821cfb') in 0.013809 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000073 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Mesh_Colliders/Fir_Trees/TwoSided/Fir_Tree_crk_m_03.prefab
+  artifactKey: Guid(b5ab9f8e28aa5774799a9b77f921767c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Mesh_Colliders/Fir_Trees/TwoSided/Fir_Tree_crk_m_03.prefab using Guid(b5ab9f8e28aa5774799a9b77f921767c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '41c66de2e2d877329e000165f6a1c9b2') in 0.007674 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000145 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/With_Bottoms/Fir_Trees/Fir_Tree_crk_m_BT_03.fbx
+  artifactKey: Guid(b4eabd9ccd6382a47bbc5b34738f9ebc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/With_Bottoms/Fir_Trees/Fir_Tree_crk_m_BT_03.fbx using Guid(b4eabd9ccd6382a47bbc5b34738f9ebc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '25e3d889dbeb3de7560c765b1364eff2') in 0.024224 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 0.000068 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_crk_m_03_LOD.fbx
+  artifactKey: Guid(d6e5b287e89639b40ad83cebcb4d3c04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_crk_m_03_LOD.fbx using Guid(d6e5b287e89639b40ad83cebcb4d3c04) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'd572d578a275bfaafd20e68b78470c4e') in 0.020963 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/With_Bottoms/Mesh_Colliders/Fir_Trees/Fir_Tree_crk_m_BT_04.prefab
+  artifactKey: Guid(fc206709c346e0744a672b5af5228cbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/With_Bottoms/Mesh_Colliders/Fir_Trees/Fir_Tree_crk_m_BT_04.prefab using Guid(fc206709c346e0744a672b5af5228cbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a75eff39f7453d97beee0eaf5628a675') in 0.005529 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000050 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms/Fir_Trees/TwoSided/FBX/Fir_Tree_crk_m_04.fbx
+  artifactKey: Guid(d330dcfaf7042fd42bd066e56e387476) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms/Fir_Trees/TwoSided/FBX/Fir_Tree_crk_m_04.fbx using Guid(d330dcfaf7042fd42bd066e56e387476) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a296d06e01f17011372f539e884b939a') in 0.007144 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 0.000076 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_crk_m_04_LOD.fbx
+  artifactKey: Guid(36bab2b774f5f404495ef5c9476167de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_crk_m_04_LOD.fbx using Guid(36bab2b774f5f404495ef5c9476167de) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '616685bb318bec9cb075eaa3803c27d3') in 0.019023 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/With_Bottoms/Fir_Trees/Fir_Tree_crk_m_BT_04.fbx
+  artifactKey: Guid(32cd345f3079250449c072380ae4ac97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/With_Bottoms/Fir_Trees/Fir_Tree_crk_m_BT_04.fbx using Guid(32cd345f3079250449c072380ae4ac97) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '7ff92483590748f2ca80a392b4b88abe') in 0.006691 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/With_Bottoms/Mesh_Colliders/Fir_Trees/Fir_Tree_crk_m_BT_02.prefab
+  artifactKey: Guid(f3ee237e963fd28469d4abeb2ad8573b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/With_Bottoms/Mesh_Colliders/Fir_Trees/Fir_Tree_crk_m_BT_02.prefab using Guid(f3ee237e963fd28469d4abeb2ad8573b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '52b7823502e1c838d5cdeab49f775167') in 0.003967 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Fir_Trees/TwoSided/Fir_Tree_crk_m_04.prefab
+  artifactKey: Guid(36b9acdfaeff9424ca54f0821e19109a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees/NoLOD/No_Bottoms/Capsule_Colliders/Fir_Trees/TwoSided/Fir_Tree_crk_m_04.prefab using Guid(36b9acdfaeff9424ca54f0821e19109a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'ee6f75977f49edc0aec8159e96c3f955') in 0.004525 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 15
+========================================================================
+Received Import Request.
+  Time since last request: 1.147559 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_crk_m_Snow_02_LOD.fbx
+  artifactKey: Guid(aa0406a087466124e84a988a5d5d7c45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_crk_m_Snow_02_LOD.fbx using Guid(aa0406a087466124e84a988a5d5d7c45) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'deef35cc83a8246922b8e9e4edcd14b7') in 0.018258 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000113 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_m_01_LOD.fbx
+  artifactKey: Guid(2a810928cfac9f846ab2906549d04609) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_m_01_LOD.fbx using Guid(2a810928cfac9f846ab2906549d04609) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '7fe3da15893cfa9bd326b21c05ae9d54') in 0.017446 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees_Snow/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_s_Snow_03_LOD.prefab
+  artifactKey: Guid(d72786a76fe18264891d05667d072b9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees_Snow/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_s_Snow_03_LOD.prefab using Guid(d72786a76fe18264891d05667d072b9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '1624dbca5e615f7fa29831367127f9ce') in 0.004127 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_crk_s_Snow_03_LOD.fbx
+  artifactKey: Guid(25d38699eb366624483a6893497549cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_crk_s_Snow_03_LOD.fbx using Guid(25d38699eb366624483a6893497549cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '2546b43986e9107aada1ecf5656f39f8') in 0.016937 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_crk_s_03_LOD.fbx
+  artifactKey: Guid(c1fb55ec8dbe9d14cb3c012c1c942d52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_crk_s_03_LOD.fbx using Guid(c1fb55ec8dbe9d14cb3c012c1c942d52) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '8e1e5254da3de026afc25b2127351137') in 0.014448 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees_Snow/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_m_Snow_04_LOD.prefab
+  artifactKey: Guid(556438fd3073f084a9d3e9a0a58f3b28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees_Snow/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_crk_m_Snow_04_LOD.prefab using Guid(556438fd3073f084a9d3e9a0a58f3b28) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '75f5b0ead3f728f9c09d8799da746751') in 0.004123 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_crk_m_Snow_03_LOD.fbx
+  artifactKey: Guid(aa50c0121d94696438e9c33bf6928dac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_crk_m_Snow_03_LOD.fbx using Guid(aa50c0121d94696438e9c33bf6928dac) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'e9b09d80d0d776e14d11a056ad577dce') in 0.023681 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_crk_s_Snow_02_LOD.fbx
+  artifactKey: Guid(bbb42fa80e867b841ac952739aae87f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_crk_s_Snow_02_LOD.fbx using Guid(bbb42fa80e867b841ac952739aae87f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '4ead081595bd94a2938df48de11b7379') in 0.016450 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 1.639083 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_m_07_LOD.fbx
+  artifactKey: Guid(aee40c7fe1d5b2b4f86ac5c460562702) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_m_07_LOD.fbx using Guid(aee40c7fe1d5b2b4f86ac5c460562702) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3907b03f2b0853d163055b98f4fafe23') in 0.020839 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_m_09_LOD.fbx
+  artifactKey: Guid(0aaa4b8582b413948883b5c682c914a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_m_09_LOD.fbx using Guid(0aaa4b8582b413948883b5c682c914a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a1e5783847c0f2644fd8a535acf8b149') in 0.017754 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.145432 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_m_12_LOD.fbx
+  artifactKey: Guid(9800c1015e2ec7b41bc98aa05fa188fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees/No_Bottoms_LOD/Fir Trees/TwoSided/Fir_Tree_m_12_LOD.fbx using Guid(9800c1015e2ec7b41bc98aa05fa188fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'e573430b3ee711c945f025ecec7edda8') in 0.017239 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees_Snow/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_m_Snow_02_LOD.prefab
+  artifactKey: Guid(693d28a018bbad04d9a911a4b8a6bae5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Trees_Snow/LOD/No_Bottoms/Fir_Trees/TwoSided/Fir_Tree_m_Snow_02_LOD.prefab using Guid(693d28a018bbad04d9a911a4b8a6bae5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '0a418c835c3f2c30a2ffcbc8ca6fc4d3') in 0.004285 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_m_Snow_02_LOD.fbx
+  artifactKey: Guid(6bdbcebdc98bc1448866eb1fba70f72d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Meshes/Trees_Snow/No_Bottoms_LOD/Fir_Trees/TwoSided/Fir_Tree_m_Snow_02_LOD.fbx using Guid(6bdbcebdc98bc1448866eb1fba70f72d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '5d4d6ddc2d487dccd733fe7b33e7b077') in 0.016331 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Thread 0x345d93000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.255 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.761 seconds
+Domain Reload Profiling: 1016ms
+	BeginReloadAssembly (86ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (31ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (13ms)
+	LoadAllAssembliesAndSetupDomain (126ms)
+		LoadAssemblies (146ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (12ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (761ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (286ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (14ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (30ms)
+			ProcessInitializeOnLoadAttributes (228ms)
+			ProcessInitializeOnLoadMethodAttributes (10ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Refreshing native plugins compatible for Editor in 2.80 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3755 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 20 unused Assets / (31.4 KB). Loaded Objects now: 4267.
+Memory consumption went from 164.5 MB to 164.4 MB.
+Total: 2.562875 ms (FindLiveObjects: 0.136750 ms CreateObjectMapping: 0.064416 ms MarkObjects: 2.328042 ms  DeleteObjects: 0.033250 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 262.510201 seconds.
+  path: Assets/Mapbox/User/Modifiers/NewSpawnInsideModifier 1.asset
+  artifactKey: Guid(626994441da934d5a905e740abcd3186) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mapbox/User/Modifiers/NewSpawnInsideModifier 1.asset using Guid(626994441da934d5a905e740abcd3186) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '9ed516c70aef51fb4b1c6d3969ac4868') in 0.034879 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 22.267583 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/LOD/Acacia_Firewood/Acacia_Firewood_Pile_02_LOD.prefab
+  artifactKey: Guid(50df1339dae8ae14f826776d2e4aed83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood/LOD/Acacia_Firewood/Acacia_Firewood_Pile_02_LOD.prefab using Guid(50df1339dae8ae14f826776d2e4aed83) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'c7cca62943bc0e18e001ce3d394a8d40') in 0.045972 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 46
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood_Snow/LOD/Acacia Firewood/Acacia_Firewood_Snow_02_LOD.prefab
+  artifactKey: Guid(d6c81592d477b314fbafeec4729a73ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood_Snow/LOD/Acacia Firewood/Acacia_Firewood_Snow_02_LOD.prefab using Guid(d6c81592d477b314fbafeec4729a73ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '430e29b0be52c359f79ce446ab2944fb') in 0.006025 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_01_LOD.prefab
+  artifactKey: Guid(a2b6a42e5bb7dcd4da8a9345b1bcd3c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_01_LOD.prefab using Guid(a2b6a42e5bb7dcd4da8a9345b1bcd3c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'ad11842c6773924f00a8bf73dc8e2d77') in 0.005497 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000061 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood_Snow/LOD/Acacia Firewood/Acacia_Firewood_Snow_04_LOD.prefab
+  artifactKey: Guid(3440c9e2bfeec9f49b3a9682fa1af460) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood_Snow/LOD/Acacia Firewood/Acacia_Firewood_Snow_04_LOD.prefab using Guid(3440c9e2bfeec9f49b3a9682fa1af460) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'd7ecb4dad6d06a955e55d9d90c8e94fc') in 0.005848 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.010346 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood_Snow/LOD/Acacia Firewood/Acacia_Firewood_Pile_Snow_01_LOD.prefab
+  artifactKey: Guid(7729799b1df4d9244a7fe3625f7f8d2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Firewood_Snow/LOD/Acacia Firewood/Acacia_Firewood_Pile_Snow_01_LOD.prefab using Guid(7729799b1df4d9244a7fe3625f7f8d2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '4c2bb95bf706aad02fc10df7d2dc53a0') in 0.007633 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 0.006728 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_03_LOD.prefab
+  artifactKey: Guid(81cf6c1748440be4f8f4b4b9c73dea59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_03_LOD.prefab using Guid(81cf6c1748440be4f8f4b4b9c73dea59) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '561a52d4234c24b9918abf775ef70bf3') in 0.005118 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.002181 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_04_LOD.prefab
+  artifactKey: Guid(4fbba3fef478ab648bbc20d142a5fab3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_04_LOD.prefab using Guid(4fbba3fef478ab648bbc20d142a5fab3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3e8fb9d5ac88c1b265f6de595a35d75b') in 0.006846 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 1.437917 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_06_LOD.prefab
+  artifactKey: Guid(0efe3c5a23cb97b4eaec6160916b3109) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_06_LOD.prefab using Guid(0efe3c5a23cb97b4eaec6160916b3109) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '93e8577c144a50155fcbad1e2d7c42eb') in 0.006336 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_08_LOD.prefab
+  artifactKey: Guid(2565dda5064958a428a9882d2fb3c06d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs/LOD/Acacia_Logs/Acacia_Log_08_LOD.prefab using Guid(2565dda5064958a428a9882d2fb3c06d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '9bc209d0d289275f26deb985aea8adcc') in 0.004553 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.066900 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs_Snow/LOD/Acacia Logs/Acacia_Log_Snow_03_LOD.prefab
+  artifactKey: Guid(7de329dc3995428478f98f92a070a4e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs_Snow/LOD/Acacia Logs/Acacia_Log_Snow_03_LOD.prefab using Guid(7de329dc3995428478f98f92a070a4e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '487609e1f72df367bc080bf810d12039') in 0.004611 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs_Snow/LOD/Acacia Logs/Acacia_Log_Snow_04_LOD.prefab
+  artifactKey: Guid(d17718a77c056e246beac6c5cd229a53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs_Snow/LOD/Acacia Logs/Acacia_Log_Snow_04_LOD.prefab using Guid(d17718a77c056e246beac6c5cd229a53) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'db2770b6f7cea385e5a671e97c81a648') in 0.004607 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.048587 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs_Snow/LOD/Acacia Logs/Acacia_Log_Snow_08_LOD.prefab
+  artifactKey: Guid(1cc787a86b1b3384c9eb11f97446bf16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Logs_Snow/LOD/Acacia Logs/Acacia_Log_Snow_08_LOD.prefab using Guid(1cc787a86b1b3384c9eb11f97446bf16) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b902964407bee871463bbcf218739ffe') in 0.004593 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 34
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Stumps/LOD/Acacia_Stump_01_LOD.prefab
+  artifactKey: Guid(4666ac08c89b12f40bd6e1c974aeae30) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Stumps/LOD/Acacia_Stump_01_LOD.prefab using Guid(4666ac08c89b12f40bd6e1c974aeae30) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '72817139821096c23b998b7293154b29') in 0.004135 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.047161 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Stumps/LOD/Acacia_Stump_05_LOD.prefab
+  artifactKey: Guid(e88485397a404da47b1a2f071fd65225) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Stumps/LOD/Acacia_Stump_05_LOD.prefab using Guid(e88485397a404da47b1a2f071fd65225) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'cdfbadbbd313035489fb0517062a3865') in 0.004005 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.000052 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Stumps_Snow/LOD/Acacia_Stump_Snow_03_LOD.prefab
+  artifactKey: Guid(c5fa4ad37c25c894ead6810af30c094e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Stumps_Snow/LOD/Acacia_Stump_Snow_03_LOD.prefab using Guid(c5fa4ad37c25c894ead6810af30c094e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '2966df47e35c5a72f10fe6903c71eda0') in 0.003668 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Import Request.
+  Time since last request: 0.317285 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Stumps_Snow/LOD/Acacia_Stump_Snow_05_LOD.prefab
+  artifactKey: Guid(376e81b25b76c4d49bdd9deee652942f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Tree Assets/Prefabs/Stumps_Snow/LOD/Acacia_Stump_Snow_05_LOD.prefab using Guid(376e81b25b76c4d49bdd9deee652942f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '6ff2af82601110115320d16fdd965253') in 0.005182 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 28
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Thread 0x3358fb000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.274 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.847 seconds
+Domain Reload Profiling: 1121ms
+	BeginReloadAssembly (94ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (33ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (15ms)
+	LoadAllAssembliesAndSetupDomain (135ms)
+		LoadAssemblies (161ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (11ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (847ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (300ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (17ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (31ms)
+			ProcessInitializeOnLoadAttributes (239ms)
+			ProcessInitializeOnLoadMethodAttributes (10ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Refreshing native plugins compatible for Editor in 3.07 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3755 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 20 unused Assets / (31.6 KB). Loaded Objects now: 4271.
+Memory consumption went from 174.2 MB to 174.2 MB.
+Total: 2.642916 ms (FindLiveObjects: 0.133958 ms CreateObjectMapping: 0.065000 ms MarkObjects: 2.405958 ms  DeleteObjects: 0.037500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 

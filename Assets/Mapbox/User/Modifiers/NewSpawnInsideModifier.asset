@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420705c61d1b6435c8aa7b1cbd0ce80a, type: 3}
+  m_Name: NewSpawnInsideModifier
+  m_EditorClassIdentifier: 
+  Active: 1
+  _spawnRateInSquareMeters: 50
+  _maxSpawn: 1000
+  _prefabs:
+  - {fileID: 125050, guid: 72709de00caee1f46bff9e75852d2994, type: 3}
+  - {fileID: 104280, guid: fe0e4c29b703f474ebd8ac9ee119b407, type: 3}
+  - {fileID: 170646, guid: 4f802b134aa507642be5c059f74b202d, type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _scaleDownWithWorld: 1
+  _randomizeScale: 1
+  _randomizeRotation: 1
