@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420705c61d1b6435c8aa7b1cbd0ce80a, type: 3}
+  m_Name: GreenAreaSpawnModifier
+  m_EditorClassIdentifier: 
+  Active: 1
+  _spawnRateInSquareMeters: 0
+  _maxSpawn: 1000
+  _prefabs:
+  - {fileID: 171226, guid: 12630938e7cfa8e4fab41e45efa6b618, type: 3}
+  - {fileID: 158724, guid: 67a2fc132b29005419b87b32fcd3f5d7, type: 3}
+  - {fileID: 182044, guid: 74035968ad5ab59468a0c046cfb0ee1d, type: 3}
+  - {fileID: 147396, guid: 2eb5fa13a2bdf654696731ff373f2a0f, type: 3}
+  - {fileID: 149308, guid: b0327e7f373bd8a4fa293956b47c3f0d, type: 3}
+  - {fileID: 171226, guid: 12630938e7cfa8e4fab41e45efa6b618, type: 3}
+  - {fileID: 171226, guid: 12630938e7cfa8e4fab41e45efa6b618, type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _scaleDownWithWorld: 1
+  _randomizeScale: 1
+  _randomizeRotation: 1

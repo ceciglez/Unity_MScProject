@@ -118,6 +118,7 @@
     <Compile Include="Assets/Mapbox/Unity/Editor/FeatureBehaviourEditor.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/UnitTests/MapboxUnitTests_CircularBuffer.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/PointsOfInterestSubLayerPropertiesDrawer.cs" />
+    <Compile Include="Assets/KinematicCharacterController/Examples/Scripts/Editor/PauseStateHandler.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/CameraBoundsTileProviderOptionsDrawer.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/VectorFilterOptionsDrawer.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_ForwardGeocodeResource.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/SpawnPrefabOptionsDrawer.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/AtlasTemplateGenerator.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/TreeModel.cs" />
+    <Compile Include="Assets/KinematicCharacterController/Core/Editor/ReadOnlyPropertyDrawer.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PopupSelectionMenu.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/CoreVectorLayerPropertiesDrawer.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_SQLiteCache.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Assets/Mapbox/Unity/Editor/TreeElementUtility.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/FeaturesSubLayerPropertiesDrawer.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/MapScalingOptionsDrawer.cs" />
+    <Compile Include="Assets/Scripts/Editor/NaturePolygonModifierEditor.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_MapMatcher.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/ElevationModificationOptionsDrawer.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/TerrainColliderOptionsDrawer.cs" />
@@ -150,8 +153,10 @@
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_DirectionResource.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/ScriptablePaletteEditor.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_TileCover.cs" />
+    <Compile Include="Assets/Scripts/Editor/ObservationUISetup.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_CanonicalTileId.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/MaterialListDrawer.cs" />
+    <Compile Include="Assets/KinematicCharacterController/Core/Editor/KinematicCharacterMotorEditor.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_ReverseGeocodeResource.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/RangeTileProviderOptionsDrawer.cs" />
     <Compile Include="Assets/Mapbox/Unity/Editor/PropertyDrawers/ColliderOptionsDrawer.cs" />

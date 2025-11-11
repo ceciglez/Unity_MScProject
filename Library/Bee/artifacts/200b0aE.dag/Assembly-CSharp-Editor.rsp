@@ -381,6 +381,9 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
+"Assets/KinematicCharacterController/Core/Editor/KinematicCharacterMotorEditor.cs"
+"Assets/KinematicCharacterController/Core/Editor/ReadOnlyPropertyDrawer.cs"
+"Assets/KinematicCharacterController/Examples/Scripts/Editor/PauseStateHandler.cs"
 "Assets/Mapbox/Core/cheap-ruler-cs/Tests/Editor/MapboxUnitTests_CheapRulerCs.cs"
 "Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_AngleSmoothing.cs"
 "Assets/Mapbox/Core/mapbox-sdk-cs/Tests/UnitTests/Editor/MapboxUnitTests_BboxToGeoCoordinateBoundsConverter.cs"
@@ -474,6 +477,8 @@
 "Assets/Mapbox/Unity/Editor/TreeViewWithTreeModel.cs"
 "Assets/Mapbox/Unity/Editor/UnitTests/MapboxUnitTests_CircularBuffer.cs"
 "Assets/Mapbox/Unity/Editor/VectorSubLayerTreeView.cs"
+"Assets/Scripts/Editor/NaturePolygonModifierEditor.cs"
+"Assets/Scripts/Editor/ObservationUISetup.cs"
 -langversion:9.0
 /deterministic
 /optimize+

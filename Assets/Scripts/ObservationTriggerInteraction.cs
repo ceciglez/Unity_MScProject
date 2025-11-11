@@ -1,4 +1,5 @@
 using UnityEngine;
+using KinematicCharacterController;
 
 /// <summary>
 /// Handles collision/trigger-based interaction with observations
@@ -13,14 +14,19 @@ public class ObservationTriggerInteraction : MonoBehaviour
     [SerializeField] private bool useSphereCollider = true;
     
     [Header("UI Settings")]
-    [SerializeField] private bool showCanvas = true; // Show the 3D canvas on observation
+    [SerializeField] private bool useScreenUI = true; // Use centered screen-space UI
+    [SerializeField] private bool showCanvas = false; // Show the 3D canvas on observation (legacy)
     [SerializeField] private bool showTooltip = false; // Also show 2D tooltip UI
     [SerializeField] private bool autoFindTooltip = true;
+    
+    [Header("Distance Settings")]
+    [SerializeField] private float hideDistance = 15f; // Hide UI when player is further than this
     
     private ObservationDisplay observationDisplay;
     private ObservationTooltip tooltip;
     private Collider triggerCollider;
     private bool playerInside = false;
+    private Transform playerTransform;
     
     void Awake()
     {
@@ -92,6 +98,7 @@ public class ObservationTriggerInteraction : MonoBehaviour
         if (IsPlayer(other))
         {
             playerInside = true;
+            playerTransform = other.transform;
             ShowObservationUI();
             Debug.Log($"Player entered observation trigger: {observationDisplay?.GetData().taxon?.preferred_common_name ?? "Unknown"}");
         }
@@ -103,8 +110,25 @@ public class ObservationTriggerInteraction : MonoBehaviour
         if (IsPlayer(other))
         {
             playerInside = false;
+            playerTransform = null;
             HideObservationUI();
             Debug.Log($"Player exited observation trigger");
+        }
+    }
+    
+    private void Update()
+    {
+        // If player is nearby, check distance to hide UI if too far
+        if (playerInside && playerTransform != null)
+        {
+            float distance = Vector3.Distance(transform.position, playerTransform.position);
+            
+            if (distance > hideDistance)
+            {
+                // Player moved too far, hide UI
+                HideObservationUI();
+                Debug.Log($"Player too far ({distance:F1}m), hiding UI");
+            }
         }
     }
     
@@ -114,12 +138,20 @@ public class ObservationTriggerInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
             return true;
         
-        // Check for CharacterController (FPC usually has this)
+        // Check for Unity's CharacterController (old FPC)
         if (other.GetComponent<CharacterController>() != null)
             return true;
         
-        // Check for FirstPersonController script
+        // Check for FirstPersonController script (old FPC)
         if (other.GetComponent<FirstPersonController>() != null)
+            return true;
+        
+        // Check for KinematicCharacterMotor (new KCC)
+        if (other.GetComponent<KinematicCharacterMotor>() != null)
+            return true;
+        
+        // Check for ExampleCharacterController (KCC)
+        if (other.GetComponent<KinematicCharacterController.Examples.ExampleCharacterController>() != null)
             return true;
         
         return false;
@@ -127,7 +159,21 @@ public class ObservationTriggerInteraction : MonoBehaviour
     
     private void ShowObservationUI()
     {
-        // Show the 3D canvas UI on the observation object itself
+        // Show screen-space UI (recommended)
+        if (useScreenUI && observationDisplay != null)
+        {
+            ObservationScreenUI screenUI = ObservationScreenUI.Instance;
+            if (screenUI != null)
+            {
+                screenUI.ShowObservation(observationDisplay.GetData());
+            }
+            else
+            {
+                Debug.LogWarning("ObservationScreenUI instance not found in scene!");
+            }
+        }
+        
+        // Show the 3D canvas UI on the observation object itself (legacy)
         if (showCanvas && observationDisplay != null)
         {
             observationDisplay.ShowCanvas();
@@ -142,6 +188,16 @@ public class ObservationTriggerInteraction : MonoBehaviour
     
     private void HideObservationUI()
     {
+        // Hide screen-space UI
+        if (useScreenUI)
+        {
+            ObservationScreenUI screenUI = ObservationScreenUI.Instance;
+            if (screenUI != null)
+            {
+                screenUI.HideObservation();
+            }
+        }
+        
         // Hide the 3D canvas UI
         if (showCanvas && observationDisplay != null)
         {
