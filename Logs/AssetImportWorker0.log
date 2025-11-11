@@ -3037,3 +3037,401 @@ AssetImportParameters requested are different than current active one (requested
   custom:scripting/monoscript/fileName/NaturePolygonModifierEditor.cs: 260b974f4bfd5504dc00174e83e8a458 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:scripting/precompiled-assembly-types:Assembly-CSharp: d7f99a2100b9a406c1a99a87ad5598b3 -> 1bf6122e40c1b5fe182bfa745f1b9f54
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Thread 0x17ff6b000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.290 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.742 seconds
+Domain Reload Profiling: 1032ms
+	BeginReloadAssembly (100ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (38ms)
+	RebuildCommonClasses (21ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (14ms)
+	LoadAllAssembliesAndSetupDomain (147ms)
+		LoadAssemblies (163ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (20ms)
+			TypeCache.Refresh (10ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (9ms)
+	FinalizeReload (742ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (290ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (17ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (29ms)
+			ProcessInitializeOnLoadAttributes (230ms)
+			ProcessInitializeOnLoadMethodAttributes (10ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Refreshing native plugins compatible for Editor in 2.54 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3810 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (32.5 KB). Loaded Objects now: 4470.
+Memory consumption went from 447.1 MB to 447.0 MB.
+Total: 3.271625 ms (FindLiveObjects: 0.146083 ms CreateObjectMapping: 0.060625 ms MarkObjects: 3.002709 ms  DeleteObjects: 0.061750 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/NewBehaviourScript.cs: b21687ddb03d73bd9f0c1daecb9714de -> 
+  custom:scripting/monoscript/fileName/ObservationScreenUI.cs: 29b3c0fd9a90a5d2d60ecde29570bfd0 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ProximityInteractionManager.cs: f5e3aefdd233144e61a3ad79df0e8a6c -> 
+  custom:scripting/monoscript/fileName/MapUserController.cs: 469c54cb66d386271dc2c221b44641f2 -> 
+  custom:scripting/monoscript/fileName/DynamicMapLoader.cs: 4477e47fb46cc0b38c61638e930b19b2 -> 
+  custom:scripting/monoscript/fileName/ObservationTooltip.cs: ed8515df65f445bc7d52b21f9e21c5b8 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ObservationInteractionManager.cs: 1ef9c0b432e27c26d41e7af2f3f231c5 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/INaturalistFilterManager.cs: 66eaf4bc46926867750287dfac8637b9 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:scripting/monoscript/fileName/ObservationUISetup.cs: d9924071673719da39dbfcb6ce6cfea1 -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifier.cs: 065273fcaa40f9c0ef8b2f7f876e6c75 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/FirstPersonController.cs: 8d3e1e9cbae8a175d4b9e7e3e7536c1f -> 
+  custom:scripting/monoscript/fileName/MapboxTerrainAdapter.cs: aabbd2c977e50c4bb761cae1d3622fbe -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifierEditor.cs: 260b974f4bfd5504dc00174e83e8a458 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: d7f99a2100b9a406c1a99a87ad5598b3 -> 1bf6122e40c1b5fe182bfa745f1b9f54
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Thread 0x16e02f000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.310 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.818 seconds
+Domain Reload Profiling: 1129ms
+	BeginReloadAssembly (100ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (38ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (15ms)
+	LoadAllAssembliesAndSetupDomain (166ms)
+		LoadAssemblies (188ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (14ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (818ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (370ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (86ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (30ms)
+			ProcessInitializeOnLoadAttributes (242ms)
+			ProcessInitializeOnLoadMethodAttributes (9ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Refreshing native plugins compatible for Editor in 2.79 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3810 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (32.5 KB). Loaded Objects now: 4474.
+Memory consumption went from 454.9 MB to 454.9 MB.
+Total: 3.583458 ms (FindLiveObjects: 0.155750 ms CreateObjectMapping: 0.091167 ms MarkObjects: 3.269458 ms  DeleteObjects: 0.066583 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/NewBehaviourScript.cs: b21687ddb03d73bd9f0c1daecb9714de -> 
+  custom:scripting/monoscript/fileName/ObservationScreenUI.cs: 29b3c0fd9a90a5d2d60ecde29570bfd0 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ProximityInteractionManager.cs: f5e3aefdd233144e61a3ad79df0e8a6c -> 
+  custom:scripting/monoscript/fileName/MapUserController.cs: 469c54cb66d386271dc2c221b44641f2 -> 
+  custom:scripting/monoscript/fileName/DynamicMapLoader.cs: 4477e47fb46cc0b38c61638e930b19b2 -> 
+  custom:scripting/monoscript/fileName/ObservationTooltip.cs: ed8515df65f445bc7d52b21f9e21c5b8 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ObservationInteractionManager.cs: 1ef9c0b432e27c26d41e7af2f3f231c5 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/INaturalistFilterManager.cs: 66eaf4bc46926867750287dfac8637b9 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:scripting/monoscript/fileName/ObservationUISetup.cs: d9924071673719da39dbfcb6ce6cfea1 -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifier.cs: 065273fcaa40f9c0ef8b2f7f876e6c75 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/FirstPersonController.cs: 8d3e1e9cbae8a175d4b9e7e3e7536c1f -> 
+  custom:scripting/monoscript/fileName/MapboxTerrainAdapter.cs: aabbd2c977e50c4bb761cae1d3622fbe -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifierEditor.cs: 260b974f4bfd5504dc00174e83e8a458 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: d7f99a2100b9a406c1a99a87ad5598b3 -> 1bf6122e40c1b5fe182bfa745f1b9f54
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Thread 0x16e02f000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.353 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.824 seconds
+Domain Reload Profiling: 1178ms
+	BeginReloadAssembly (141ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (61ms)
+	RebuildCommonClasses (23ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (23ms)
+	LoadAllAssembliesAndSetupDomain (159ms)
+		LoadAssemblies (196ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (13ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (824ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (313ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (21ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (33ms)
+			ProcessInitializeOnLoadAttributes (246ms)
+			ProcessInitializeOnLoadMethodAttributes (10ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Refreshing native plugins compatible for Editor in 2.87 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3810 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (32.4 KB). Loaded Objects now: 4478.
+Memory consumption went from 462.2 MB to 462.2 MB.
+Total: 3.287958 ms (FindLiveObjects: 0.164000 ms CreateObjectMapping: 0.066833 ms MarkObjects: 3.006500 ms  DeleteObjects: 0.050084 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/NewBehaviourScript.cs: b21687ddb03d73bd9f0c1daecb9714de -> 
+  custom:scripting/monoscript/fileName/ObservationScreenUI.cs: 29b3c0fd9a90a5d2d60ecde29570bfd0 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ProximityInteractionManager.cs: f5e3aefdd233144e61a3ad79df0e8a6c -> 
+  custom:scripting/monoscript/fileName/MapUserController.cs: 469c54cb66d386271dc2c221b44641f2 -> 
+  custom:scripting/monoscript/fileName/DynamicMapLoader.cs: 4477e47fb46cc0b38c61638e930b19b2 -> 
+  custom:scripting/monoscript/fileName/ObservationTooltip.cs: ed8515df65f445bc7d52b21f9e21c5b8 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ObservationInteractionManager.cs: 1ef9c0b432e27c26d41e7af2f3f231c5 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/INaturalistFilterManager.cs: 66eaf4bc46926867750287dfac8637b9 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:scripting/monoscript/fileName/ObservationUISetup.cs: d9924071673719da39dbfcb6ce6cfea1 -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifier.cs: 065273fcaa40f9c0ef8b2f7f876e6c75 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/FirstPersonController.cs: 8d3e1e9cbae8a175d4b9e7e3e7536c1f -> 
+  custom:scripting/monoscript/fileName/MapboxTerrainAdapter.cs: aabbd2c977e50c4bb761cae1d3622fbe -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifierEditor.cs: 260b974f4bfd5504dc00174e83e8a458 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: d7f99a2100b9a406c1a99a87ad5598b3 -> 1bf6122e40c1b5fe182bfa745f1b9f54
+========================================================================
+Received Import Request.
+  Time since last request: 18331.589907 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_a_02.prefab
+  artifactKey: Guid(852cb8c41e01737438082cc349cdd49d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_a_02.prefab using Guid(852cb8c41e01737438082cc349cdd49d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '95dde331860e9c9e5defa56b87a4d116') in 0.055642 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000058 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_a_04.prefab
+  artifactKey: Guid(cc957b04a70bdf04187142ab9d8a7f33) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_a_04.prefab using Guid(cc957b04a70bdf04187142ab9d8a7f33) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '0e307f1e87f66683270433d5ed44d79c') in 0.004974 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_a_06.prefab
+  artifactKey: Guid(a046bf9b8d2845a4baa366e3c7298672) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_a_06.prefab using Guid(a046bf9b8d2845a4baa366e3c7298672) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '03b539cf698f255c89e21feb909d607c') in 0.005145 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_b_04.prefab
+  artifactKey: Guid(566bdbd4bfcd5f14f8cab75f52301f3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_b_04.prefab using Guid(566bdbd4bfcd5f14f8cab75f52301f3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '1b2d58cbf02f2ac78375c5237e0657c4') in 0.004598 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000103 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_b_03.prefab
+  artifactKey: Guid(671cf45c511e43a4aad264fdcf9edf74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_b_03.prefab using Guid(671cf45c511e43a4aad264fdcf9edf74) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '95d586bad50a26dd30e22e4cde54a0ad') in 0.004281 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000088 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_a_03.prefab
+  artifactKey: Guid(238b71ad9f49264488e0af380e7eca8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_a_03.prefab using Guid(238b71ad9f49264488e0af380e7eca8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '2392e925575e4c6d5d765089a0625130') in 0.006385 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_b_08.prefab
+  artifactKey: Guid(09645f9be38fec649aee4f32bd2d45b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Vegetation/Vegetation Assets/Prefabs/Grass/Grass3D/Grass3D_b_08.prefab using Guid(09645f9be38fec649aee4f32bd2d45b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '16a408e10b06516e4c8bc46e4173389b') in 0.004313 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Thread 0x17ff6b000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.273 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.749 seconds
+Domain Reload Profiling: 1023ms
+	BeginReloadAssembly (94ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (33ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (15ms)
+	LoadAllAssembliesAndSetupDomain (134ms)
+		LoadAssemblies (155ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (13ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (750ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (295ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (31ms)
+			ProcessInitializeOnLoadAttributes (235ms)
+			ProcessInitializeOnLoadMethodAttributes (9ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Refreshing native plugins compatible for Editor in 3.10 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3809 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (32.5 KB). Loaded Objects now: 4482.
+Memory consumption went from 470.5 MB to 470.5 MB.
+Total: 3.327750 ms (FindLiveObjects: 0.149083 ms CreateObjectMapping: 0.064000 ms MarkObjects: 3.068250 ms  DeleteObjects: 0.045875 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/NewBehaviourScript.cs: b21687ddb03d73bd9f0c1daecb9714de -> 
+  custom:scripting/monoscript/fileName/ObservationScreenUI.cs: 29b3c0fd9a90a5d2d60ecde29570bfd0 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ProximityInteractionManager.cs: f5e3aefdd233144e61a3ad79df0e8a6c -> 
+  custom:scripting/monoscript/fileName/MapUserController.cs: 469c54cb66d386271dc2c221b44641f2 -> 
+  custom:scripting/monoscript/fileName/DynamicMapLoader.cs: 4477e47fb46cc0b38c61638e930b19b2 -> 
+  custom:scripting/monoscript/fileName/ObservationTooltip.cs: ed8515df65f445bc7d52b21f9e21c5b8 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ObservationInteractionManager.cs: 1ef9c0b432e27c26d41e7af2f3f231c5 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/INaturalistFilterManager.cs: 66eaf4bc46926867750287dfac8637b9 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:scripting/monoscript/fileName/ObservationUISetup.cs: d9924071673719da39dbfcb6ce6cfea1 -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifier.cs: 065273fcaa40f9c0ef8b2f7f876e6c75 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/FirstPersonController.cs: 8d3e1e9cbae8a175d4b9e7e3e7536c1f -> 
+  custom:scripting/monoscript/fileName/MapboxTerrainAdapter.cs: aabbd2c977e50c4bb761cae1d3622fbe -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifierEditor.cs: 260b974f4bfd5504dc00174e83e8a458 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: d7f99a2100b9a406c1a99a87ad5598b3 -> 1bf6122e40c1b5fe182bfa745f1b9f54
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+TcpMessagingSession - receive error: operation aborted. errorcode: 89, details: Operation aborted.
+AssetImportWorker is now disconnected from the server
+Process exiting

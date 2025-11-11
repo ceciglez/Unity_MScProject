@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1457532bd921d402d96ce873f9223e7f, type: 3}
+  m_Name: TEST_CUSTOM_MODIFIER
+  m_EditorClassIdentifier: 
+  Active: 1
+  prefabs: []
+  spawnMode: 0
+  fixedQuantity: 10
+  density: 1
+  positionOffset: {x: 5, y: 5}
+  snapToTerrain: 1
+  heightOffset: 0
+  randomRotation: 1
+  fixedRotation: {x: 0, y: 0, z: 0}
+  randomScale: 1
+  scaleRange: {x: 0.8, y: 1.2}
+  terrainMask:
+    serializedVersion: 2
+    m_Bits: 4294967295

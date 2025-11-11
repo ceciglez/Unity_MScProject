@@ -1,0 +1,981 @@
+Unity Editor version:    2022.3.57f1 (9d8bd91adc0a)
+Branch:                  2022.3/staging
+Build type:              Release
+Batch mode:              YES
+macOS version:           Version 15.6 (Build 24G84)
+Darwin version:          24.6.0
+Architecture:            arm64
+Running under Rosetta:   NO
+Available memory:        32768 MB
+Using pre-set license
+Pro License: YES
+
+COMMAND LINE ARGUMENTS:
+/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/MacOS/Unity
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker5
+-projectPath
+/Users/ceci/Documents/UAL/THESIS/PROTOTYPE/UNITY PROTOTYPE THESIS/MapBoxiNaturalistTest_02
+-logFile
+Logs/AssetImportWorker5.log
+-srvPort
+50189
+Successfully changed project path to: /Users/ceci/Documents/UAL/THESIS/PROTOTYPE/UNITY PROTOTYPE THESIS/MapBoxiNaturalistTest_02
+/Users/ceci/Documents/UAL/THESIS/PROTOTYPE/UNITY PROTOTYPE THESIS/MapBoxiNaturalistTest_02
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [8583372992]  Target information:
+
+Player connection [8583372992]  * "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 841965063 [EditorId] 841965063 [Version] 1048832 [Id] OSXEditor(0,Mac) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" 
+
+Player connection [8583372992] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [8583372992] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+Refreshing native plugins compatible for Editor in 27.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.57f1 (9d8bd91adc0a)
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Users/ceci/Documents/UAL/THESIS/PROTOTYPE/UNITY PROTOTYPE THESIS/MapBoxiNaturalistTest_02/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+ preferred device: Apple M2 Pro (high power)
+Metal devices available: 1
+0: Apple M2 Pro (high power)
+Using device Apple M2 Pro (high power)
+Initializing Metal device caps: Apple M2 Pro
+Initialize mono
+Mono path[0] = '/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/Managed'
+Mono path[1] = '/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
+Mono config path = '/Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56925
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/2022.3.57f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/2022.3.57f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Registered in 0.004421 seconds.
+- Loaded All Assemblies, in  0.244 seconds
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+[usbmuxd] Send listen message
+Native extension for iOS target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 81 ms
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.290 seconds
+Domain Reload Profiling: 534ms
+	BeginReloadAssembly (77ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (0ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (34ms)
+	LoadAllAssembliesAndSetupDomain (103ms)
+		LoadAssemblies (79ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (100ms)
+			TypeCache.Refresh (99ms)
+				TypeCache.ScanAssembly (89ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (291ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (261ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (171ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (1ms)
+			ProcessInitializeOnLoadAttributes (61ms)
+			ProcessInitializeOnLoadMethodAttributes (25ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.470 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.491 seconds
+Domain Reload Profiling: 962ms
+	BeginReloadAssembly (79ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (19ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (23ms)
+	LoadAllAssembliesAndSetupDomain (339ms)
+		LoadAssemblies (242ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (132ms)
+			TypeCache.Refresh (119ms)
+				TypeCache.ScanAssembly (106ms)
+			ScanForSourceGeneratedMonoScriptInfo (8ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (491ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (391ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (31ms)
+			ProcessInitializeOnLoadAttributes (330ms)
+			ProcessInitializeOnLoadMethodAttributes (12ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Launching external process: /Applications/Unity/Hub/Editor/2022.3.57f1/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.03 seconds
+Refreshing native plugins compatible for Editor in 2.48 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3836 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 26 unused Assets / (52.8 KB). Loaded Objects now: 4322.
+Memory consumption went from 172.5 MB to 172.4 MB.
+Total: 3.424834 ms (FindLiveObjects: 0.151875 ms CreateObjectMapping: 0.081792 ms MarkObjects: 3.066333 ms  DeleteObjects: 0.124417 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/NewBehaviourScript.cs: b21687ddb03d73bd9f0c1daecb9714de -> 
+  custom:scripting/monoscript/fileName/ObservationScreenUI.cs: 29b3c0fd9a90a5d2d60ecde29570bfd0 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ProximityInteractionManager.cs: f5e3aefdd233144e61a3ad79df0e8a6c -> 
+  custom:scripting/monoscript/fileName/MapUserController.cs: 469c54cb66d386271dc2c221b44641f2 -> 
+  custom:scripting/monoscript/fileName/DynamicMapLoader.cs: 4477e47fb46cc0b38c61638e930b19b2 -> 
+  custom:scripting/monoscript/fileName/ObservationTooltip.cs: ed8515df65f445bc7d52b21f9e21c5b8 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ObservationInteractionManager.cs: 1ef9c0b432e27c26d41e7af2f3f231c5 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/INaturalistFilterManager.cs: 66eaf4bc46926867750287dfac8637b9 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:scripting/monoscript/fileName/ObservationUISetup.cs: d9924071673719da39dbfcb6ce6cfea1 -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifier.cs: 065273fcaa40f9c0ef8b2f7f876e6c75 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/FirstPersonController.cs: 8d3e1e9cbae8a175d4b9e7e3e7536c1f -> 
+  custom:scripting/monoscript/fileName/MapboxTerrainAdapter.cs: aabbd2c977e50c4bb761cae1d3622fbe -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifierEditor.cs: 260b974f4bfd5504dc00174e83e8a458 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 262797.808696 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Flat_Rocks/Rocks_Flat_s_2C_03.prefab
+  artifactKey: Guid(2f614d83c98467745ba308c4719d95e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Flat_Rocks/Rocks_Flat_s_2C_03.prefab using Guid(2f614d83c98467745ba308c4719d95e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '25020e29341a82033cfb835e64a4fe06') in 0.058274 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.559504 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Rock_Arches/Rock_Arch_2C_03.prefab
+  artifactKey: Guid(e28d6c0a97e41824a98c87cfb480e789) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Rock_Arches/Rock_Arch_2C_03.prefab using Guid(e28d6c0a97e41824a98c87cfb480e789) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '5092244101dbbca15e3c5e956df43ccf') in 0.007042 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.647721 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Rock_Walls/Rock_Wall_2C_03.prefab
+  artifactKey: Guid(7528a92c8cd2d8b4fb748d06c307a74f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Rock_Walls/Rock_Wall_2C_03.prefab using Guid(7528a92c8cd2d8b4fb748d06c307a74f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'fcb9bfff2f375d62951a0c53a8d9085c') in 0.008598 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Rock_Walls/Rock_Wall_2C_04.prefab
+  artifactKey: Guid(cbb011c488594a54f877265091726a94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Rock_Walls/Rock_Wall_2C_04.prefab using Guid(cbb011c488594a54f877265091726a94) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'f741cbc4a2c7fdc75b9607d2fb4a3a44') in 0.008331 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Thread 0x33d493000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.271 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.754 seconds
+Domain Reload Profiling: 1025ms
+	BeginReloadAssembly (86ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (2ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (30ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (14ms)
+	LoadAllAssembliesAndSetupDomain (141ms)
+		LoadAssemblies (161ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (12ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (754ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (297ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (22ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (30ms)
+			ProcessInitializeOnLoadAttributes (232ms)
+			ProcessInitializeOnLoadMethodAttributes (11ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Refreshing native plugins compatible for Editor in 4.73 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3810 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (32.2 KB). Loaded Objects now: 4334.
+Memory consumption went from 174.9 MB to 174.9 MB.
+Total: 3.293083 ms (FindLiveObjects: 0.137125 ms CreateObjectMapping: 0.066291 ms MarkObjects: 3.053250 ms  DeleteObjects: 0.035917 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/NewBehaviourScript.cs: b21687ddb03d73bd9f0c1daecb9714de -> 
+  custom:scripting/monoscript/fileName/ObservationScreenUI.cs: 29b3c0fd9a90a5d2d60ecde29570bfd0 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ProximityInteractionManager.cs: f5e3aefdd233144e61a3ad79df0e8a6c -> 
+  custom:scripting/monoscript/fileName/MapUserController.cs: 469c54cb66d386271dc2c221b44641f2 -> 
+  custom:scripting/monoscript/fileName/DynamicMapLoader.cs: 4477e47fb46cc0b38c61638e930b19b2 -> 
+  custom:scripting/monoscript/fileName/ObservationTooltip.cs: ed8515df65f445bc7d52b21f9e21c5b8 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ObservationInteractionManager.cs: 1ef9c0b432e27c26d41e7af2f3f231c5 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/INaturalistFilterManager.cs: 66eaf4bc46926867750287dfac8637b9 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:scripting/monoscript/fileName/ObservationUISetup.cs: d9924071673719da39dbfcb6ce6cfea1 -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifier.cs: 065273fcaa40f9c0ef8b2f7f876e6c75 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/FirstPersonController.cs: 8d3e1e9cbae8a175d4b9e7e3e7536c1f -> 
+  custom:scripting/monoscript/fileName/MapboxTerrainAdapter.cs: aabbd2c977e50c4bb761cae1d3622fbe -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifierEditor.cs: 260b974f4bfd5504dc00174e83e8a458 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 202.850966 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_2C_02.prefab
+  artifactKey: Guid(f4bcf3dd7ab6a4c44972756c6bfc37a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_2C_02.prefab using Guid(f4bcf3dd7ab6a4c44972756c6bfc37a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b8ef4243e9d684c732eae925168b3b36') in 0.059808 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_crk_2C_02.prefab
+  artifactKey: Guid(341c0c80c8d81254cb8b1ec8f9f779ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_crk_2C_02.prefab using Guid(341c0c80c8d81254cb8b1ec8f9f779ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'bc2e88da3532d115a19eccc46709848c') in 0.005528 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000073 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_crk_2C_01.prefab
+  artifactKey: Guid(9e745573d21af4e40b785c0b500602ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_crk_2C_01.prefab using Guid(9e745573d21af4e40b785c0b500602ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '5d696ad5cc8e0a26da9677dcc265fe1f') in 0.006991 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000062 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_05.prefab
+  artifactKey: Guid(ffb1eb450754232438eb1875837ccd73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_05.prefab using Guid(ffb1eb450754232438eb1875837ccd73) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '6e3dae4fd464602f74b8265afec24011') in 0.007175 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000056 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_08.prefab
+  artifactKey: Guid(6f63fb5471810cd4baacb55296b34e52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_08.prefab using Guid(6f63fb5471810cd4baacb55296b34e52) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '8b35ffb22af85d6c55a226c4496de1c6') in 0.006815 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000214 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_crk_2C_03.prefab
+  artifactKey: Guid(5ba6c7a906e7cad47a77e148745b94a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_crk_2C_03.prefab using Guid(5ba6c7a906e7cad47a77e148745b94a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '8be0a5a7514ae8283184b009385c1455') in 0.005944 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_2C_05.prefab
+  artifactKey: Guid(998555e84010c8a4dac08097b5d8da75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_2C_05.prefab using Guid(998555e84010c8a4dac08097b5d8da75) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '74a594591ca4cc88eda37e2fda85ee61') in 0.004722 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_s_2C_01.prefab
+  artifactKey: Guid(83002ac1863355c4e849afa6845ae401) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_s_2C_01.prefab using Guid(83002ac1863355c4e849afa6845ae401) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '9b7e2d485b11cac083cc970a58cef877') in 0.004542 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_02.prefab
+  artifactKey: Guid(f0fe0ceb50ec3964189d9f9ff4ef7543) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_02.prefab using Guid(f0fe0ceb50ec3964189d9f9ff4ef7543) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'c74852f19750cca1a8b536caa7797dec') in 0.004521 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_2C_03.prefab
+  artifactKey: Guid(4ceff8a052d8b4148b6e344199e1ddd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_2C_03.prefab using Guid(4ceff8a052d8b4148b6e344199e1ddd0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'db70d757c8cd208e95f2e2b8cfcab483') in 0.005474 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000166 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_06.prefab
+  artifactKey: Guid(3754741c890f93e47bdcf61403761dab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_06.prefab using Guid(3754741c890f93e47bdcf61403761dab) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '23c4ba1fbed5743f0b25a4a3a97f1856') in 0.007783 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_04.prefab
+  artifactKey: Guid(2c1c0779face63d4492cb3b16f7bbefe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Bricks/Brick_Pile_m_2C_04.prefab using Guid(2c1c0779face63d4492cb3b16f7bbefe) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a84e2f219884b0da0e741e2b01b55ba0') in 0.005102 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 1.727462 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_crk_m_2C_02.prefab
+  artifactKey: Guid(14ed8cab27f3f80439d1f3b4fc3b4de8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_crk_m_2C_02.prefab using Guid(14ed8cab27f3f80439d1f3b4fc3b4de8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'e769448fcfa20efce9f7245812a16e1c') in 0.006854 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_l_2C_02.prefab
+  artifactKey: Guid(b64ff1a07c417b54986f4119e7ef652c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_l_2C_02.prefab using Guid(b64ff1a07c417b54986f4119e7ef652c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a9f8913e1bc1e7368ac6a210a364d8a9') in 0.004377 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_crk_m_2C_05.prefab
+  artifactKey: Guid(1bad8e8b359267441b22b4d5964d3ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_crk_m_2C_05.prefab using Guid(1bad8e8b359267441b22b4d5964d3ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'bfcb22ff1973d8b67b799b254decfa2d') in 0.004621 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_l_2C_06.prefab
+  artifactKey: Guid(fb208c8266ae4c7409bf0ddc74cc75e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_l_2C_06.prefab using Guid(fb208c8266ae4c7409bf0ddc74cc75e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '908403a6800efb94b847f538e3f84b61') in 0.003204 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_04.prefab
+  artifactKey: Guid(11bfb39f5c676324abad8d5df7c04af4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_04.prefab using Guid(11bfb39f5c676324abad8d5df7c04af4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3c26400959ce2eeda003f4da526082b0') in 0.005824 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_01.prefab
+  artifactKey: Guid(1f362242c0f46744e880394e18c847b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_01.prefab using Guid(1f362242c0f46744e880394e18c847b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'fe7ae1b1e4de4fa51848cf3d90b9e5e3') in 0.004298 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_12.prefab
+  artifactKey: Guid(0a09073c83256ed4ca5f419da6926bcf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_12.prefab using Guid(0a09073c83256ed4ca5f419da6926bcf) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'e624e85ab88225135affea3e0c73f867') in 0.005677 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_16.prefab
+  artifactKey: Guid(af44d683332a7f0498f2b890cfb46c12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_16.prefab using Guid(af44d683332a7f0498f2b890cfb46c12) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3fb7d8731478106cdae6a8a9b8730e2c') in 0.004802 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_s_2C_03.prefab
+  artifactKey: Guid(f16fed3d32f3c374d9a1fcac659f83d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_s_2C_03.prefab using Guid(f16fed3d32f3c374d9a1fcac659f83d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a37a91768350d883965ab3bc157fc628') in 0.004592 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_13.prefab
+  artifactKey: Guid(590ab91ab66ad7b4e82df81bbd68c44f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_13.prefab using Guid(590ab91ab66ad7b4e82df81bbd68c44f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3dc9e13499dc68637eb75622a4521af3') in 0.004496 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_m_2C_03.prefab
+  artifactKey: Guid(967a112aa008bfa4390e7f9dfe042a0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_m_2C_03.prefab using Guid(967a112aa008bfa4390e7f9dfe042a0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'f03ff8ef0fb8c79bffed8f7838d34dde') in 0.004328 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_s_2C_04.prefab
+  artifactKey: Guid(ef2439c6f0f7b2547a70b176f60e76ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_s_2C_04.prefab using Guid(ef2439c6f0f7b2547a70b176f60e76ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '9e51043d185cc1b5126783391c50c84d') in 0.005266 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_l_2C_01.prefab
+  artifactKey: Guid(c8aa1df8e45c8fe47b6be163f42b7864) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_l_2C_01.prefab using Guid(c8aa1df8e45c8fe47b6be163f42b7864) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'df14282403fb244f2abaa66eb8c88c5c') in 0.004635 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_m_2C_01.prefab
+  artifactKey: Guid(842f0171917f4954c968ec45fb52da82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_m_2C_01.prefab using Guid(842f0171917f4954c968ec45fb52da82) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'aa0462ef675ce2a67b874f625bcdef58') in 0.004351 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_l_2C_08.prefab
+  artifactKey: Guid(aac433ab6073271439e01b79f59194cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_l_2C_08.prefab using Guid(aac433ab6073271439e01b79f59194cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'd2925a2ee65ac649103e846faf490d21') in 0.007657 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000166 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_06.prefab
+  artifactKey: Guid(6d40760a133b9b5459f6510c29d8fd02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_06.prefab using Guid(6d40760a133b9b5459f6510c29d8fd02) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'c70169a2f8ea26a4516e284822663aad') in 0.005879 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_crk_m_2C_04.prefab
+  artifactKey: Guid(9414f6ff92dc3224184431d751419ace) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_crk_m_2C_04.prefab using Guid(9414f6ff92dc3224184431d751419ace) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '8bf4838f3dede064825e645344b0b9e5') in 0.007211 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000062 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_m_2C_04.prefab
+  artifactKey: Guid(a9fdd287b1fab3c4aaa7e536cb7f72f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_m_2C_04.prefab using Guid(a9fdd287b1fab3c4aaa7e536cb7f72f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'f5036f51b93a4110b50d8cc5e3c1c202') in 0.005147 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_m_2C_05.prefab
+  artifactKey: Guid(c7460606131f6a84380717882ac58013) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_m_2C_05.prefab using Guid(c7460606131f6a84380717882ac58013) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '0c6df245b136762be83f8d7b7f3adef1') in 0.005555 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_l_2C_02.prefab
+  artifactKey: Guid(1e035cbdfde78ce46a4439d4f3ef5da2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rocks_Round_l_2C_02.prefab using Guid(1e035cbdfde78ce46a4439d4f3ef5da2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '167c7f1f42a2897b8a7914840e308d1e') in 0.004784 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000173 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_s_2C_05.prefab
+  artifactKey: Guid(6a4da517e4afec14a83035f18455b2c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_s_2C_05.prefab using Guid(6a4da517e4afec14a83035f18455b2c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '38fabccf44404f816e682ab711db6681') in 0.005874 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_l_2C_07.prefab
+  artifactKey: Guid(abd8e3c0b3e27ad4fba0c0c11613ebc3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_l_2C_07.prefab using Guid(abd8e3c0b3e27ad4fba0c0c11613ebc3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '778a2bc761f292894cb2839db8348302') in 0.007927 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000467 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_11.prefab
+  artifactKey: Guid(209c389589bfb174b8cf8930397f7920) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Round_Rocks/Rock_Round_m_2C_11.prefab using Guid(209c389589bfb174b8cf8930397f7920) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a33b9c0047bbe77bd64324faed46a18e') in 0.019097 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 22.351904 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_crk_m_2C_03.prefab
+  artifactKey: Guid(01125f1c57ea53145bfebd871571cb6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_crk_m_2C_03.prefab using Guid(01125f1c57ea53145bfebd871571cb6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'febb046eae52d7a8be0fbdf726ec8eb6') in 0.009481 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_l_2C_03.prefab
+  artifactKey: Guid(4e03079838cb5c146b96a2ca39f7c924) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_l_2C_03.prefab using Guid(4e03079838cb5c146b96a2ca39f7c924) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '8f02e7b32ccab255e12506155f59d7bf') in 0.005586 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000053 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_06.prefab
+  artifactKey: Guid(1993d04cfb9ba5145954f3782f7e099a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_06.prefab using Guid(1993d04cfb9ba5145954f3782f7e099a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '07adf678f92e0fc1f31661ded7fdd0e4') in 0.006166 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000064 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_13.prefab
+  artifactKey: Guid(623d8fab1ff2c8048b9eb6fa6226d0c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_13.prefab using Guid(623d8fab1ff2c8048b9eb6fa6226d0c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '59e4ecf19a736fe128d675488e6948e8') in 0.006582 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_19.prefab
+  artifactKey: Guid(103dca4fd49d87e4e8eeb245d848cf43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_19.prefab using Guid(103dca4fd49d87e4e8eeb245d848cf43) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'de52e9b9e4e48c1463a2bf1ec316e09e') in 0.005573 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_s_2C_08.prefab
+  artifactKey: Guid(e6ca1bfe77721cc4889499d17e4a1257) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_s_2C_08.prefab using Guid(e6ca1bfe77721cc4889499d17e4a1257) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'bf18eeabb8645299c97a9df767ee089b') in 0.006054 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_l_2C_04.prefab
+  artifactKey: Guid(a8f910840461909449f773ea7bc5493b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_l_2C_04.prefab using Guid(a8f910840461909449f773ea7bc5493b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '39d28602056ab5ba0b673882db228b62') in 0.004521 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_l_2C_03.prefab
+  artifactKey: Guid(3ed4c4065b742fa4c8fc46d18011a02d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_l_2C_03.prefab using Guid(3ed4c4065b742fa4c8fc46d18011a02d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'de875bd020529aa2a09d74426af9d32a') in 0.006660 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000064 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_s_2C_07.prefab
+  artifactKey: Guid(636bb3be09958e34c93e8dae77465487) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_s_2C_07.prefab using Guid(636bb3be09958e34c93e8dae77465487) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'e565da925b1ee038bb96695b2eb65947') in 0.005519 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000215 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_m_2C_02.prefab
+  artifactKey: Guid(a21b5afbe2a08d0489b131dba94060f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_m_2C_02.prefab using Guid(a21b5afbe2a08d0489b131dba94060f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a0e11b2c7242eca43cc0498f176cc902') in 0.005085 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_s_2C_03.prefab
+  artifactKey: Guid(5dc44f4177349ac489aa4b6183a44fbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_s_2C_03.prefab using Guid(5dc44f4177349ac489aa4b6183a44fbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '0817d2f2b26d214ff0a70f93d4406478') in 0.004226 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000231 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_18.prefab
+  artifactKey: Guid(8723282fa0ec73c44bf7e423ab2698b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_18.prefab using Guid(8723282fa0ec73c44bf7e423ab2698b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a5269395be7d00e9dcd8f833d5da0a28') in 0.007924 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_m_2C_03.prefab
+  artifactKey: Guid(99d1d2e06355f4c47ad4748f8ad783cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_m_2C_03.prefab using Guid(99d1d2e06355f4c47ad4748f8ad783cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'e03774d2eddc60825c39df4a2b3a5ad8') in 0.004536 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000059 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_s_2C_01.prefab
+  artifactKey: Guid(20551c2b85ecf95499837ee1a1e53c0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_s_2C_01.prefab using Guid(20551c2b85ecf95499837ee1a1e53c0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '413a39474adfc9eda9ba8da0827bd1a2') in 0.004681 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_17.prefab
+  artifactKey: Guid(b3a2e305d28c596449748f8a6b1838d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_17.prefab using Guid(b3a2e305d28c596449748f8a6b1838d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b921c7a9dcde0cd2f84bab66ab6ab2bc') in 0.004980 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_01.prefab
+  artifactKey: Guid(3cd6adce17c53654b9ef806b48122655) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_01.prefab using Guid(3cd6adce17c53654b9ef806b48122655) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '3b3a143432f4e9930065cf3eb48d0135') in 0.005596 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000136 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_s_2C_06.prefab
+  artifactKey: Guid(974303d8c89c9ba4eb02f0453d492e15) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_s_2C_06.prefab using Guid(974303d8c89c9ba4eb02f0453d492e15) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b93289b1f493a6348e464cadb9feef14') in 0.005116 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_20.prefab
+  artifactKey: Guid(cc49c97cbd5c08c41be44f371a805184) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_20.prefab using Guid(cc49c97cbd5c08c41be44f371a805184) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'a961b4558ae39c9883c746239e30da69') in 0.005739 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_11.prefab
+  artifactKey: Guid(6c715e2d1479314419ce8fecb0f57e3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_m_2C_11.prefab using Guid(6c715e2d1479314419ce8fecb0f57e3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '0054d371e8fcd6c4439f762d697769a4') in 0.005333 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000122 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_l_2C_02.prefab
+  artifactKey: Guid(0951c09cfcf25f84abf40412aa84942e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_l_2C_02.prefab using Guid(0951c09cfcf25f84abf40412aa84942e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'b6854f3d81c2e4e18ffb45e90df691da') in 0.004329 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_s_2C_07.prefab
+  artifactKey: Guid(33975bd3d58d3fe4daa5ee215be739a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rock_Sharp_s_2C_07.prefab using Guid(33975bd3d58d3fe4daa5ee215be739a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '60e7755be68907ab8e929be90edf463b') in 0.004820 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_l_2C_02.prefab
+  artifactKey: Guid(da3c094aa0d120048847c830ca2c311d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LMHPOLY/Low Poly Nature Bundle/Rocks/Rock Assets/Prefabs/With_Mesh_Colliders/2 Color/Sharp_Rocks/Rocks_Sharp_l_2C_02.prefab using Guid(da3c094aa0d120048847c830ca2c311d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '043dbf155edaab41df9e629f0b6e7782') in 0.005690 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+Thread 0x17f9df000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.266 seconds
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.778 seconds
+Domain Reload Profiling: 1045ms
+	BeginReloadAssembly (102ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (44ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (15ms)
+	LoadAllAssembliesAndSetupDomain (120ms)
+		LoadAssemblies (142ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (11ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (778ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (300ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (30ms)
+			ProcessInitializeOnLoadAttributes (241ms)
+			ProcessInitializeOnLoadMethodAttributes (10ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (2ms)
+Refreshing native plugins compatible for Editor in 2.53 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3810 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (32.4 KB). Loaded Objects now: 4338.
+Memory consumption went from 184.4 MB to 184.3 MB.
+Total: 3.322416 ms (FindLiveObjects: 0.121708 ms CreateObjectMapping: 0.061667 ms MarkObjects: 3.087583 ms  DeleteObjects: 0.051083 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/NewBehaviourScript.cs: b21687ddb03d73bd9f0c1daecb9714de -> 
+  custom:scripting/monoscript/fileName/ObservationScreenUI.cs: 29b3c0fd9a90a5d2d60ecde29570bfd0 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ProximityInteractionManager.cs: f5e3aefdd233144e61a3ad79df0e8a6c -> 
+  custom:scripting/monoscript/fileName/MapUserController.cs: 469c54cb66d386271dc2c221b44641f2 -> 
+  custom:scripting/monoscript/fileName/DynamicMapLoader.cs: 4477e47fb46cc0b38c61638e930b19b2 -> 
+  custom:scripting/monoscript/fileName/ObservationTooltip.cs: ed8515df65f445bc7d52b21f9e21c5b8 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ObservationInteractionManager.cs: 1ef9c0b432e27c26d41e7af2f3f231c5 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/INaturalistFilterManager.cs: 66eaf4bc46926867750287dfac8637b9 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: 3918e3fc78b5a79bad01e8451be0beb8 -> 
+  custom:scripting/monoscript/fileName/ObservationUISetup.cs: d9924071673719da39dbfcb6ce6cfea1 -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifier.cs: 065273fcaa40f9c0ef8b2f7f876e6c75 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/FirstPersonController.cs: 8d3e1e9cbae8a175d4b9e7e3e7536c1f -> 
+  custom:scripting/monoscript/fileName/MapboxTerrainAdapter.cs: aabbd2c977e50c4bb761cae1d3622fbe -> 
+  custom:scripting/monoscript/fileName/NaturePolygonModifierEditor.cs: 260b974f4bfd5504dc00174e83e8a458 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 

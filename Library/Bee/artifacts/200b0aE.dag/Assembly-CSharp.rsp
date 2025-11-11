@@ -789,6 +789,7 @@
 "Assets/Mapbox/Unity/Utilities/TelemetryConfigurationButton.cs"
 "Assets/Mapbox/Unity/Utilities/VectorEntity.cs"
 "Assets/Mapbox/Unity/Utilities/VectorExtensions.cs"
+"Assets/Scripts/CustomPrefabSpawner.cs"
 "Assets/Scripts/DebugCoordinateOverlay.cs"
 "Assets/Scripts/INaturalistMapController.cs"
 "Assets/Scripts/INaturalistMapControllerEditor.cs"

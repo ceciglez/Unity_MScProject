@@ -90,6 +90,7 @@
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/MeshModifiers/SmoothLineModifier.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Platform/TileJSON/TileJSONReponse.cs" />
     <Compile Include="Assets/Mapbox/Examples/2_AstronautGame/AstronautGame/Astronaut/AstronautMouseController.cs" />
+    <Compile Include="Assets/Scripts/CustomPrefabSpawner.cs" />
     <Compile Include="Assets/Mapbox/Unity/LayerProperties/PresetSubLayerPropertiesFetcher.cs" />
     <Compile Include="Assets/Mapbox/Unity/Location/TransformLocationProvider.cs" />
     <Compile Include="Assets/KinematicCharacterController/Core/PhysicsMover.cs" />
