@@ -136,11 +136,10 @@ public class INaturalistMapControllerEditor : Editor
         CreateUIElement(panel, "Observer", 280, 20, 0, 80, typeof(TextMeshProUGUI));
         CreateUIElement(panel, "Location", 280, 20, 0, 55, typeof(TextMeshProUGUI));
         
-        // Add tooltip component
-        panel.AddComponent<ObservationTooltip>();
+        // Note: ObservationTooltip component removed - using world-space canvas instead
         
         EditorUtility.DisplayDialog("Tooltip Created", 
-            "Tooltip UI created!\n\nPlease assign all UI references in the ObservationTooltip component.", "OK");
+            "Tooltip UI created!\n\nNote: This creates a basic UI panel. ObservationTooltip component has been removed in favor of world-space canvas.", "OK");
         
         Selection.activeGameObject = panel;
     }

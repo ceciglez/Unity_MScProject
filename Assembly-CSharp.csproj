@@ -167,7 +167,6 @@
     <Compile Include="Assets/Mapbox/Examples/Scripts/HighlightFeature.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Directions/Response/Route.cs" />
     <Compile Include="Assets/Mapbox/Unity/Utilities/VectorExtensions.cs" />
-    <Compile Include="Assets/Scripts/ObservationTooltip.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/GameObjectModifiers/LayerModifier.cs" />
     <Compile Include="Assets/Mapbox/Unity/Map/InitializeMapWithLocationProvider.cs" />
     <Compile Include="Assets/Mapbox/Unity/Telemetry/TelemetryWebgl.cs" />
@@ -282,7 +281,6 @@
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Platform/FileSource.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Platform/IAsyncRequestFactory.cs" />
     <Compile Include="Assets/Mapbox/Unity/Location/AngleSmoothing/AngleSmoothingAverage.cs" />
-    <Compile Include="Assets/Scripts/DynamicMapLoader.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_DigitValidator.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_FrameRateCounter.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Geocoding/ReverseGeocodeResource.cs" />
@@ -296,7 +294,6 @@
     <Compile Include="Assets/Mapbox/Unity/LayerProperties/VectorFilterOptions.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/GameObjectModifiers/TagModifier.cs" />
     <Compile Include="Assets/Mapbox/Unity/SourceLayers/SubLayerModeling.cs" />
-    <Compile Include="Assets/Scripts/ProximityInteractionManager.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Factories/TerrainStrategies/TerrainStrategy.cs" />
     <Compile Include="Assets/Mapbox/Unity/Map/Strategies/MapPlacementAtLocationCenterStrategy.cs" />
     <Compile Include="Assets/KinematicCharacterController/Walkthrough/13- Swimming state/Scripts/MyPlayer.cs" />
@@ -336,7 +333,6 @@
     <Compile Include="Assets/Mapbox/Unity/Utilities/OpenUrlOnButtonClick.cs" />
     <Compile Include="Assets/KinematicCharacterController/Walkthrough/1- Player Camera Character Setup/Scripts/MyPlayer.cs" />
     <Compile Include="Assets/KinematicCharacterController/Examples/Scripts/BuildManager.cs" />
-    <Compile Include="Assets/Scripts/MapUserController.cs" />
     <Compile Include="Assets/Mapbox/Unity/Location/AngleSmoothing/IAngleSmoothing.cs" />
     <Compile Include="Assets/Mapbox/Unity/DataContainers/LocationPrefabCategoryOptions.cs" />
     <Compile Include="Assets/KinematicCharacterController/Walkthrough/2- Basic Movement and Gravity/Scripts/MyCharacterController.cs" />
@@ -351,7 +347,6 @@
     <Compile Include="Assets/Mapbox/Unity/Utilities/GameObjectExtensions.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexZoom.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Directions/DirectionResource.cs" />
-    <Compile Include="Assets/Scripts/MapboxTerrainAdapter.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Data/KdTreeCollection.cs" />
     <Compile Include="Assets/Mapbox/Unity/Telemetry/TelemetryFallback.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/ModifierStack.cs" />
@@ -369,7 +364,6 @@
     <Compile Include="Assets/Mapbox/Unity/DataContainers/SpawnPrefabOptions.cs" />
     <Compile Include="Assets/Mapbox/Unity/Location/EditorLocationProvider.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Directions/Response/DirectionsResponse.cs" />
-    <Compile Include="Assets/Scripts/NewBehaviourScript.cs" />
     <Compile Include="Assets/Mapbox/Unity/Location/Logging/LocationLogReader.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/GameObjectModifiers/AddMonoBehavioursModifierType.cs" />
     <Compile Include="Assets/KinematicCharacterController/Walkthrough/3- Jumping/Scripts/c- Wall Jumping/MyCharacterController.cs" />
@@ -384,7 +378,6 @@
     <Compile Include="Assets/KinematicCharacterController/Walkthrough/8- Creating a moving platform/Scripts/MyPlayer.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Geocoding/Geocoder.cs" />
     <Compile Include="Assets/Mapbox/Unity/Map/TileProviders/AbstractTileProvider.cs" />
-    <Compile Include="Assets/Scripts/NaturePolygonModifier.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Map/TileErrorEventArgs.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Data/KdTree/KDTree.cs" />
     <Compile Include="Assets/KinematicCharacterController/Core/IMoverController.cs" />
@@ -411,13 +404,11 @@
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TextMeshProFloatingText.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/MeshModifier.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Tokens/MapboxTokenApi.cs" />
-    <Compile Include="Assets/Scripts/INaturalistFilterManager.cs" />
     <Compile Include="Assets/Mapbox/Unity/Utilities/SingletonScriptableObject.cs" />
     <Compile Include="Assets/Mapbox/Unity/Utilities/PolygonUtils.cs" />
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/MeshGenerationBase.cs" />
     <Compile Include="Assets/Mapbox/Examples/Scripts/CameraBillboard.cs" />
     <Compile Include="Assets/Mapbox/Unity/SourceLayers/SubLayerCustomStyleTiled.cs" />
-    <Compile Include="Assets/Scripts/ObservationScreenUI.cs" />
     <Compile Include="Assets/KinematicCharacterController/Walkthrough/7- Orienting towards arbitrary up direction/Scripts/MyCharacterController.cs" />
     <Compile Include="Assets/Scripts/ObservationTriggerInteraction.cs" />
     <Compile Include="Assets/Mapbox/Unity/DataContainers/ElevationModificationOptions.cs" />
@@ -453,7 +444,6 @@
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Interfaces/LayerVisualizerBase.cs" />
     <Compile Include="Assets/Mapbox/Unity/Utilities/MapVisualizerPerformance.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Map/TileResource.cs" />
-    <Compile Include="Assets/Scripts/FirstPersonController.cs" />
     <Compile Include="Assets/Mapbox/Examples/Scripts/FeatureSelectionDetector.cs" />
     <Compile Include="Assets/Mapbox/Unity/Map/TileProviders/QuadTreeMapVisualizer.cs" />
     <Compile Include="Assets/Scripts/ObservationDisplay.cs" />
@@ -469,6 +459,7 @@
     <Compile Include="Assets/KinematicCharacterController/Examples/Scripts/PlanetManager.cs" />
     <Compile Include="Assets/Mapbox/Unity/Utilities/Conversions.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark03.cs" />
+    <Compile Include="Assets/Scripts/DebugCoordinateOverlay.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Map/UnwrappedTileId.cs" />
     <Compile Include="Assets/Mapbox/Unity/LayerProperties/LayerProperties.cs" />
     <Compile Include="Assets/Mapbox/Unity/Map/TileProviders/GlobeTileProvider.cs" />
@@ -517,7 +508,6 @@
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/MeshModifiers/HeightModifier.cs" />
     <Compile Include="Assets/Mapbox/Unity/DataContainers/ImageryRasterOptions.cs" />
     <Compile Include="Assets/Mapbox/Unity/SourceLayers/ISubLayerDarkStyle.cs" />
-    <Compile Include="Assets/Scripts/ObservationInteractionManager.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Map/Map.cs" />
     <Compile Include="Assets/Mapbox/Unity/SourceLayers/MapboxDefaultVector.cs" />
     <Compile Include="Assets/KinematicCharacterController/Core/KinematicCharacterSystem.cs" />

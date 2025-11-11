@@ -477,8 +477,6 @@
 "Assets/Mapbox/Unity/Editor/TreeViewWithTreeModel.cs"
 "Assets/Mapbox/Unity/Editor/UnitTests/MapboxUnitTests_CircularBuffer.cs"
 "Assets/Mapbox/Unity/Editor/VectorSubLayerTreeView.cs"
-"Assets/Scripts/Editor/NaturePolygonModifierEditor.cs"
-"Assets/Scripts/Editor/ObservationUISetup.cs"
 -langversion:9.0
 /deterministic
 /optimize+

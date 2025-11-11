@@ -23,11 +23,14 @@ public class INaturalistMapController : MonoBehaviour
     [SerializeField] private int maxObservations = 100;
     [SerializeField] private float updateDelay = 2f;
     [SerializeField] private bool autoUpdate = true;
+    [SerializeField] private float reloadDistanceThreshold = 500f; // Reload when player moves 500m
     
     [Header("Visual Settings")]
     [SerializeField] private float prefabScale = 1f;
     [SerializeField] private float recentObservationPulseDays = 7f;
     [SerializeField] private bool showDebugInfo = true;
+    [SerializeField] private bool showDebugOverlay = true;
+    [SerializeField] private int debugOverlayFontSize = 11;
     
     // Private variables
     private List<ObservationData> observations = new List<ObservationData>();
@@ -35,9 +38,12 @@ public class INaturalistMapController : MonoBehaviour
     private bool isLoading = false;
     private Vector2d lastMapCenter;
     private float lastMapZoom;
+    private Vector3 lastPlayerPosition;
+    private Transform playerTransform;
     private float timeSinceLastUpdate = 0f;
     private float minUpdateInterval = 1f; // Don't update more than once per second
     private const string INATURALIST_API_URL = "https://api.inaturalist.org/v1/observations";
+    private GameObject debugOverlay;
     
     void Start()
     {
@@ -60,6 +66,25 @@ public class INaturalistMapController : MonoBehaviour
             observationContainer = container.transform;
         }
         
+        // Find player
+        var kccController = FindObjectOfType<KinematicCharacterController.Examples.ExampleCharacterController>();
+        if (kccController != null)
+        {
+            playerTransform = kccController.transform;
+            lastPlayerPosition = playerTransform.position;
+            Debug.Log($"INaturalistMapController: Found player at {playerTransform.gameObject.name}");
+        }
+        else
+        {
+            Debug.LogWarning("INaturalistMapController: No player found - auto-reload based on movement will not work");
+        }
+        
+        // Create debug overlay if enabled
+        if (showDebugOverlay)
+        {
+            CreateDebugOverlay();
+        }
+        
         // Store initial map state
         lastMapCenter = map.CenterLatitudeLongitude;
         lastMapZoom = map.Zoom;
@@ -68,24 +93,69 @@ public class INaturalistMapController : MonoBehaviour
         StartCoroutine(InitialLoad());
     }
     
+    private void CreateDebugOverlay()
+    {
+        debugOverlay = new GameObject("DebugCoordinateOverlay");
+        DebugCoordinateOverlay overlay = debugOverlay.AddComponent<DebugCoordinateOverlay>();
+        overlay.SetFontSize(debugOverlayFontSize);
+        // The overlay script will auto-find the map and player
+        Debug.Log("Debug coordinate overlay created");
+    }
+    
+    void OnDestroy()
+    {
+        if (debugOverlay != null)
+        {
+            Destroy(debugOverlay);
+        }
+    }
+    
     void Update()
     {
         if (!autoUpdate || map == null) return;
         
         timeSinceLastUpdate += Time.deltaTime;
         
-        // Check if map has moved significantly
+        // Check if enough time has passed
+        if (timeSinceLastUpdate < minUpdateInterval) return;
+        
+        bool shouldReload = false;
+        
+        // Check if map center has moved significantly
         Vector2d currentCenter = map.CenterLatitudeLongitude;
         float currentZoom = map.Zoom;
         
         float centerDiff = (float)Vector2d.Distance(lastMapCenter, currentCenter);
         float zoomDiff = Mathf.Abs(lastMapZoom - currentZoom);
         
-        // Reload if map has moved enough AND enough time has passed
-        if ((centerDiff > 0.01f || zoomDiff > 0.5f) && timeSinceLastUpdate >= minUpdateInterval)
+        if (centerDiff > 0.01f || zoomDiff > 0.5f)
         {
+            shouldReload = true;
             lastMapCenter = currentCenter;
             lastMapZoom = currentZoom;
+        }
+        
+        // Check if player has moved significantly (in world space)
+        if (playerTransform != null)
+        {
+            float playerMovement = Vector3.Distance(lastPlayerPosition, playerTransform.position);
+            
+            if (playerMovement > reloadDistanceThreshold)
+            {
+                shouldReload = true;
+                lastPlayerPosition = playerTransform.position;
+                
+                if (showDebugInfo)
+                {
+                    Vector2d playerLatLng = map.WorldToGeoPosition(playerTransform.position);
+                    Debug.Log($"Player moved {playerMovement:F0}m - reloading observations at {playerLatLng.x:F6}, {playerLatLng.y:F6}");
+                }
+            }
+        }
+        
+        // Reload if needed
+        if (shouldReload)
+        {
             timeSinceLastUpdate = 0f;
             StartCoroutine(LoadiNaturalistData());
         }
@@ -110,19 +180,27 @@ public class INaturalistMapController : MonoBehaviour
         
         isLoading = true;
         
-        // Get map bounds
-        Vector2d mapBounds = map.CenterLatitudeLongitude;
+        // Use player position if available, otherwise use map center
+        Vector2d queryCenter;
+        if (playerTransform != null)
+        {
+            queryCenter = map.WorldToGeoPosition(playerTransform.position);
+        }
+        else
+        {
+            queryCenter = map.CenterLatitudeLongitude;
+        }
+        
         float zoom = map.Zoom;
         
-        // Calculate approximate bounds (this is a simplified calculation)
-        // For production, you might want to use Mapbox's viewport bounds
-        float latOffset = 0.1f / Mathf.Pow(2, zoom - 10);
-        float lngOffset = 0.1f / Mathf.Pow(2, zoom - 10);
+        // Calculate search radius based on zoom level
+        // Higher zoom = closer view = smaller search radius
+        float searchRadius = 2.0f / Mathf.Pow(2, zoom - 10); // In degrees
         
-        float swlat = (float)(mapBounds.x - latOffset);
-        float swlng = (float)(mapBounds.y - lngOffset);
-        float nelat = (float)(mapBounds.x + latOffset);
-        float nelng = (float)(mapBounds.y + lngOffset);
+        float swlat = (float)(queryCenter.x - searchRadius);
+        float swlng = (float)(queryCenter.y - searchRadius);
+        float nelat = (float)(queryCenter.x + searchRadius);
+        float nelng = (float)(queryCenter.y + searchRadius);
         
         // Build API URL
         string url = $"{INATURALIST_API_URL}?" +
@@ -130,7 +208,12 @@ public class INaturalistMapController : MonoBehaviour
                      $"&per_page={maxObservations}&order=desc&order_by=created_at" +
                      $"&photos=true&captive=false&quality_grade=research";
         
-        if (showDebugInfo) Debug.Log($"Fetching iNaturalist data from: {url}");
+        if (showDebugInfo) 
+        {
+            Debug.Log($"Loading observations near player: Lat {queryCenter.x:F6}, Lng {queryCenter.y:F6}");
+            Debug.Log($"Search bounds: [{swlat:F6}, {swlng:F6}] to [{nelat:F6}, {nelng:F6}]");
+            Debug.Log($"API URL: {url}");
+        }
         
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
@@ -211,7 +294,7 @@ public class INaturalistMapController : MonoBehaviour
                 {
                     display = prefabInstance.AddComponent<ObservationDisplay>();
                 }
-                display.Initialize(obs, IsRecentObservation(obs));
+                display.Initialize(obs);
                 
                 // Add a component to track and update position
                 ObservationPositionTracker tracker = prefabInstance.AddComponent<ObservationPositionTracker>();

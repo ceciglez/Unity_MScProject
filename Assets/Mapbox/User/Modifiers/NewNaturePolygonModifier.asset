@@ -13,7 +13,27 @@ MonoBehaviour:
   m_Name: NewNaturePolygonModifier
   m_EditorClassIdentifier: 
   Active: 1
-  naturePrefabs: []
+  naturePrefabs:
+  - {fileID: 116100, guid: 421195bb5ed2a584eb6e927d53b8474d, type: 3}
+  - {fileID: 137020, guid: 278c41d947d868a4db78f2030e02e745, type: 3}
+  - {fileID: 184336, guid: ef45be0af35bac744b6d9ac5fb88197a, type: 3}
+  - {fileID: 171978, guid: 574607153c739924eb923209d48784b9, type: 3}
+  - {fileID: 116576, guid: 1252271b65d8ff849abc4e1962e5fe4c, type: 3}
+  - {fileID: 169404, guid: c7409aa4ee008e247b3f0b17974224d6, type: 3}
+  - {fileID: 161430, guid: d8ab3bdf30f249842a2e40837d1ac8fd, type: 3}
+  - {fileID: 184852, guid: 3f4d75c07b6084e4daa3a3eb2c5a4822, type: 3}
+  - {fileID: 159694, guid: 501379ce736077946b1cca773273f5ed, type: 3}
+  - {fileID: 179254, guid: d945b762b8421e94ea7dcdf9cb3e710c, type: 3}
+  - {fileID: 165290, guid: 16d14a84a78ec8b49aeb9416bb1b5c8c, type: 3}
+  - {fileID: 190712, guid: 61db61824216d86478da569afaa8d225, type: 3}
+  - {fileID: 136718, guid: ae1881e6aba99d04cb0f7086a0e8a29c, type: 3}
+  - {fileID: 102040, guid: 6790c535123e132499b4a62bcc675617, type: 3}
+  - {fileID: 180350, guid: 8281f75258e55464a8cb3d92629f4d61, type: 3}
+  - {fileID: 173556, guid: 2affbdbf691288b4586cf1acde6ef1aa, type: 3}
+  - {fileID: 135968, guid: fd28d687d5a4cab4a92aa15f074bc346, type: 3}
+  - {fileID: 111696, guid: ca3f5245640eb4a48a625aac19d630eb, type: 3}
+  - {fileID: 118804, guid: 3e0cf4dec1c9ddb4b9832582972317f6, type: 3}
+  - {fileID: 142226, guid: 062b3bff21dca3242ab78d1d7b65275f, type: 3}
   density: 0.05
   minSpacing: 2
   randomRotation: 1
@@ -21,7 +41,6 @@ MonoBehaviour:
   heightOffset: 0
   snapToTerrain: 1
   terrainLayers:
-    serializedVersion: 2
     m_Bits: 4294967295
   maxAssetsPerPolygon: 100
   parentTransform: {fileID: 0}
