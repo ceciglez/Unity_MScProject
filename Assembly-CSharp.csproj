@@ -278,6 +278,7 @@
     <Compile Include="Assets/Mapbox/Unity/MeshGeneration/Modifiers/GameObjectModifiers/PrefabModifier.cs" />
     <Compile Include="Assets/Mapbox/Unity/Location/AngleSmoothing/AngleSmoothingNoOp.cs" />
     <Compile Include="Assets/Scripts/INaturalistMapControllerEditor.cs" />
+    <Compile Include="Assets/Scripts/ElevationBasedMaterial.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Utils/Vector2d/RectD.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Platform/FileSource.cs" />
     <Compile Include="Assets/Mapbox/Core/mapbox-sdk-cs/Platform/IAsyncRequestFactory.cs" />
@@ -587,6 +588,7 @@
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" />
     <None Include="Assets/LMHPOLY/Low Poly Nature Bundle/Trees/Demo/Asset _Scenes/_Info.txt" />
     <None Include="Assets/Mapbox/Unity/Location/ExampleGpsTraces/LocationProviderAndroidNative-2.txt" />
+    <None Include="Assets/Materials/HeightBasedTerrain.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" />
     <None Include="Assets/TextMesh Pro/Examples &amp; Extras/Fonts/Bangers - OFL.txt" />
   </ItemGroup>
