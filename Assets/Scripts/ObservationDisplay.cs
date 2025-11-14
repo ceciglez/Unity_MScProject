@@ -3,9 +3,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-/// <summary>
-/// Displays observation data with a small centered world-space canvas
-/// </summary>
+/// Displays observation data 
+
 public class ObservationDisplay : MonoBehaviour
 {
     [Header("UI Components")]
@@ -17,6 +16,12 @@ public class ObservationDisplay : MonoBehaviour
     [Header("Canvas Settings")]
     [SerializeField] private Vector3 canvasOffset = new Vector3(0, 2f, 0);
     [SerializeField] private float canvasSize = 0.5f;
+    
+    [Header("Organism Colors")]
+    [SerializeField] private Color plantaeColor = new Color(0.2f, 0.8f, 0.2f); // Green for plants
+    [SerializeField] private Color animaliaColor = new Color(0.8f, 0.3f, 0.2f); // Red/orange for animals
+    [SerializeField] private Color fungiColor = new Color(0.6f, 0.4f, 0.8f); // Purple for fungi
+    [SerializeField] private Color defaultColor = new Color(0.5f, 0.5f, 0.5f); // Gray for unknown
     
     private ObservationData observationData;
     private Camera mainCamera;
@@ -211,9 +216,9 @@ public class ObservationDisplay : MonoBehaviour
         infoCanvas.transform.localScale = Vector3.one * 0.01f;
     }
     
-    /// <summary>
+
     /// Initialize with observation data and load photo
-    /// </summary>
+
     public void Initialize(ObservationData data)
     {
         observationData = data;
@@ -250,6 +255,9 @@ public class ObservationDisplay : MonoBehaviour
             Debug.LogWarning($"  scientificNameText is NULL!");
         }
         
+        // Apply color based on organism type
+        ApplyOrganismColor(data);
+        
         // Load photo
         if (photoImage != null && data.photos != null && data.photos.Length > 0)
         {
@@ -277,9 +285,9 @@ public class ObservationDisplay : MonoBehaviour
         }
     }
     
-    /// <summary>
+ 
     /// Show the info canvas
-    /// </summary>
+
     public void ShowCanvas()
     {
         if (infoCanvas != null)
@@ -293,15 +301,65 @@ public class ObservationDisplay : MonoBehaviour
         }
     }
     
-    /// <summary>
+
     /// Hide the info canvas
-    /// </summary>
+
     public void HideCanvas()
     {
         if (infoCanvas != null)
         {
             infoCanvas.gameObject.SetActive(false);
             Debug.Log($"ObservationDisplay.HideCanvas called on {gameObject.name} - Canvas now hidden");
+        }
+    }
+    
+    /// <summary>
+    /// Apply color to observation prefab based on organism type
+    /// </summary>
+    private void ApplyOrganismColor(ObservationData data)
+    {
+        if (data?.taxon == null) return;
+        
+        string iconicTaxon = data.taxon.iconic_taxon_name;
+        Color organismColor = defaultColor;
+        
+        // Determine color based on iconic taxon
+        if (!string.IsNullOrEmpty(iconicTaxon))
+        {
+            if (iconicTaxon.Equals("Plantae", System.StringComparison.OrdinalIgnoreCase))
+            {
+                organismColor = plantaeColor;
+                Debug.Log($"Observation is PLANT - applying green color");
+            }
+            else if (iconicTaxon.Equals("Animalia", System.StringComparison.OrdinalIgnoreCase) ||
+                     iconicTaxon.Equals("Aves", System.StringComparison.OrdinalIgnoreCase) ||
+                     iconicTaxon.Equals("Mammalia", System.StringComparison.OrdinalIgnoreCase) ||
+                     iconicTaxon.Equals("Reptilia", System.StringComparison.OrdinalIgnoreCase) ||
+                     iconicTaxon.Equals("Amphibia", System.StringComparison.OrdinalIgnoreCase) ||
+                     iconicTaxon.Equals("Actinopterygii", System.StringComparison.OrdinalIgnoreCase) ||
+                     iconicTaxon.Equals("Insecta", System.StringComparison.OrdinalIgnoreCase) ||
+                     iconicTaxon.Equals("Arachnida", System.StringComparison.OrdinalIgnoreCase))
+            {
+                organismColor = animaliaColor;
+                Debug.Log($"Observation is ANIMAL ({iconicTaxon}) - applying red/orange color");
+            }
+            else if (iconicTaxon.Equals("Fungi", System.StringComparison.OrdinalIgnoreCase))
+            {
+                organismColor = fungiColor;
+                Debug.Log($"Observation is FUNGI - applying purple color");
+            }
+            else
+            {
+                Debug.Log($"Observation type: {iconicTaxon} - applying default color");
+            }
+        }
+        
+        // Apply color to the mesh renderer (the observation prefab sphere/object)
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+        if (meshRenderer != null && meshRenderer.material != null)
+        {
+            meshRenderer.material.color = organismColor;
+            Debug.Log($"Applied color {organismColor} to observation {gameObject.name}");
         }
     }
     

@@ -7,9 +7,9 @@ using Mapbox.Unity.Map;
 using Mapbox.Utils;
 using Mapbox.Unity.Utilities;
 
-/// <summary>
-/// Controller for displaying iNaturalist observations on a Mapbox map
-/// </summary>
+
+// Controller for displaying iNaturalist observations on a Mapbox map
+
 public class INaturalistMapController : MonoBehaviour
 {
     [Header("Map References")]
@@ -401,6 +401,7 @@ public class TaxonData
     public int id;
     public string name;
     public string preferred_common_name;
+    public string iconic_taxon_name; // Plantae, Animalia, Fungi, etc.
 }
 
 [Serializable]
