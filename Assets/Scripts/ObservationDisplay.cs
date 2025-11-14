@@ -23,6 +23,10 @@ public class ObservationDisplay : MonoBehaviour
     [SerializeField] private Color fungiColor = new Color(0.6f, 0.4f, 0.8f); // Purple for fungi
     [SerializeField] private Color defaultColor = new Color(0.5f, 0.5f, 0.5f); // Gray for unknown
     
+    [Header("Camera")]
+    [Tooltip("Assign the player camera here to avoid Camera.main ambiguity. If left empty, falls back to Camera.main.")]
+    [SerializeField] private Camera playerCameraOverride;
+    
     private ObservationData observationData;
     private Camera mainCamera;
     private bool isInitialized = false;
@@ -30,7 +34,8 @@ public class ObservationDisplay : MonoBehaviour
     void Awake()
     {
         // Create canvas in Awake so it exists before Start
-        mainCamera = Camera.main;
+        // Use explicit override if assigned, otherwise fall back to Camera.main
+        mainCamera = playerCameraOverride != null ? playerCameraOverride : Camera.main;
         
         // If no canvas assigned, create one automatically
         if (infoCanvas == null)
