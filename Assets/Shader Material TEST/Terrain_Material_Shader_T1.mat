@@ -23,18 +23,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _HighTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _LowTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MidTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -55,12 +43,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HighTex:
+        m_Texture: {fileID: 2800000, guid: 6495274fff15eef4e9e58f5d87270364, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LowTex:
+        m_Texture: {fileID: 2800000, guid: ba0465cac1668624aa14430a63c348e5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MidTex:
+        m_Texture: {fileID: 2800000, guid: 3dbd640bbde9d714d9c0e61ae8c00eda, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -73,11 +73,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BlendDistance: 10
     - _Glossiness: 0.2
+    - _HighThreshold: 150
+    - _LowThreshold: 0
     - _Metallic: 0
+    - _MidThreshold: 50
     - _TexScale: 0.01
     m_Colors:
+    - _HighColor: {r: 1, g: 1, b: 1, a: 1}
     - _HighTint: {r: 1, g: 1, b: 1, a: 1}
+    - _LowColor: {r: 1, g: 1, b: 1, a: 1}
     - _LowTint: {r: 1, g: 1, b: 1, a: 1}
+    - _MidColor: {r: 1, g: 1, b: 1, a: 1}
     - _MidTint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
