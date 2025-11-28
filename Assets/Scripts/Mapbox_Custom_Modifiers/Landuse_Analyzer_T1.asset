@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 093ae37aed8314d038f33f738c857ce2, type: 3}
+  m_Name: Landuse_Analyzer_T1
+  m_EditorClassIdentifier: 
+  Active: 1
+  landuseRules:
+  - ruleName: Water bodies
+    landuseTypes:
+    - water
+    - river
+    - lake
+    - pond
+    - canal
+    material: {fileID: 2100000, guid: 1625f63737c872043b06db73c8670208, type: 2}
+    visualColor: {r: 0, g: 0.8183856, b: 1, a: 0}
+    spawnPrefabs: 0
+    prefabs: []
+    prefabDensityPer100sqm: 0
+    minPrefabs: 0
+    maxPrefabs: 0
+    snapToTerrain: 0
+    heightOffset: 0
+    randomRotation: 0
+    randomScale: 0
+    scaleRange: {x: 0, y: 0}
+  defaultMaterial: {fileID: 0}
+  defaultColor: {r: 0.019607844, g: 0.81960785, b: 1, a: 1}
+  terrainMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  debugMode: 0
