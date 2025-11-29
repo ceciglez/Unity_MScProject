@@ -32,26 +32,31 @@ public class StaticMapMinimap : MonoBehaviour
     [Tooltip("Map style - streets-v11, light-v10, dark-v10, satellite-streets-v11, outdoors-v11")]
     public string mapStyle = "streets-v11";
     
-    [Tooltip("Map width in pixels (higher = better quality but slower to load)")]
-    [Range(256, 1280)]
-    public int mapWidth = 512;
+    [Tooltip("Map width in pixels (larger = more buffer before reload, higher quality)")]
+    [Range(512, 1280)]
+    public int mapWidth = 1024;
     
     [Tooltip("Map height in pixels")]
-    [Range(256, 1280)]
-    public int mapHeight = 512;
+    [Range(512, 1280)]
+    public int mapHeight = 1024;
     
     [Tooltip("Map zoom level (higher = more zoomed in)")]
     [Range(10, 18)]
-    public int zoomLevel = 15;
+    public int zoomLevel = 16;
     
-    [Tooltip("Radius around player to show in meters (approximate)")]
-    [Range(100f, 2000f)]
-    public float mapRadiusMeters = 500f;
+    [Tooltip("Radius around player to show in meters (for calculating scale)")]
+    [Range(100f, 1000f)]
+    public float mapRadiusMeters = 300f;
+    
+    [Header("Scale Calibration")]
+    [Tooltip("Manual scale adjustment multiplier (1.0 = auto-calculated, adjust if offset persists)")]
+    [Range(0.5f, 2.0f)]
+    public float scaleMultiplier = 1.0f;
     
     [Header("Update Settings")]
-    [Tooltip("Regenerate map image when player moves this distance (meters) - lower = more updates")]
-    [Range(10f, 200f)]
-    public float updateDistanceThreshold = 50f;
+    [Tooltip("Regenerate map when player is this far from the map center (meters) - higher = fewer reloads")]
+    [Range(50f, 500f)]
+    public float updateDistanceThreshold = 200f;
     
     [Tooltip("Minimum time between map updates (seconds)")]
     [Range(0.5f, 10f)]
@@ -61,8 +66,13 @@ public class StaticMapMinimap : MonoBehaviour
     [Tooltip("Show debug logs")]
     public bool debugMode = false;
     
+    [Tooltip("Force reload the minimap (useful when adjusting scale multiplier)")]
+    public bool forceReload = false;
+    
     private Texture2D currentMapTexture;
     private Vector2d lastMapCenter;
+    private Vector2d mapCenterCoords; // Center of the current loaded map
+    private float metersPerPixel; // Scale factor for panning
     private float lastUpdateTime;
     private bool isLoadingMap = false;
     
@@ -125,6 +135,18 @@ public class StaticMapMinimap : MonoBehaviour
         if (mainMap == null || playerTransform == null || minimapImage == null)
             return;
         
+        // Check if force reload button was pressed
+        if (forceReload)
+        {
+            forceReload = false; // Reset the button
+            if (debugMode)
+            {
+                Debug.Log("[StaticMapMinimap] Force reload triggered");
+            }
+            LoadMapForCurrentPosition();
+            return; // Skip normal update this frame
+        }
+        
         // Update player marker position
         UpdatePlayerMarker();
         
@@ -137,14 +159,50 @@ public class StaticMapMinimap : MonoBehaviour
     
     private void UpdatePlayerMarker()
     {
-        if (playerMarker == null || minimapImage == null)
+        if (playerMarker == null || minimapImage == null || playerTransform == null)
             return;
         
-        // Player marker is ALWAYS centered on the minimap
-        // The map image itself moves/updates to keep player at center
+        // Don't update until first map is loaded (metersPerPixel will be 0)
+        if (metersPerPixel == 0 || mapCenterCoords.x == 0 && mapCenterCoords.y == 0)
+            return;
+        
+        // Get current player position in lat/lon
+        Vector2d playerCoords = mainMap.WorldToGeoPosition(playerTransform.position);
+        
+        // Calculate offset from map center in degrees
+        double latDiff = playerCoords.x - mapCenterCoords.x;
+        double lonDiff = playerCoords.y - mapCenterCoords.y;
+        
+        // Convert to meters using more accurate formulas
+        // Latitude: 1 degree = 111,320 meters (constant)
+        double latMeters = latDiff * 111320.0;
+        
+        // Longitude: varies by latitude - 1 degree = 111,320 * cos(latitude) meters
+        // Use the map center latitude for consistent calculation
+        double lonMeters = lonDiff * 111320.0 * Mathf.Cos((float)mapCenterCoords.x * Mathf.Deg2Rad);
+        
+        // Convert meters to pixels using calculated scale
+        float xPixels = -(float)(lonMeters / metersPerPixel); // Negative: moving east should shift map west
+        float yPixels = -(float)(latMeters / metersPerPixel); // Negative: Unity Y is up, map Y is down
+        
+        if (debugMode && Time.frameCount % 60 == 0) // Log every 60 frames to avoid spam
+        {
+            Debug.Log($"[Minimap] Player: {playerCoords.x:F6}, {playerCoords.y:F6} | Center: {mapCenterCoords.x:F6}, {mapCenterCoords.y:F6}");
+            Debug.Log($"[Minimap] Diff: lat={latDiff:F7}° lon={lonDiff:F7}° | Meters: {latMeters:F2}m lat, {lonMeters:F2}m lon");
+            Debug.Log($"[Minimap] MetersPerPixel: {metersPerPixel:F3} | Pixels: X={xPixels:F1}, Y={yPixels:F1}");
+        }
+        
+        // Pan the minimap image (move the RawImage's RectTransform)
+        RectTransform mapRect = minimapImage.GetComponent<RectTransform>();
+        if (mapRect != null)
+        {
+            mapRect.anchoredPosition = new Vector2(xPixels, yPixels);
+        }
+        
+        // Keep player marker centered in the viewport
         playerMarker.anchoredPosition = Vector2.zero;
         
-        // Rotate marker to face player direction
+        // Rotate marker to show player's facing direction
         float playerRotation = playerTransform.eulerAngles.y;
         playerMarker.rotation = Quaternion.Euler(0, 0, -playerRotation);
     }
@@ -158,9 +216,10 @@ public class StaticMapMinimap : MonoBehaviour
         if (Time.time - lastUpdateTime < updateCooldown)
             return false;
         
-        // Check distance moved
+        // Check distance from MAP CENTER (not last update position)
+        // This allows the map to pan smoothly until player gets too far from center
         Vector2d currentLatLon = mainMap.WorldToGeoPosition(playerTransform.position);
-        double distance = CalculateDistance(currentLatLon, lastMapCenter);
+        double distance = CalculateDistance(currentLatLon, mapCenterCoords);
         
         return distance > updateDistanceThreshold;
     }
@@ -216,9 +275,33 @@ public class StaticMapMinimap : MonoBehaviour
                 currentMapTexture = DownloadHandlerTexture.GetContent(request);
                 minimapImage.texture = currentMapTexture;
                 
+                // Store the center coordinates for this map
+                mapCenterCoords = center;
+                
+                // Reset the map image position to center when loading new map
+                RectTransform mapRect = minimapImage.GetComponent<RectTransform>();
+                if (mapRect != null)
+                {
+                    mapRect.anchoredPosition = Vector2.zero;
+                }
+                
+                // Calculate meters per pixel for this zoom level
+                // Formula: metersPerPixel = (Earth circumference * cos(latitude)) / (256 * 2^zoom)
+                // This gives meters per pixel at the standard 256x256 tile size
+                // Since our image is larger (e.g., 1024x1024), the scale is the same
+                double earthCircumference = 40075017.0; // meters at equator
+                double latitudeRadians = center.x * Mathf.Deg2Rad;
+                float baseMetersPerPixel = (float)(earthCircumference * Mathf.Cos((float)latitudeRadians) / (256.0 * Mathf.Pow(2, validZoom)));
+                
+                // Apply manual scale multiplier for calibration
+                metersPerPixel = baseMetersPerPixel * scaleMultiplier;
+                
                 if (debugMode)
                 {
-                    Debug.Log("[StaticMapMinimap] Map loaded successfully");
+                    Debug.Log($"[StaticMapMinimap] Map loaded successfully. Center: {center.x:F6}, {center.y:F6}");
+                    Debug.Log($"[StaticMapMinimap] Base meters/pixel: {baseMetersPerPixel:F3}, Multiplier: {scaleMultiplier:F2}, Final: {metersPerPixel:F3}");
+                    Debug.Log($"[StaticMapMinimap] Zoom: {validZoom}, Latitude: {center.x:F2}°");
+                    Debug.Log($"[StaticMapMinimap] Map image reset to center (0, 0)");
                 }
             }
             else
