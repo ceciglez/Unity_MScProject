@@ -1439,6 +1439,7 @@ GameObject:
   - component: {fileID: 622408577}
   - component: {fileID: 622408576}
   - component: {fileID: 622408575}
+  - component: {fileID: 622408579}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1487,7 +1488,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f7bc96225726e0641a6653092cea035f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1526,12 +1527,65 @@ Transform:
   m_GameObject: {fileID: 622408574}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10221.19, y: -4636, z: -7639.522}
-  m_LocalScale: {x: 24.38, y: 23.669903, z: 23.669903}
+  m_LocalPosition: {x: 0, y: -25.34, z: 0}
+  m_LocalScale: {x: 20, y: 19.417477, z: 19.417477}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &622408579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622408574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb257b300d8d9d748bf8d0eeb8190b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distSource: 0
+  baseMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  terrain: {fileID: 0}
+  terrainLayers: []
+  chunkCount: {x: 8, y: 8}
+  sceneFilters: []
+  bladeType: 2
+  multipleMeshes: 1
+  grassBladeMesh: {fileID: 0}
+  grassBladeMeshes:
+  - {fileID: -7426583211642308163, guid: 002bf449675252849a29782b177a97f2, type: 3}
+  - {fileID: 4768935795143599982, guid: 002bf449675252849a29782b177a97f2, type: 3}
+  meshDensityValues:
+  - 1
+  - 1
+  multipleMaterials: 1
+  material: {fileID: 2100000, guid: 67bf7110f1e9aa1479f46da9c636bff6, type: 2}
+  materials:
+  - {fileID: 2100000, guid: b618b95b3e2b7b34193375b30c13a185, type: 2}
+  - {fileID: 2100000, guid: 67bf7110f1e9aa1479f46da9c636bff6, type: 2}
+  shadowMode: 1
+  renderLayer:
+    m_LayerIndex: 0
+  pointCount: 100
+  multiplyByArea: 1
+  pointLODFactor: 0.194
+  randomiseSeed: 1
+  seed: 0
+  overwriteNormalDirection: 0
+  forcedNormal: {x: 0, y: 1, z: 0}
+  useDensity: 1
+  densityCutoff: 0.5
+  useLength: 1
+  lengthMapping: {x: 0, y: 1}
+  projectType: 0
+  projectMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  boundingBoxOffset:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
