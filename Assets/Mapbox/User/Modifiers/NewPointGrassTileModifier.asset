@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1e668a6c6294db0b9a0445ab6ba8db, type: 3}
+  m_Name: NewPointGrassTileModifier
+  m_EditorClassIdentifier: 
+  Active: 1
+  grassMaterial: {fileID: 0}
+  grassBladeMesh: {fileID: 0}
+  pointCount: 1000
+  multiplyByArea: 1
+  densityCutoff: 0.5
+  lengthMapping: {x: 0.5, y: 1.5}
+  shadowMode: 0
+  debugMode: 0
