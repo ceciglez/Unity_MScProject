@@ -484,7 +484,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 218695894}
-  - component: {fileID: 218695893}
   - component: {fileID: 218695895}
   m_Layer: 0
   m_Name: GrassManager
@@ -493,56 +492,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &218695893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 218695892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb257b300d8d9d748bf8d0eeb8190b52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distSource: 3
-  baseMesh: {fileID: 0}
-  terrain: {fileID: 0}
-  terrainLayers: []
-  chunkCount: {x: 8, y: 8}
-  sceneFilters: []
-  bladeType: 2
-  multipleMeshes: 0
-  grassBladeMesh: {fileID: -7426583211642308163, guid: 002bf449675252849a29782b177a97f2, type: 3}
-  grassBladeMeshes:
-  - {fileID: 0}
-  meshDensityValues:
-  - 1
-  multipleMaterials: 0
-  material: {fileID: 2100000, guid: b618b95b3e2b7b34193375b30c13a185, type: 2}
-  materials:
-  - {fileID: 0}
-  shadowMode: 1
-  renderLayer:
-    m_LayerIndex: 0
-  pointCount: 1000
-  multiplyByArea: 1
-  pointLODFactor: 1
-  randomiseSeed: 1
-  seed: 0
-  overwriteNormalDirection: 1
-  forcedNormal: {x: 0, y: 1, z: 0}
-  useDensity: 1
-  densityCutoff: 0.5
-  useLength: 1
-  lengthMapping: {x: 0, y: 1}
-  projectType: 0
-  projectMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  boundingBoxOffset:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!4 &218695894
 Transform:
   m_ObjectHideFlags: 0
@@ -567,18 +516,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 218695892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a5231cc01534c2fb0f7e220141886d, type: 3}
+  m_Script: {fileID: 11500000, guid: 45985c76f0baa4f4fa04735a0ae63f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 2047478927}
-  grassRenderer: {fileID: 218695893}
   player: {fileID: 583617922}
-  pointCount: 10000
-  multiplyByArea: 1
-  grassRenderDistance: 150
-  updateInterval: 2
-  minVertexCount: 100
-  debugMode: 0
+  grassMaterial: {fileID: 2100000, guid: c1939f2f752cd49aeb5fdf09e8a725fa, type: 2}
+  baseMaterial: {fileID: 2100000, guid: 4c01f4d9acb2941efb4de51fbf93df62, type: 2}
+  grassRenderDistance: 100
+  updateInterval: 1
+  debugMode: 1
 --- !u!21 &260605133
 Material:
   serializedVersion: 8
@@ -5592,6 +5539,57 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _WindowColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
+--- !u!1 &1987907806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1987907808}
+  - component: {fileID: 1987907807}
+  m_Layer: 0
+  m_Name: StylizedGrassSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1987907807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987907806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88c6c0bd2ee8e9439ca69a1bbb88368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  vectorRT: {fileID: 0}
+  colorMap: {fileID: 0}
+  listenToWindZone: 0
+  windZone: {fileID: 0}
+  windAmbientMultiplier: 1
+  windGustMultiplier: 1
+--- !u!4 &1987907808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987907806}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -25.34, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2047478926
 GameObject:
   m_ObjectHideFlags: 0
@@ -5648,7 +5646,7 @@ MonoBehaviour:
       scalingType: 0
       unityTileSize: 100
     loadingTexture: {fileID: 1691670368}
-    tileMaterial: {fileID: 2100000, guid: 7dda73451d585404bb1a8cd5a3ecf5d4, type: 2}
+    tileMaterial: {fileID: 2100000, guid: 4c01f4d9acb2941efb4de51fbf93df62, type: 2}
   _initializeOnStart: 1
   _imagery:
     _layerProperty:
@@ -6280,3 +6278,4 @@ SceneRoots:
   - {fileID: 622408578}
   - {fileID: 40942076}
   - {fileID: 1134089705}
+  - {fileID: 1987907808}
