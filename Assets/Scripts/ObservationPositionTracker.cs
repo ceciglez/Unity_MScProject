@@ -10,7 +10,7 @@ using Mapbox.Utils;
 public class ObservationPositionTracker : MonoBehaviour
 {
     [Header("Terrain Settings")]
-    [SerializeField] private float heightOffset = 1f; // How far above terrain to float
+    [SerializeField] private float heightOffset = 2.5f; // How far above terrain to float
     [SerializeField] private bool useRaycast = false; // Enable for more accurate positioning
     [SerializeField] private float raycastDistance = 2000f;
     [SerializeField] private LayerMask terrainMask = -1;

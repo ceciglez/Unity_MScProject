@@ -1,12 +1,42 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using Mapbox.Unity.Map;
 using Mapbox.Utils;
 using Mapbox.Unity.Utilities;
 
+/// <summary>
+/// iNaturalist API quality grades
+/// </summary>
+public enum QualityGrade
+{
+    Research,   // "research" - verified by community
+    NeedsId,    // "needs_id" - has photo but needs identification  
+    Casual      // "casual" - doesn't meet research criteria
+}
+
+/// <summary>
+/// iNaturalist API observation ordering options
+/// </summary>
+public enum ObservationOrder
+{
+    CreatedAt,      // "created_at" - when observation was created
+    ObservedOn,     // "observed_on" - when organism was observed
+    Species,        // "species_guess" - alphabetical by species name
+    Votes          // "votes" - by community votes
+}
+
+/// <summary>
+/// Sort direction for observations
+/// </summary>
+public enum SortDirection
+{
+    Desc,   // "desc" - descending (newest first)
+    Asc     // "asc" - ascending (oldest first)
+}
 
 // Controller for displaying iNaturalist observations on a Mapbox map
 
@@ -20,13 +50,32 @@ public class INaturalistMapController : MonoBehaviour
     [SerializeField] private Transform observationContainer;
     
     [Header("API Settings")]
-    [SerializeField] private int maxObservations = 100;
+    [SerializeField] private int maxObservations = 500;
     [SerializeField] private float updateDelay = 2f;
     [SerializeField] private bool autoUpdate = true;
     [SerializeField] private float reloadDistanceThreshold = 500f; // Reload when player moves 500m
     
+    [Header("Query Filters")]
+    [Tooltip("Search radius in kilometers (overrides zoom-based calculation if > 0)")]
+    [SerializeField] private float fixedSearchRadiusKm = 5f;
+    [Tooltip("Require observations to have photos")]
+    [SerializeField] private bool requirePhotos = true;
+    [Tooltip("Include captive/cultivated observations (zoo, garden plants, etc.)")]
+    [SerializeField] private bool includeCaptive = false;
+    [Tooltip("Quality grades to include")]
+    [SerializeField] private QualityGrade[] qualityGrades = { QualityGrade.Research, QualityGrade.NeedsId };
+    [Tooltip("Include observations without photos")]
+    [SerializeField] private bool includeObservationsWithoutPhotos = false;
+    [Tooltip("Order observations by")]
+    [SerializeField] private ObservationOrder orderBy = ObservationOrder.CreatedAt;
+    [Tooltip("Sort direction")]
+    [SerializeField] private SortDirection sortDirection = SortDirection.Desc;
+    [Tooltip("Sort by distance to player after receiving API response")]
+    [SerializeField] private bool sortByDistanceToPlayer = true;
+    
     [Header("Visual Settings")]
     [SerializeField] private float prefabScale = 1f;
+    [SerializeField] private float prefabYOffset = 2f; // Height above ground
     [SerializeField] private float recentObservationPulseDays = 7f;
     [SerializeField] private bool showDebugInfo = true;
     [SerializeField] private bool showDebugOverlay = true;
@@ -193,25 +242,35 @@ public class INaturalistMapController : MonoBehaviour
         
         float zoom = map.Zoom;
         
-        // Calculate search radius based on zoom level
-        // Higher zoom = closer view = smaller search radius
-        float searchRadius = 2.0f / Mathf.Pow(2, zoom - 10); // In degrees
+        // Calculate search radius 
+        float searchRadius;
+        if (fixedSearchRadiusKm > 0)
+        {
+            // Use fixed radius in kilometers, convert to degrees
+            searchRadius = fixedSearchRadiusKm / 111f; // Approximate: 1 degree ≈ 111 km
+        }
+        else
+        {
+            // Calculate search radius based on zoom level
+            // Higher zoom = closer view = smaller search radius
+            searchRadius = 2.0f / Mathf.Pow(2, zoom - 10); // In degrees
+        }
         
         float swlat = (float)(queryCenter.x - searchRadius);
         float swlng = (float)(queryCenter.y - searchRadius);
         float nelat = (float)(queryCenter.x + searchRadius);
         float nelng = (float)(queryCenter.y + searchRadius);
         
-        // Build API URL
-        string url = $"{INATURALIST_API_URL}?" +
-                     $"swlng={swlng}&swlat={swlat}&nelng={nelng}&nelat={nelat}" +
-                     $"&per_page={maxObservations}&order=desc&order_by=created_at" +
-                     $"&photos=true&captive=false&quality_grade=research";
+        // Build API URL with configurable parameters
+        int requestLimit = sortByDistanceToPlayer ? Mathf.Max(maxObservations * 3, 200) : maxObservations;
+        string url = BuildApiUrl(swlng, swlat, nelng, nelat, requestLimit);
         
         if (showDebugInfo) 
         {
             Debug.Log($"Loading observations near player: Lat {queryCenter.x:F6}, Lng {queryCenter.y:F6}");
+            Debug.Log($"Search radius: {searchRadius:F6} degrees ({searchRadius * 111:F1} km)");
             Debug.Log($"Search bounds: [{swlat:F6}, {swlng:F6}] to [{nelat:F6}, {nelng:F6}]");
+            Debug.Log($"Max observations requested: {requestLimit} (for distance sorting: {sortByDistanceToPlayer})");
             Debug.Log($"API URL: {url}");
         }
         
@@ -223,7 +282,24 @@ public class INaturalistMapController : MonoBehaviour
             {
                 try
                 {
+                    if (showDebugInfo)
+                    {
+                        Debug.Log($"[iNaturalist] Raw API response length: {request.downloadHandler.text.Length} characters");
+                        // Log a sample of the response to see structure
+                        string sample = request.downloadHandler.text.Length > 500 ? 
+                            request.downloadHandler.text.Substring(0, 500) + "..." : 
+                            request.downloadHandler.text;
+                        Debug.Log($"[iNaturalist] API response sample: {sample}");
+                    }
+                    
                     INaturalistResponse response = JsonUtility.FromJson<INaturalistResponse>(request.downloadHandler.text);
+                    
+                    if (showDebugInfo)
+                    {
+                        Debug.Log($"[iNaturalist] API returned {response.results?.Length ?? 0} total observations, total_results: {response.total_results}");
+                        Debug.Log($"[iNaturalist] Current filters: requirePhotos={requirePhotos}, includeCaptive={includeCaptive}, qualityGrades=[{string.Join(",", qualityGrades)}]");
+                    }
+                    
                     ProcessObservations(response);
                     SpawnObservationPrefabs();
                 }
@@ -251,21 +327,130 @@ public class INaturalistMapController : MonoBehaviour
             return;
         }
         
+        if (showDebugInfo)
+        {
+            Debug.Log($"[iNaturalist] Processing {response.results.Length} observations from API (total_results: {response.total_results})");
+        }
+        
+        int totalReceived = response.results.Length;
+        int noLocation = 0;
+        int noPhotos = 0;
+        int noTaxon = 0;
+        
         foreach (var obs in response.results)
         {
-            if (obs.location != null && !string.IsNullOrEmpty(obs.location) &&
-                obs.photos != null && obs.photos.Length > 0 &&
-                obs.taxon != null)
+            // Debug each observation's basic info
+            if (showDebugInfo && observations.Count < 5) // Show details for first few
             {
-                observations.Add(obs);
+                Debug.Log($"[iNaturalist] Obs {obs.id}: " +
+                         $"photos={obs.photos?.Length ?? 0}, location='{obs.location}', " +
+                         $"taxon={(obs.taxon != null ? obs.taxon.preferred_common_name + " [" + obs.taxon.iconic_taxon_name + "]" : "null")}, " +
+                         $"observed_on='{obs.observed_on}', user={obs.user?.login}");
+            }
+            
+            // Check location
+            if (string.IsNullOrEmpty(obs.location))
+            {
+                noLocation++;
+                continue;
+            }
+            
+            // Check photos (temporarily disabled to see what we get)
+            if (requirePhotos && (obs.photos == null || obs.photos.Length == 0))
+            {
+                noPhotos++;
+                continue;
+            }
+            
+            // Check taxon
+            if (obs.taxon == null)
+            {
+                noTaxon++;
+                continue;
+            }
+
+            observations.Add(obs);
+        }
+        
+        int totalFiltered = noLocation + noPhotos + noTaxon;
+        
+        if (showDebugInfo)
+        {
+            Debug.Log($"[iNaturalist] Results: {observations.Count} kept, {totalFiltered} filtered out of {totalReceived} total");
+            Debug.Log($"[iNaturalist] Filter breakdown: {noLocation} no location, {noPhotos} no photos, {noTaxon} no taxon");
+            
+            if (totalFiltered > observations.Count && totalReceived > 5)
+            {
+                Debug.LogWarning($"[iNaturalist] WARNING: Filtering out {totalFiltered} of {totalReceived} observations!");
+                Debug.LogWarning($"[iNaturalist] QUICK FIX: Try setting 'Require Photos' to FALSE in the Inspector to get more observations");
+                Debug.LogWarning($"[iNaturalist] Most observations in Camberwell may not have photos attached");
+            }
+            
+            if (observations.Count > 0)
+            {
+                var firstObs = observations[0];
+                Debug.Log($"[iNaturalist] Sample kept observation: {firstObs.taxon?.preferred_common_name ?? "Unknown"} [{firstObs.taxon?.iconic_taxon_name}] at {firstObs.location}");
+            }
+            else
+            {
+                Debug.LogError($"[iNaturalist] NO OBSERVATIONS KEPT! Raw API returned {totalReceived}, all filtered out.");
             }
         }
         
-        if (showDebugInfo) Debug.Log($"Loaded {observations.Count} valid observations");
+        // Sort by distance to player if enabled
+        if (sortByDistanceToPlayer && observations.Count > 1 && playerTransform != null)
+        {
+            Vector2d playerLatLng = map.WorldToGeoPosition(playerTransform.position);
+            
+            if (showDebugInfo)
+            {
+                Debug.Log($"[iNaturalist] Player lat/lng: {playerLatLng} (from world pos: {playerTransform.position})");
+                Debug.Log($"[iNaturalist] Sorting {observations.Count} observations by distance...");
+            }
+            
+            // Calculate distances for all observations
+            var observationsWithDistance = new List<(ObservationData obs, double distance)>();
+            
+            foreach (var obs in observations)
+            {
+                Vector2d obsLatLng = ParseLocation(obs.location);
+                if (obsLatLng != Vector2d.zero)
+                {
+                    double distance = CalculateDistance(playerLatLng, obsLatLng);
+                    observationsWithDistance.Add((obs, distance));
+                }
+            }
+            
+            // Sort by distance and take only the closest ones up to maxObservations
+            observationsWithDistance.Sort((a, b) => a.distance.CompareTo(b.distance));
+            observations = observationsWithDistance.Take(maxObservations).Select(x => x.obs).ToList();
+            
+            if (showDebugInfo && observationsWithDistance.Count > 0)
+            {
+                Debug.Log($"[iNaturalist] Sorted and limited to {observations.Count} closest observations");
+                var closest = observationsWithDistance[0];
+                Debug.Log($"[iNaturalist] Closest: {closest.obs.taxon?.preferred_common_name} at {closest.distance:F0}m");
+                
+                if (observationsWithDistance.Count > 5)
+                {
+                    var furthest = observationsWithDistance[observationsWithDistance.Count - 1];
+                    Debug.Log($"[iNaturalist] Furthest (before limiting): {furthest.obs.taxon?.preferred_common_name} at {furthest.distance:F0}m");
+                }
+                
+                // Show distance range of selected observations
+                if (observations.Count > 1)
+                {
+                    var lastSelected = observationsWithDistance[observations.Count - 1];
+                    Debug.Log($"[iNaturalist] Selected range: {closest.distance:F0}m to {lastSelected.distance:F0}m");
+                }
+            }
+        }
     }
     
     private void SpawnObservationPrefabs()
     {
+        if (showDebugInfo) Debug.Log($"[iNaturalist] SpawnObservationPrefabs called with {observations.Count} observations");
+        
         // Clear existing prefabs
         foreach (var prefab in spawnedPrefabs)
         {
@@ -273,7 +458,13 @@ public class INaturalistMapController : MonoBehaviour
                 Destroy(prefab);
         }
         spawnedPrefabs.Clear();
-        
+
+        if (observationPrefab == null)
+        {
+            Debug.LogError("[iNaturalist] observationPrefab is NULL! Cannot spawn observations.");
+            return;
+        }
+
         // Spawn new prefabs
         foreach (var obs in observations)
         {
@@ -283,10 +474,45 @@ public class INaturalistMapController : MonoBehaviour
             {
                 // Convert lat/lng to Unity world position
                 Vector3 worldPosition = map.GeoToWorldPosition(latLng, true);
+                float originalY = worldPosition.y;
                 
-                // Instantiate prefab - parent to map's root transform
+                // Try raycast to find ground (but don't fail if it doesn't work)
+                RaycastHit hit;
+                Vector3 rayStart = worldPosition + Vector3.up * 500f;
+                bool hitGround = Physics.Raycast(rayStart, Vector3.down, out hit, 1000f);
+                
+                if (hitGround)
+                {
+                    worldPosition.y = hit.point.y + prefabYOffset;
+                    if (showDebugInfo)
+                    {
+                        Debug.Log($"[iNaturalist] Raycast HIT: Ground Y={hit.point.y:F2}, Final Y={worldPosition.y:F2}");
+                    }
+                }
+                else
+                {
+                    // Just use original Y + offset
+                    worldPosition.y = originalY + prefabYOffset;
+                    if (showDebugInfo && Time.frameCount % 10 == 0) // Log only occasionally to avoid spam
+                    {
+                        Debug.Log($"[iNaturalist] Raycast MISS: Using original Y={originalY:F2} + offset={prefabYOffset}, Final Y={worldPosition.y:F2}");
+                    }
+                }
+                
+                // Instantiate prefab
                 GameObject prefabInstance = Instantiate(observationPrefab, worldPosition, Quaternion.identity, map.transform);
+                if (prefabInstance == null)
+                {
+                    Debug.LogError($"[iNaturalist] Failed to instantiate prefab for observation {obs.id}!");
+                    continue;
+                }
+                
                 prefabInstance.transform.localScale = Vector3.one * prefabScale;
+                
+                if (showDebugInfo)
+                {
+                    Debug.Log($"[iNaturalist] Created prefab '{prefabInstance.name}' at world pos {worldPosition}, active={prefabInstance.activeSelf}");
+                }
                 
                 // Add or update ObservationDisplay component
                 ObservationDisplay display = prefabInstance.GetComponent<ObservationDisplay>();
@@ -309,9 +535,20 @@ public class INaturalistMapController : MonoBehaviour
                 
                 spawnedPrefabs.Add(prefabInstance);
             }
+            else
+            {
+                if (showDebugInfo)
+                {
+                    Debug.LogWarning($"[iNaturalist] Failed to parse location for observation {obs.id}: '{obs.location}'");
+                }
+            }
         }
         
-        if (showDebugInfo) Debug.Log($"Spawned {spawnedPrefabs.Count} observation prefabs");
+        if (showDebugInfo) 
+        {
+            Debug.Log($"[iNaturalist] Spawned {spawnedPrefabs.Count} observation prefabs total");
+            Debug.Log($"[iNaturalist] Prefabs parent: {(observationContainer != null ? observationContainer.name : map.transform.name)}");
+        }
     }
     
     private Vector2d ParseLocation(string location)
@@ -327,6 +564,28 @@ public class INaturalistMapController : MonoBehaviour
         }
         
         return Vector2d.zero;
+    }
+    
+    /// <summary>
+    /// Calculate distance between two lat/lng points in meters
+    /// </summary>
+    private double CalculateDistance(Vector2d pos1, Vector2d pos2)
+    {
+        // Haversine formula for distance calculation
+        const double earthRadius = 6371000; // Earth radius in meters
+        
+        double lat1Rad = pos1.x * Mathf.Deg2Rad;
+        double lat2Rad = pos2.x * Mathf.Deg2Rad;
+        double deltaLatRad = (pos2.x - pos1.x) * Mathf.Deg2Rad;
+        double deltaLngRad = (pos2.y - pos1.y) * Mathf.Deg2Rad;
+        
+        double a = Math.Sin(deltaLatRad / 2) * Math.Sin(deltaLatRad / 2) +
+                   Math.Cos(lat1Rad) * Math.Cos(lat2Rad) *
+                   Math.Sin(deltaLngRad / 2) * Math.Sin(deltaLngRad / 2);
+        
+        double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+        
+        return earthRadius * c;
     }
     
     private bool IsRecentObservation(ObservationData obs)
@@ -365,6 +624,80 @@ public class INaturalistMapController : MonoBehaviour
         }
         spawnedPrefabs.Clear();
         observations.Clear();
+    }
+    
+    /// <summary>
+    /// Build iNaturalist API URL with all configured filters
+    /// </summary>
+    private string BuildApiUrl(float swlng, float swlat, float nelng, float nelat, int limit = -1)
+    {
+        int actualLimit = limit > 0 ? limit : maxObservations;
+        string url = $"{INATURALIST_API_URL}?" +
+                     $"swlng={swlng}&swlat={swlat}&nelng={nelng}&nelat={nelat}" +
+                     $"&per_page={actualLimit}";
+        
+        // Add quality grades
+        if (qualityGrades != null && qualityGrades.Length > 0)
+        {
+            string qualityGradeStr = "";
+            for (int i = 0; i < qualityGrades.Length; i++)
+            {
+                if (i > 0) qualityGradeStr += ",";
+                qualityGradeStr += QualityGradeToString(qualityGrades[i]);
+            }
+            url += $"&quality_grade={qualityGradeStr}";
+        }
+        
+        // Add photo requirement
+        if (requirePhotos && !includeObservationsWithoutPhotos)
+        {
+            url += "&photos=true";
+        }
+        else if (includeObservationsWithoutPhotos)
+        {
+            url += "&photos=any";
+        }
+        
+        // Add captive filter
+        url += $"&captive={(includeCaptive ? "true" : "false")}";
+        
+        // Add ordering
+        url += $"&order={SortDirectionToString(sortDirection)}&order_by={OrderByToString(orderBy)}";
+        
+        return url;
+    }
+    
+    private string QualityGradeToString(QualityGrade grade)
+    {
+        switch (grade)
+        {
+            case QualityGrade.Research: return "research";
+            case QualityGrade.NeedsId: return "needs_id";
+            case QualityGrade.Casual: return "casual";
+            default: return "research";
+        }
+    }
+    
+    private string OrderByToString(ObservationOrder order)
+    {
+        switch (order)
+        {
+            case ObservationOrder.CreatedAt: return "created_at";
+            case ObservationOrder.ObservedOn: return "observed_on";
+            case ObservationOrder.Species: return "species_guess";
+            case ObservationOrder.Votes: return "votes";
+            default: return "created_at";
+        }
+    }
+    
+    private string SortDirectionToString(SortDirection direction)
+    {
+        switch (direction)
+        {
+            case SortDirection.Desc: return "desc";
+            case SortDirection.Asc: return "asc";
+            default: return "desc";
+        }
     }
 }
 

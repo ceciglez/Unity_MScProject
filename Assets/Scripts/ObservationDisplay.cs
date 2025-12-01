@@ -269,6 +269,10 @@ public class ObservationDisplay : MonoBehaviour
             Debug.Log($"  Loading photo: {data.photos[0].url}");
             StartCoroutine(LoadPhoto(data.photos[0].url));
         }
+        
+        // CRITICAL: Show the canvas after initialization
+        ShowCanvas();
+        Debug.Log($"  Canvas shown after initialization");
     }
     
     private IEnumerator LoadPhoto(string photoUrl)

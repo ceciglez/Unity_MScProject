@@ -198,14 +198,17 @@ public class DebugCoordinateOverlay : MonoBehaviour
                 
                 ObservationDisplay display = obs.GetComponent<ObservationDisplay>();
                 string name = "Unknown";
+                string taxon = "Unknown";
                 if (display != null && display.GetData() != null)
                 {
-                    name = display.GetData().taxon?.preferred_common_name ?? 
-                           display.GetData().taxon?.name ?? "Unknown";
+                    var data = display.GetData();
+                    name = data.taxon?.preferred_common_name ?? 
+                           data.taxon?.name ?? "Unknown";
+                    taxon = data.taxon?.iconic_taxon_name ?? "Unknown";
                     if (name.Length > 25) name = name.Substring(0, 25) + "...";
                 }
                 
-                sb.AppendLine($"  #{i + 1}: {name}");
+                sb.AppendLine($"  #{i + 1}: {name} [{taxon}]");
                 sb.AppendLine($"    World: ({obsWorldPos.x:F2}, {obsWorldPos.y:F2}, {obsWorldPos.z:F2})");
                 sb.AppendLine($"    LatLng: ({obsLatLng.x:F6}, {obsLatLng.y:F6})");
                 sb.AppendLine($"    Distance: {distance:F2}m");

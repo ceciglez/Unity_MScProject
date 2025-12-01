@@ -245,8 +245,8 @@ public class AreaVFXManager : MonoBehaviour
             // Store original rate if not already stored
             if (!ps.name.Contains("_OriginalRate_"))
             {
-                float originalRate = rateOverTime.constant;
-                ps.name = ps.name + $"_OriginalRate_{originalRate}";
+                float storedRate = rateOverTime.constant;
+                ps.name = ps.name + $"_OriginalRate_{storedRate}";
             }
             
             // Extract original rate from name
