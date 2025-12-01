@@ -3066,8 +3066,8 @@ MonoBehaviour:
   map: {fileID: 2047478927}
   player: {fileID: 583617922}
   grassPatchPrefab: {fileID: 7954506618368660309, guid: 44fef056538d21046a519e7a973f1e28, type: 3}
-  grassDensity: 1.61
-  spawnRadius: 80
+  grassDensity: 3
+  spawnRadius: 120
   heightOffset: 0.05
   alignToTerrain: 1
   randomRotation: 1
