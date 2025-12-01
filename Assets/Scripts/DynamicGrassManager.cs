@@ -47,6 +47,7 @@ public class DynamicGrassManager : MonoBehaviour
 
     private float lastUpdateTime;
     private HashSet<MeshFilter> currentFilters = new HashSet<MeshFilter>();
+    private bool hasInitializedGrass = false;
 
     void Start()
     {
@@ -83,6 +84,14 @@ public class DynamicGrassManager : MonoBehaviour
         if (grassRenderer.distSource != PointGrassCommon.DistributionSource.SceneFilters)
         {
             Debug.LogWarning("[DynamicGrassManager] PointGrassRenderer is not set to Scene Filters distribution mode!");
+        }
+        
+        // CRITICAL: Disable grass renderer at start - we'll enable it after filters are populated
+        if (grassRenderer.enabled)
+        {
+            if (debugMode)
+                Debug.Log("[DynamicGrassManager] Disabling PointGrassRenderer at start - will enable after filters populate");
+            grassRenderer.enabled = false;
         }
 
         // Subscribe to tile events for immediate updates
@@ -188,8 +197,20 @@ public class DynamicGrassManager : MonoBehaviour
             }
         }
         
-        // Trigger rebuild via coroutine - but only if we have a reasonable number of filters
-        if (terrainFilters.Count > 0 && terrainFilters.Count <= 9)
+        // First time initialization - just enable the renderer with filters set
+        if (!hasInitializedGrass && terrainFilters.Count > 0 && terrainFilters.Count <= 9)
+        {
+            if (debugMode)
+                Debug.Log("[DynamicGrassManager] First initialization - enabling grass renderer");
+            
+            hasInitializedGrass = true;
+            grassRenderer.enabled = true;
+            
+            // Debug after enabling
+            Invoke("DebugGrassRendererState", 0.5f);
+        }
+        // Subsequent updates - toggle to rebuild
+        else if (hasInitializedGrass && terrainFilters.Count > 0 && terrainFilters.Count <= 9)
         {
             StartCoroutine(RebuildGrassWithDelay());
         }
@@ -197,9 +218,6 @@ public class DynamicGrassManager : MonoBehaviour
         {
             Debug.LogWarning($"[DynamicGrassManager] Too many tiles ({terrainFilters.Count}) for grass rendering. Reduce grassRenderDistance or increase minVertexCount.");
         }
-        
-        // Debug grass renderer state
-        DebugGrassRendererState();
     }
     
     private System.Collections.IEnumerator RebuildGrassWithDelay()
@@ -207,18 +225,32 @@ public class DynamicGrassManager : MonoBehaviour
         // Wait a frame to ensure scene filters array is properly set
         yield return null;
         
+        if (debugMode)
+            Debug.Log($"[DynamicGrassManager] Starting rebuild. Current filters: {(grassRenderer.sceneFilters != null ? grassRenderer.sceneFilters.Length : 0)}");
+        
         // Toggle the component to trigger OnDisable/OnEnable
         if (grassRenderer != null && grassRenderer.enabled)
         {
             if (debugMode)
-                Debug.Log("[DynamicGrassManager] Rebuilding grass renderer...");
+                Debug.Log("[DynamicGrassManager] Disabling grass renderer...");
                 
             grassRenderer.enabled = false;
-            yield return null;
-            grassRenderer.enabled = true;
+            
+            yield return new WaitForSeconds(0.1f);
             
             if (debugMode)
+                Debug.Log("[DynamicGrassManager] Re-enabling grass renderer...");
+                
+            grassRenderer.enabled = true;
+            
+            yield return new WaitForSeconds(0.1f);
+            
+            if (debugMode)
+            {
                 Debug.Log("[DynamicGrassManager] Grass renderer rebuilt");
+                Debug.Log($"Renderer enabled: {grassRenderer.enabled}");
+                Debug.Log($"GameObject active: {grassRenderer.gameObject.activeInHierarchy}");
+            }
         }
     }
     
@@ -239,21 +271,41 @@ public class DynamicGrassManager : MonoBehaviour
         if (grassRenderer.material != null)
         {
             Debug.Log($"Material Shader: {grassRenderer.material.shader.name}");
+            Debug.Log($"Material renderQueue: {grassRenderer.material.renderQueue}");
         }
         
         if (grassRenderer.sceneFilters != null && grassRenderer.sceneFilters.Length > 0)
         {
+            Debug.Log($"First filter: {grassRenderer.sceneFilters[0].gameObject.name}");
             Debug.Log($"First filter mesh vertices: {grassRenderer.sceneFilters[0].sharedMesh.vertexCount}");
             Debug.Log($"First filter position: {grassRenderer.sceneFilters[0].transform.position}");
             Debug.Log($"First filter active: {grassRenderer.sceneFilters[0].gameObject.activeInHierarchy}");
+            Debug.Log($"First filter mesh bounds: {grassRenderer.sceneFilters[0].sharedMesh.bounds}");
+        }
+        else
+        {
+            Debug.LogWarning("NO SCENE FILTERS ASSIGNED!");
         }
         
         // Check if renderer is actually enabled
         var rendererBehavior = grassRenderer as MonoBehaviour;
         if (rendererBehavior != null)
         {
-            Debug.Log($"PointGrassRenderer enabled: {rendererBehavior.enabled}");
-            Debug.Log($"GameObject active: {rendererBehavior.gameObject.activeInHierarchy}");
+            Debug.Log($"PointGrassRenderer component enabled: {rendererBehavior.enabled}");
+            Debug.Log($"PointGrassRenderer GameObject active: {rendererBehavior.gameObject.activeInHierarchy}");
+            Debug.Log($"PointGrassRenderer GameObject name: {rendererBehavior.gameObject.name}");
+        }
+        
+        // Check camera
+        Camera mainCam = Camera.main;
+        if (mainCam != null)
+        {
+            Debug.Log($"Main camera found: {mainCam.name}");
+            Debug.Log($"Camera culling mask: {mainCam.cullingMask}");
+        }
+        else
+        {
+            Debug.LogWarning("No main camera found!");
         }
         
         Debug.Log("=== END DEBUG ===");
