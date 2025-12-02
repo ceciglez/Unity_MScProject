@@ -125,7 +125,7 @@ public class ObservationTriggerInteraction : MonoBehaviour
     {
         if (observationDisplay != null)
         {
-            observationDisplay.HideCanvas();
+            //observationDisplay.HideCanvas();
         }
     }
     

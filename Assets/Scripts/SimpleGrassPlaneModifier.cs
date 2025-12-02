@@ -24,6 +24,16 @@ public class SimpleGrassPlaneModifier : GameObjectModifier
     [Range(0f, 1f)]
     public float grassHeight = 0.05f;
     
+    [Header("Layer Settings")]
+    [Tooltip("Layer to assign to grass planes")]
+    public string grassLayer = "Grass";
+    [Tooltip("Check for observation overlap before spawning grass")]
+    public bool avoidObservations = true;
+    [Tooltip("Layer containing observations to avoid")]
+    public string observationLayer = "Observations";
+    [Tooltip("Layer containing grass exclusion zones")]
+    public string grassExclusionLayer = "GrassExclusion";
+    
     [Header("Advanced")]
     [Tooltip("Enable debug logs")]
     public bool debugMode = false;
@@ -60,12 +70,28 @@ public class SimpleGrassPlaneModifier : GameObjectModifier
         // Get feature bounds
         Bounds bounds = GetFeatureBounds(ve.GameObject);
         
+        // Check for observation overlap if enabled
+        if (avoidObservations && CheckForObservationOverlap(bounds))
+        {
+            if (debugMode)
+                Debug.Log($"[SimpleGrassPlane] Skipping grass - overlaps with observation");
+            return;
+        }
+        
         // Create grass plane
         CreateGrassPlane(ve.GameObject, bounds);
     }
     
     private void CreateGrassPlane(GameObject feature, Bounds bounds)
     {
+        // Check for observation overlap if avoidance is enabled
+        if (avoidObservations && CheckForObservationOverlap(bounds))
+        {
+            if (debugMode)
+                Debug.Log($"[SimpleGrassPlane] Skipping grass creation due to observation overlap");
+            return;
+        }
+        
         // Create plane matching feature bounds
         GameObject grassPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
         grassPlane.name = "GrassPlane";
@@ -93,6 +119,13 @@ public class SimpleGrassPlaneModifier : GameObjectModifier
         {
             renderer.material = grassMaterial;
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+        
+        // Set grass layer
+        int grassLayerIndex = LayerMask.NameToLayer(grassLayer);
+        if (grassLayerIndex != -1)
+        {
+            grassPlane.layer = grassLayerIndex;
         }
         
         // Remove collider (grass shouldn't block player)
@@ -138,5 +171,60 @@ public class SimpleGrassPlaneModifier : GameObjectModifier
         }
         
         return new Bounds(featureObj.transform.position, Vector3.one * 100f);
+    }
+    
+    private bool CheckForObservationOverlap(Bounds grassBounds)
+    {
+        // Method 1: Check for observation layer colliders
+        int obsLayerMask = 1 << LayerMask.NameToLayer(observationLayer);
+        if (obsLayerMask > 1)
+        {
+            Collider[] observations = Physics.OverlapBox(
+                grassBounds.center, 
+                grassBounds.extents, 
+                Quaternion.identity, 
+                obsLayerMask
+            );
+            
+            if (observations.Length > 0)
+            {
+                if (debugMode)
+                    Debug.Log($"[SimpleGrassPlane] Found {observations.Length} observation collider overlaps");
+                return true;
+            }
+        }
+        
+        // Method 2: Check for grass exclusion layer colliders
+        int exclusionLayerMask = 1 << LayerMask.NameToLayer(grassExclusionLayer);
+        if (exclusionLayerMask > 1)
+        {
+            Collider[] exclusionZones = Physics.OverlapBox(
+                grassBounds.center, 
+                grassBounds.extents, 
+                Quaternion.identity, 
+                exclusionLayerMask
+            );
+            
+            if (exclusionZones.Length > 0)
+            {
+                if (debugMode)
+                    Debug.Log($"[SimpleGrassPlane] Found {exclusionZones.Length} exclusion zone overlaps");
+                return true;
+            }
+        }
+        
+        // Method 3: Check for grass exclusion markers
+        GrassExclusionMarker[] exclusionMarkers = FindObjectsOfType<GrassExclusionMarker>();
+        foreach (var marker in exclusionMarkers)
+        {
+            if (marker.DoesBoundsOverlap(grassBounds))
+            {
+                if (debugMode)
+                    Debug.Log($"[SimpleGrassPlane] Found exclusion marker overlap at {marker.transform.position}");
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

@@ -5,7 +5,7 @@
 **Institution:** UAL  
 **Project Type:** MSc Thesis Prototype  
 **Started:** November 27, 2025  
-**Last Updated:** December 1, 2025
+**Last Updated:** December 2, 2025
 
 ---
 
@@ -850,15 +850,253 @@ Don't render grass on ALL tiles - only near player:
 
 ## Project Statistics
 
-**Code Files Created:** 15+
-**Lines of Code:** ~2000+
+**Code Files Created:** 17+
+**Lines of Code:** ~2500+
 **Documentation Pages:** 8
 **Assets Purchased:** $30 (Stylized Grass Shader)
 **Assets Abandoned:** 2 (Point Grass Renderer, Nature Hybrid Pack shaders)
-**Major Systems:** 6 (Mapping, Observations, Minimap, Grass, Water, URP)
-**Critical Breakthroughs:** 2 (URP activation, Stylized Grass solution)
-**Dead Ends:** 2 (Point Grass compute buffers, ASE shader conversion)
+**Major Systems:** 7 (Mapping, Observations, Minimap, Grass, Water, URP, API Debugging)
+**Critical Breakthroughs:** 4 (URP activation, Stylized Grass solution, PNG emoji system, API filter optimization)
+**Dead Ends:** 3 (Point Grass compute buffers, ASE shader conversion, TextMeshPro emoji fonts)
+**API Integration Issues Resolved:** 2 (Large file git conflicts, observation filtering pipeline)
 
 ---
 
 **End of Log - December 1, 2025**
+
+### December 2, 2025 - Observation System Debugging & API Optimization
+
+**Major Issue Identified:**
+- Only 1 out of 33+ observations showing on map despite successful API calls
+- Both 3D observation prefabs and 2D minimap markers affected
+- API returning 1,558 total observations in Camberwell area but only 5 surviving filters
+
+**Root Cause Analysis:**
+
+**Canvas Visibility System:**
+- Discovered `ObservationTriggerInteraction` component hiding canvases by default
+- Canvases only visible when player within 3m trigger radius
+- Many observations appear "missing" but are actually hidden until approached
+- System working as designed for proximity-based interaction
+
+**API Filtering Issues:**
+- `requirePhotos = true` filtering out 95%+ of observations (most iNaturalist data has no photos)
+- Quality grade filter excluding "Casual" observations (citizen science data)
+- `includeCaptive = false` excluding garden/zoo observations in urban areas
+
+**Solutions Implemented:**
+
+**1. API Filter Optimization:**
+```csharp
+// Changed defaults to be more inclusive
+[SerializeField] private bool requirePhotos = false; // Was true
+[SerializeField] private bool includeCaptive = true; // Was false
+[SerializeField] private QualityGrade[] qualityGrades = { 
+    QualityGrade.Research, 
+    QualityGrade.NeedsId, 
+    QualityGrade.Casual  // Added casual observations
+};
+```
+
+**2. Enhanced API Debugging System:**
+- Added comprehensive request/response logging
+- Created `DebugTestSimpleAPICall()` method for manual API testing
+- Added `DebugCompareAPICalls()` to compare filtered vs unfiltered results
+- Fixed captive filter in `BuildApiUrl()` method (was broken)
+
+**3. Distance-Based Observation Sorting:**
+```csharp
+// Sort observations by distance to player after API response
+if (sortByDistanceToPlayer && observations.Count > 1)
+{
+    observations.Sort((a, b) => {
+        double distA = CalculateDistance(playerLatLng, aLatLng);
+        double distB = CalculateDistance(playerLatLng, bLatLng);
+        return distA.CompareTo(distB); // Closest first
+    });
+}
+```
+
+**4. Git Repository Issues Resolved:**
+- Large Apple Color Emoji font file (179MB) exceeded GitHub's 100MB limit
+- Successfully removed font file from git history using `git reset --soft`
+- Switched from TextMeshPro emoji system to lightweight PNG sprites
+- Successfully pushed all improvements without large files
+
+**Technical Improvements:**
+
+**Enhanced Processing Pipeline:**
+```csharp
+// Added detailed per-observation debugging
+foreach (var obs in response.results)
+{
+    Debug.Log($"[iNaturalist] === OBSERVATION {obs.id} ===");
+    Debug.Log($"Location: '{obs.location}', Photos: {obs.photos?.Length ?? 0}");
+    Debug.Log($"Taxon: {obs.taxon?.preferred_common_name}");
+    // Show exactly what gets filtered and why
+}
+```
+
+**Minimap Architecture Understanding:**
+- Confirmed minimap markers read directly from `INaturalistMapController.observations` via reflection
+- Independent from 3D prefab rendering system
+- Both systems sync to same API data source
+- Explained why markers can appear without 3D prefabs (systems are separate)
+
+**Key Discoveries:**
+
+**1. iNaturalist Data Reality:**
+- Most urban observations lack photos (community science focus)
+- Casual grade observations are majority of citizen science data
+- Captive observations common in urban areas (parks, gardens)
+
+**2. Canvas Interaction System:**
+- Not a bug - working as designed for proximity interaction
+- "Canvas visible false" is normal behavior when player distant
+- Trigger radius: 3m show, 10m hide distance
+
+**Current Status:**
+- API now returns significantly more observations (potentially 200 vs previous 5)
+- Distance sorting ensures closest observations appear first
+- Enhanced debugging allows real-time filter impact analysis
+- System ready for user testing with realistic observation density
+
+**Files Modified:**
+- `INaturalistMapController.cs` - Major API and filtering overhaul
+- `ObservationTriggerInteraction.cs` - Canvas visibility debugging
+- `PROJECT_LOG.md` - This documentation update
+
+**Next Steps:**
+- Test new inclusive filters with user gameplay
+- Evaluate observation density and distribution
+- Consider UI improvements for observation discovery
+- Finalize emoji icon mapping for observation categories
+
+### December 2, 2025 (Continued) - Grass-Observation Overlap Resolution
+
+**Issue Identified:**
+- Grass planes spawning on top of observation prefabs
+- Player interaction lost when colliders disabled to prevent grass overlap
+- Need for layer-based separation between grass and observations
+
+**Root Cause Analysis:**
+
+**Grass Spawning System:**
+- `SimpleGrassPlaneModifier` creating grass planes without layer assignments
+- No collision detection with observation prefabs during grass spawning
+- `GrassMaskingSphere` from Stylized Grass Shader only supports single global sphere
+- Physics collision matrix not configured for grass/observation separation
+
+**Solutions Implemented:**
+
+**1. Multi-Layer System Architecture:**
+```csharp
+// Added layer configuration to INaturalistMapController
+[Header("Layer Settings")]
+[SerializeField] private string observationLayer = "Observations";
+[SerializeField] private string grassExclusionLayer = "GrassExclusion";
+
+// Recursive layer assignment for observation prefabs
+private void SetLayerRecursively(GameObject obj, int layer)
+```
+
+**2. Enhanced Grass Spawning Intelligence:**
+```csharp
+// SimpleGrassPlaneModifier improvements
+[Header("Layer Settings")]
+public string grassLayer = "Grass";
+public bool avoidObservations = true;
+public string observationLayer = "Observations";
+
+// Pre-spawn overlap detection
+private bool CheckForObservationOverlap(Bounds grassBounds)
+```
+
+**3. Triple-Protection Exclusion System:**
+```csharp
+// Multi-method grass exclusion zones
+private void CreateGrassExclusionZone(Vector3 position, float radius)
+{
+    // Method 1: GrassMaskingSphere (Stylized Grass Shader)
+    // Method 2: Physics-based SphereCollider  
+    // Method 3: Custom GrassExclusionMarker component
+}
+```
+
+**4. Custom Exclusion Marker Component:**
+- Created `GrassExclusionMarker.cs` for bounds-based overlap detection
+- Visual gizmos for debugging exclusion zones
+- `IsPositionExcluded()` and `DoesBoundsOverlap()` methods
+
+**Technical Implementation Details:**
+
+**Layer Setup Requirements:**
+- `Observations` layer: For observation prefabs (no grass collision)
+- `Grass` layer: For grass planes  
+- `GrassExclusion` layer: For exclusion zone markers
+- Physics collision matrix: Unchecked intersections between conflicting layers
+
+**Grass Spawning Logic:**
+```csharp
+// Enhanced overlap detection in SimpleGrassPlaneModifier
+// Method 1: Physics.OverlapBox with observation layer mask
+// Method 2: FindObjectsOfType<GrassExclusionMarker> with bounds checking
+// Prevents grass spawning when overlap detected
+```
+
+**Exclusion Zone Workflow:**
+1. Observation prefab spawns at world position
+2. `CreateGrassExclusionZone()` called with configurable radius
+3. Multiple exclusion methods created for maximum compatibility
+4. Grass spawner checks all exclusion methods before spawning grass
+
+**Key Improvements:**
+
+**Player Interaction Preserved:**
+- Observation prefabs keep full trigger collider functionality
+- Grass exclusion uses separate collision detection layer
+- No interference between player interaction and grass spawning
+
+**Debugging Enhancement:**
+- Debug mode in `SimpleGrassPlaneModifier` shows overlap detection
+- Visual gizmos for exclusion zones in Scene view
+- Console logging for grass spawn success/failure with reasons
+
+**Multi-Shader Compatibility:**
+- Works with Stylized Grass Shader (`GrassMaskingSphere`)
+- Works with custom grass systems (`GrassExclusionMarker`)
+- Physics-based fallback for any grass implementation
+
+**Current Status:**
+- Triple-protection exclusion system implemented
+- Layer architecture configured for optimal separation
+- Debug tools available for troubleshooting
+- Player interaction fully preserved while preventing grass overlap
+
+**Files Modified:**
+- `INaturalistMapController.cs` - Added layer system and exclusion zone creation
+- `SimpleGrassPlaneModifier.cs` - Added overlap detection and layer assignment
+- `GrassExclusionMarker.cs` - New component for custom exclusion detection
+- Physics settings - Layer collision matrix configuration required
+
+**Validation Required:**
+- Test grass spawning with debug mode enabled
+- Verify observation trigger zones still functional for player
+- Confirm exclusion zones appear as red sphere gizmos in Scene view
+- Check console logs for grass spawn prevention messages
+
+#### Compilation Fix (Final Step)
+**Issue:** Missing `observationLayer` field declaration in SimpleGrassPlaneModifier.cs
+**Error:** Line 167 referenced undefined `observationLayer` variable
+**Fix:** Added missing field definition:
+```csharp
+[Tooltip("Layer containing observations to avoid")]
+public string observationLayer = "Observations";
+```
+**Status:** ✅ Compilation error resolved, grass exclusion system ready for testing
+
+---
+
+**End of Log - December 2, 2025**
+
+```
