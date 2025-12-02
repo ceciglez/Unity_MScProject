@@ -39,7 +39,7 @@ public class MinimapObservationManager : MonoBehaviour
     public List<TaxonEmojiMapping> customMappings = new List<TaxonEmojiMapping>();
     
     [Header("Debug")]
-    public bool showDebugInfo = false;
+    public bool showDebugInfo = true;
     
     // Private variables
     private Dictionary<int, MinimapObservationMarker> activeMarkers = new Dictionary<int, MinimapObservationMarker>();
@@ -171,22 +171,45 @@ public class MinimapObservationManager : MonoBehaviour
     /// </summary>
     private string GetEmojiForTaxon(string iconicTaxonName)
     {
+        if (showDebugInfo)
+        {
+            Debug.Log($"[MinimapObservationManager] GetEmojiForTaxon called with: '{iconicTaxonName}'");
+        }
+        
         if (string.IsNullOrEmpty(iconicTaxonName))
+        {
+            if (showDebugInfo)
+                Debug.Log($"[MinimapObservationManager] Empty taxon name, returning Unknown emoji: '{emojiMap.GetValueOrDefault("Unknown", "📍")}'");
             return emojiMap.GetValueOrDefault("Unknown", "📍");
+        }
         
         // Try exact match first
         if (emojiMap.ContainsKey(iconicTaxonName))
+        {
+            if (showDebugInfo)
+                Debug.Log($"[MinimapObservationManager] Exact match found for '{iconicTaxonName}': '{emojiMap[iconicTaxonName]}'");
             return emojiMap[iconicTaxonName];
+        }
         
         // Try partial matches for subcategories
         foreach (var kvp in emojiMap)
         {
             if (iconicTaxonName.Contains(kvp.Key))
+            {
+                if (showDebugInfo)
+                    Debug.Log($"[MinimapObservationManager] Partial match found: '{iconicTaxonName}' contains '{kvp.Key}': '{kvp.Value}'");
                 return kvp.Value;
+            }
         }
         
         // Fallback to default
-        return emojiMap.GetValueOrDefault("Default", "🔵");
+        string defaultEmoji = emojiMap.GetValueOrDefault("Default", "🔵");
+        if (showDebugInfo)
+        {
+            Debug.LogWarning($"[MinimapObservationManager] No match found for '{iconicTaxonName}', using default: '{defaultEmoji}'");
+            Debug.Log($"[MinimapObservationManager] Available keys: {string.Join(", ", emojiMap.Keys)}");
+        }
+        return defaultEmoji;
     }
     
     /// <summary>
@@ -297,7 +320,16 @@ public class MinimapObservationManager : MonoBehaviour
         if (marker == null)
             marker = markerObj.AddComponent<MinimapObservationMarker>();
         
-        string emoji = GetEmojiForTaxon(obs.taxon?.iconic_taxon_name);
+        string taxonName = obs.taxon?.iconic_taxon_name;
+        if (showDebugInfo)
+        {
+            Debug.Log($"[MinimapObservationManager] Creating marker for observation {obs.id}:");
+            Debug.Log($"  - Taxon name: '{taxonName}'");
+            Debug.Log($"  - Common name: '{obs.taxon?.preferred_common_name}'");
+            Debug.Log($"  - Scientific name: '{obs.taxon?.name}'");
+        }
+        
+        string emoji = GetEmojiForTaxon(taxonName);
         marker.fontSize = markerSize;
         marker.Initialize(obs, minimap, emoji);
         

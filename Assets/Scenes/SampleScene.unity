@@ -2290,72 +2290,80 @@ MonoBehaviour:
   markerSize: 32
   updateEveryFrame: 1
   iconMappings:
-  - taxonName: actinoptergyii
-    icon: {fileID: 21300000, guid: fbf6054f445264e9f8e97874152e7954, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: amphibia
-    icon: {fileID: 21300000, guid: d0147f732da384ab08ef9ccf0b66604a, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: animalia
-    icon: {fileID: 21300000, guid: e9d09fff1b99248ed8aabbcf7c75b64f, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: arachnida
-    icon: {fileID: 21300000, guid: 8429f53b964bc410e87a09b37a7d2937, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: aves
-    icon: {fileID: 21300000, guid: 5b1c965d70846496ca35bed07ec25056, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: chromista
-    icon: {fileID: 21300000, guid: b6982afeacf7346e0b5c05f5585c8a27, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: coleoptera
-    icon: {fileID: 21300000, guid: c40f2de4552214a31acdee6ec9ac1c79, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: fungi
+  - taxonName: Fungi
     icon: {fileID: 21300000, guid: 037be2dacd8da407a98d37a78e4d892e, type: 3}
     useCustomColor: 0
     customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: hymenoptera
-    icon: {fileID: 21300000, guid: e83e9759055dc42b98f8e6be95b5d3bc, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: insecta
-    icon: {fileID: 21300000, guid: 46348ae845c344da98b8d6f8a80d7cd4, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: lepidoptera
-    icon: {fileID: 21300000, guid: 3c489de8455eb4feebfbce558502cd1a, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: mammalia
-    icon: {fileID: 21300000, guid: f71ba59e4bfbe4e608cf245cd61ad4a3, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: mollusca
-    icon: {fileID: 21300000, guid: ff746062c7ed64d5193560184b3470d3, type: 3}
-    useCustomColor: 0
-    customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: plantae
+  - taxonName: Plantae
     icon: {fileID: 21300000, guid: 021d304ca12dd4009ae4faf0ac16804e, type: 3}
     useCustomColor: 0
     customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: protozoa
+  - taxonName: Animalia
+    icon: {fileID: 21300000, guid: e9d09fff1b99248ed8aabbcf7c75b64f, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Chromista
+    icon: {fileID: 21300000, guid: b6982afeacf7346e0b5c05f5585c8a27, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Protozoa
     icon: {fileID: 21300000, guid: 18c5068949b614fb8b87f8c193d95533, type: 3}
     useCustomColor: 0
     customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: ray-finned_fishes
+  - taxonName: Insecta
+    icon: {fileID: 21300000, guid: c40f2de4552214a31acdee6ec9ac1c79, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Arachnida
+    icon: {fileID: 21300000, guid: 8429f53b964bc410e87a09b37a7d2937, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Aves
+    icon: {fileID: 21300000, guid: 5b1c965d70846496ca35bed07ec25056, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Mammalia
+    icon: {fileID: 21300000, guid: f71ba59e4bfbe4e608cf245cd61ad4a3, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Reptilia
+    icon: {fileID: 21300000, guid: 7a0e30eaa925d4b4c8b760820e1b321f, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Amphibia
+    icon: {fileID: 21300000, guid: d0147f732da384ab08ef9ccf0b66604a, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Actinopterygii
     icon: {fileID: 21300000, guid: 5719dc5d2e9f948688849ba873e3ccc7, type: 3}
     useCustomColor: 0
     customColor: {r: 0, g: 0, b: 0, a: 0}
-  - taxonName: reptilia
-    icon: {fileID: 21300000, guid: 7a0e30eaa925d4b4c8b760820e1b321f, type: 3}
+  - taxonName: Mollusca
+    icon: {fileID: 21300000, guid: ff746062c7ed64d5193560184b3470d3, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Tracheophyta
+    icon: {fileID: 21300000, guid: 021d304ca12dd4009ae4faf0ac16804e, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Byrophyta
+    icon: {fileID: 21300000, guid: b6982afeacf7346e0b5c05f5585c8a27, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Magnoliopsida
+    icon: {fileID: 21300000, guid: 3c489de8455eb4feebfbce558502cd1a, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Liliopsida
+    icon: {fileID: 21300000, guid: b6982afeacf7346e0b5c05f5585c8a27, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Pinopsida
+    icon: {fileID: 21300000, guid: b6982afeacf7346e0b5c05f5585c8a27, type: 3}
+    useCustomColor: 0
+    customColor: {r: 0, g: 0, b: 0, a: 0}
+  - taxonName: Unknown
+    icon: {fileID: 21300000, guid: b6982afeacf7346e0b5c05f5585c8a27, type: 3}
     useCustomColor: 0
     customColor: {r: 0, g: 0, b: 0, a: 0}
   defaultIcon: {fileID: 21300000, guid: 5cd824d77aef64f509043f15e14f307c, type: 3}
