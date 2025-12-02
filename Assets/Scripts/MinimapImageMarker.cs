@@ -51,7 +51,7 @@ public class MinimapImageMarker : MonoBehaviour
         {
             markerImage.sprite = iconSprite;
         }
-        markerImage.color = tintColor;
+        markerImage.color = Color.white; // Use white to preserve original sprite colors (no tint)
         
         // Preserve aspect ratio
         markerImage.preserveAspect = true;
