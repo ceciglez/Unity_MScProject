@@ -1,0 +1,210 @@
+using UnityEngine;
+using Mapbox.Unity.Map;
+using Mapbox.Unity.MeshGeneration.Data;
+using StylizedGrass;
+using System.Collections.Generic;
+
+/// <summary>
+/// Manages grass colormap integration with Mapbox tiles.
+/// Automatically updates colormap bounds and UV coordinates as new tiles load.
+/// </summary>
+public class MapboxGrassColorMapManager : MonoBehaviour
+{
+    [Header("References")]
+    [Tooltip("The Mapbox AbstractMap component")]
+    public AbstractMap map;
+    
+    [Tooltip("The GrassColorMapRenderer from Stylized Grass Shader")]
+    public GrassColorMapRenderer colorMapRenderer;
+
+    [Header("Colormap Settings")]
+    [Tooltip("Resolution of the generated colormap texture")]
+    public int colormapResolution = 1024;
+    
+    [Tooltip("Auto-update colormap when new tiles load")]
+    public bool autoUpdate = true;
+    
+    [Tooltip("Update interval in seconds (0 = update every frame new tiles load)")]
+    public float updateInterval = 2f;
+
+    [Header("Mapbox Integration")]
+    [Tooltip("Use Mapbox tiles as terrain objects for colormap rendering")]
+    public bool useMapboxTiles = true;
+    
+    [Tooltip("Layer mask for Mapbox tile meshes")]
+    public LayerMask tileLayerMask = -1;
+
+    [Header("Debug")]
+    public bool debugMode = false;
+
+    private float lastUpdateTime;
+    private List<UnityTile> registeredTiles = new List<UnityTile>();
+
+    void Start()
+    {
+        if (map != null)
+        {
+            map.OnTileFinished += OnTileFinished;
+        }
+
+        if (colorMapRenderer == null)
+        {
+            colorMapRenderer = FindObjectOfType<GrassColorMapRenderer>();
+        }
+
+        InitializeColorMap();
+    }
+
+    void OnDestroy()
+    {
+        if (map != null)
+        {
+            map.OnTileFinished -= OnTileFinished;
+        }
+    }
+
+    private void InitializeColorMap()
+    {
+        if (colorMapRenderer == null)
+        {
+            Debug.LogError("[MapboxGrassColorMap] No GrassColorMapRenderer found! Please add one to the scene.");
+            return;
+        }
+
+        // Set resolution
+        colorMapRenderer.resIdx = GetResolutionIndex(colormapResolution);
+        
+        // Configure for Mapbox tiles
+        if (useMapboxTiles)
+        {
+            UpdateMapboxTerrainObjects();
+        }
+
+        if (debugMode)
+        {
+            Debug.Log("[MapboxGrassColorMap] Initialized with resolution: " + colormapResolution);
+        }
+    }
+
+    private void OnTileFinished(UnityTile tile)
+    {
+        if (!autoUpdate) return;
+
+        // Throttle updates
+        if (Time.time - lastUpdateTime < updateInterval)
+            return;
+
+        registeredTiles.Add(tile);
+        
+        if (useMapboxTiles)
+        {
+            UpdateMapboxTerrainObjects();
+            RecalculateColorMap();
+        }
+
+        lastUpdateTime = Time.time;
+
+        if (debugMode)
+        {
+            Debug.Log($"[MapboxGrassColorMap] Updated colormap for new tile: {tile.name}");
+        }
+    }
+
+    private void UpdateMapboxTerrainObjects()
+    {
+        if (colorMapRenderer == null) return;
+
+        // Clear existing terrain objects
+        colorMapRenderer.terrainObjects.Clear();
+
+        // Find all Mapbox tile GameObjects
+        UnityTile[] tiles = map.GetComponentsInChildren<UnityTile>();
+        
+        foreach (UnityTile tile in tiles)
+        {
+            GameObject tileObj = tile.gameObject;
+            
+            // Check if tile has a mesh and is on the correct layer
+            MeshRenderer renderer = tileObj.GetComponent<MeshRenderer>();
+            if (renderer != null && IsInLayerMask(tileObj.layer, tileLayerMask))
+            {
+                colorMapRenderer.terrainObjects.Add(tileObj);
+            }
+        }
+
+        if (debugMode)
+        {
+            Debug.Log($"[MapboxGrassColorMap] Updated terrain objects: {colorMapRenderer.terrainObjects.Count} tiles");
+        }
+    }
+
+    private void RecalculateColorMap()
+    {
+        if (colorMapRenderer == null) return;
+
+        try
+        {
+            // Recalculate bounds based on current terrain objects
+            colorMapRenderer.RecalculateBounds();
+            
+            // Render new colormap
+            colorMapRenderer.Render();
+
+            if (debugMode)
+            {
+                Debug.Log("[MapboxGrassColorMap] Colormap recalculated and rendered");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[MapboxGrassColorMap] Error updating colormap: {e.Message}");
+        }
+    }
+
+    private int GetResolutionIndex(int resolution)
+    {
+        // Map resolution to index (based on common colormap resolutions)
+        switch (resolution)
+        {
+            case 256: return 0;
+            case 512: return 1;
+            case 1024: return 2;
+            case 2048: return 3;
+            case 4096: return 4;
+            default: return 2; // Default to 1024
+        }
+    }
+
+    private bool IsInLayerMask(int layer, LayerMask mask)
+    {
+        return (mask.value & (1 << layer)) != 0;
+    }
+
+    // Manual update methods
+    [ContextMenu("Force Update Colormap")]
+    public void ForceUpdateColorMap()
+    {
+        UpdateMapboxTerrainObjects();
+        RecalculateColorMap();
+    }
+
+    [ContextMenu("Clear Registered Tiles")]
+    public void ClearRegisteredTiles()
+    {
+        registeredTiles.Clear();
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (colorMapRenderer != null && colorMapRenderer.colorMap != null)
+        {
+            // Draw colormap bounds
+            Bounds bounds = colorMapRenderer.colorMap.bounds;
+            Gizmos.color = new Color(0, 1, 0, 0.3f);
+            Gizmos.DrawCube(bounds.center, bounds.size);
+            
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(bounds.center, bounds.size);
+        }
+    }
+}

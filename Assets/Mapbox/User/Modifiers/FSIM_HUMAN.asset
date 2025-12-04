@@ -13,16 +13,19 @@ MonoBehaviour:
   m_Name: FSIM_HUMAN
   m_EditorClassIdentifier: 
   Active: 1
-  _spawnRateInSquareMeters: 100
-  _maxSpawn: 1000
-  _densityMultiplier: 0.5
-  _minDistanceBetweenObjects: 3
-  _prefabs: []
+  _spawnRateInSquareMeters: 1000
+  _maxSpawn: 1200
+  _densityMultiplier: 1
+  _minDistanceBetweenObjects: 0.41
+  _prefabs:
+  - {fileID: 195122, guid: 148634163058ac74390b6d759b7cc157, type: 3}
+  - {fileID: 142742, guid: 71c23d8a1933bda4bb809c3a79316ce2, type: 3}
+  - {fileID: 123234, guid: 1ef935c6c5d97a64a938c8b97de03c2a, type: 3}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   _useStrictBoundsCheck: 1
-  _insideDistanceTolerance: 0.02
-  _scaleDownWithWorld: 0
-  _randomizeScale: 0
-  _randomizeRotation: 0
+  _insideDistanceTolerance: 0.283
+  _scaleDownWithWorld: 1
+  _randomizeScale: 1
+  _randomizeRotation: 1

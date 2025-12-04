@@ -14,19 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   _spawnRateInSquareMeters: 1
-  _maxSpawn: 500
-  _densityMultiplier: 1
-  _minDistanceBetweenObjects: 2
+  _maxSpawn: 50
   _prefabs:
-  - {fileID: 193896, guid: 5a3e96a3145aac041ae06a52dff9fd21, type: 3}
-  - {fileID: 118378, guid: 99fb1286faa00054f887fc4833b4b4a3, type: 3}
-  - {fileID: 188288, guid: 86274927571890d43bae4d1b06caede9, type: 3}
-  - {fileID: 198304, guid: feb7410a3c3ecdd4dab9b03b91e60c7e, type: 3}
+  - {fileID: 140842, guid: c04b483efaa9f394c85a329ad86940b5, type: 3}
+  - {fileID: 180360, guid: b181072a0cf26634ea3362460a31280b, type: 3}
+  - {fileID: 194936, guid: 2d433aeb3dcbf804eb7e75775a1a7c87, type: 3}
+  - {fileID: 108626, guid: aebf6f97c0a04034f8617132e3403e36, type: 3}
   _layerMask:
     serializedVersion: 2
     m_Bits: 1
-  _useStrictBoundsCheck: 1
-  _insideDistanceTolerance: 0.05
   _scaleDownWithWorld: 1
   _randomizeScale: 1
   _randomizeRotation: 1

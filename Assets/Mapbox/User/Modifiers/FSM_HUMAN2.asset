@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: FSM_HUMAN2
   m_EditorClassIdentifier: 
   Active: 1
-  _spawnRateInSquareMeters: 0
-  _maxSpawn: 1000
-  _prefabs: []
+  _spawnRateInSquareMeters: 500
+  _maxSpawn: 1200
+  _prefabs:
+  - {fileID: 165280, guid: eb115bc06ecbf0d4fadd59fc21c58895, type: 3}
+  - {fileID: 131162, guid: b71dbb8bc605cb7449937e1432d055a6, type: 3}
+  - {fileID: 100000, guid: 9dc2bc74847106341949a181700849e5, type: 3}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 0
-  _scaleDownWithWorld: 0
-  _randomizeScale: 0
-  _randomizeRotation: 0
+    m_Bits: 1
+  _scaleDownWithWorld: 1
+  _randomizeScale: 1
+  _randomizeRotation: 1

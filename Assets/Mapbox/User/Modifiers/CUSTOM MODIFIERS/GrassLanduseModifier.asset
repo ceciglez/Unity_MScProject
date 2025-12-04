@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb457ee5bb8546d2b058eb7a50a99d9, type: 3}
+  m_Name: GrassLanduseModifier
+  m_EditorClassIdentifier: 
+  Active: 1
+  grassRules: []
+  defaultGrassMaterial: {fileID: 2100000, guid: 394e2328da36a6f46bea4670876f3a78, type: 2}
+  defaultScale: 1
+  minFeatureArea: 10
+  maxFeaturesPerTile: 50
+  grassHeightOffset: 0.02
+  useColorMap: 1
+  debugMode: 0

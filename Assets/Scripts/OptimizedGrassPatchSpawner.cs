@@ -3,10 +3,12 @@ using Mapbox.Unity.Map;
 using Mapbox.Unity.MeshGeneration.Data;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// Optimized grass spawner using object pooling and incremental spawning to prevent frame drops.
 /// Spawns grass in grid chunks around player for seamless streaming.
+/// Now supports multiple grass prefab variations for natural diversity.
 /// </summary>
 public class OptimizedGrassPatchSpawner : MonoBehaviour
 {
@@ -18,7 +20,10 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
     public Transform player;
     
     [Header("Grass Patch Settings")]
-    [Tooltip("Grass patch prefab to spawn (e.g., GrassPatch_10m from demo)")]
+    [Tooltip("Array of grass patch prefabs to randomly choose from")]
+    public GameObject[] grassPatchPrefabs;
+    
+    [Tooltip("Legacy single prefab (will be ignored if array is populated)")]
     public GameObject grassPatchPrefab;
     
     [Tooltip("Grass density - patches per 100 square meters")]
@@ -35,6 +40,13 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
     
     [Tooltip("Align patches to terrain slope")]
     public bool alignToTerrain = true;
+    
+    [Tooltip("Maximum raycast distance for terrain detection")]
+    [Range(50f, 500f)]
+    public float raycastDistance = 200f;
+    
+    [Tooltip("Layer mask for terrain detection (leave 0 for everything)")]
+    public LayerMask terrainLayerMask = 0;
     
     [Tooltip("Random rotation for patches")]
     public bool randomRotation = true;
@@ -74,8 +86,8 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
     [Tooltip("Show chunk grid gizmos")]
     public bool showChunkGizmos = false;
     
-    // Object pool
-    private Queue<GameObject> grassPool = new Queue<GameObject>();
+    // Object pools per prefab type
+    private Dictionary<int, Queue<GameObject>> grassPools = new Dictionary<int, Queue<GameObject>>();
     private HashSet<GameObject> activeGrass = new HashSet<GameObject>();
     
     // Chunk management
@@ -101,6 +113,14 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
                 enabled = false;
                 return;
             }
+        }
+        
+        // Validate grass prefabs
+        if (!ValidateGrassPrefabs())
+        {
+            Debug.LogError("[OptimizedGrassSpawner] No valid grass prefabs assigned!");
+            enabled = false;
+            return;
         }
         
         if (player == null)
@@ -147,29 +167,82 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
         }
     }
     
+    bool ValidateGrassPrefabs()
+    {
+        // Use array if populated, otherwise fall back to single prefab
+        if (grassPatchPrefabs != null && grassPatchPrefabs.Length > 0)
+        {
+            // Remove null entries
+            var validPrefabs = new List<GameObject>();
+            foreach (var prefab in grassPatchPrefabs)
+            {
+                if (prefab != null)
+                    validPrefabs.Add(prefab);
+            }
+            
+            if (validPrefabs.Count > 0)
+            {
+                grassPatchPrefabs = validPrefabs.ToArray();
+                if (debugMode)
+                {
+                    Debug.Log($"[OptimizedGrassSpawner] Using {grassPatchPrefabs.Length} grass prefab variants");
+                }
+                return true;
+            }
+        }
+        
+        // Fall back to single prefab
+        if (grassPatchPrefab != null)
+        {
+            grassPatchPrefabs = new GameObject[] { grassPatchPrefab };
+            if (debugMode)
+            {
+                Debug.Log("[OptimizedGrassSpawner] Using single grass prefab (legacy mode)");
+            }
+            return true;
+        }
+        
+        return false;
+    }
+
     IEnumerator InitializePool()
     {
         int patchesCreated = 0;
+        int patchesPerPrefab = Mathf.Max(1, initialPoolSize / grassPatchPrefabs.Length);
         
-        for (int i = 0; i < initialPoolSize; i++)
+        // Create pools for each prefab type
+        for (int prefabIndex = 0; prefabIndex < grassPatchPrefabs.Length; prefabIndex++)
         {
-            GameObject patch = Instantiate(grassPatchPrefab, poolContainer.transform);
-            patch.SetActive(false);
-            grassPool.Enqueue(patch);
+            grassPools[prefabIndex] = new Queue<GameObject>();
             
-            patchesCreated++;
-            
-            // Spread creation over multiple frames
-            if (patchesCreated >= patchesPerFrame)
+            for (int i = 0; i < patchesPerPrefab; i++)
             {
-                patchesCreated = 0;
-                yield return null;
+                GameObject patch = Instantiate(grassPatchPrefabs[prefabIndex], poolContainer.transform);
+                patch.SetActive(false);
+                
+                // Tag the patch with its prefab index for pool management
+                var poolTag = patch.GetComponent<GrassPrefabTag>();
+                if (poolTag == null)
+                {
+                    poolTag = patch.AddComponent<GrassPrefabTag>();
+                }
+                poolTag.prefabIndex = prefabIndex;
+                
+                grassPools[prefabIndex].Enqueue(patch);
+                patchesCreated++;
+                
+                // Spread creation over multiple frames
+                if (patchesCreated >= patchesPerFrame)
+                {
+                    patchesCreated = 0;
+                    yield return null;
+                }
             }
         }
         
         if (debugMode)
         {
-            Debug.Log($"[OptimizedGrassSpawner] Pool initialized with {initialPoolSize} patches");
+            Debug.Log($"[OptimizedGrassSpawner] Pool initialized with {patchesCreated} patches across {grassPatchPrefabs.Length} prefab types");
         }
         
         // Spawn initial grass around player
@@ -302,28 +375,30 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
             float offsetZ = Random.Range(-chunkSize * 0.5f, chunkSize * 0.5f);
             Vector3 worldPos = chunkCenter + new Vector3(offsetX, 0, offsetZ);
             
-            // Get grass patch from pool
-            GameObject patch = GetFromPool();
+            // Get grass patch from pool (randomly choose prefab type)
+            int prefabIndex = Random.Range(0, grassPatchPrefabs.Length);
+            GameObject patch = GetFromPool(prefabIndex);
             if (patch == null)
             {
                 if (debugMode)
-                    Debug.LogWarning("[OptimizedGrassSpawner] Pool exhausted, expanding...");
-                patch = Instantiate(grassPatchPrefab, poolContainer.transform);
+                    Debug.LogWarning($"[OptimizedGrassSpawner] Pool {prefabIndex} exhausted, creating new patch...");
+                patch = Instantiate(grassPatchPrefabs[prefabIndex], poolContainer.transform);
+                
+                // Tag the new patch
+                var poolTag = patch.GetComponent<GrassPrefabTag>();
+                if (poolTag == null)
+                {
+                    poolTag = patch.AddComponent<GrassPrefabTag>();
+                }
+                poolTag.prefabIndex = prefabIndex;
             }
             
-            // Position on terrain
-            RaycastHit hit;
-            Vector3 surfaceNormal = Vector3.up;
-            float surfaceHeight = worldPos.y;
+            // Position on terrain with improved ground detection
+            Vector3 finalPosition = FindGroundPosition(worldPos);
+            patch.transform.position = finalPosition;
             
-            if (Physics.Raycast(worldPos + Vector3.up * 100f, Vector3.down, out hit, 200f))
-            {
-                surfaceHeight = hit.point.y;
-                surfaceNormal = hit.normal;
-            }
-            
-            worldPos.y = surfaceHeight + heightOffset;
-            patch.transform.position = worldPos;
+            // Get surface normal for rotation
+            Vector3 surfaceNormal = GetSurfaceNormal(finalPosition);
             
             // Rotation
             if (alignToTerrain)
@@ -376,11 +451,11 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
         }
     }
     
-    GameObject GetFromPool()
+    GameObject GetFromPool(int prefabIndex)
     {
-        if (grassPool.Count > 0)
+        if (grassPools.TryGetValue(prefabIndex, out Queue<GameObject> pool) && pool.Count > 0)
         {
-            return grassPool.Dequeue();
+            return pool.Dequeue();
         }
         return null;
     }
@@ -389,9 +464,25 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
     {
         if (patch == null) return;
         
+        // Get the prefab index from the tag
+        var poolTag = patch.GetComponent<GrassPrefabTag>();
+        int prefabIndex = 0;
+        if (poolTag != null)
+        {
+            prefabIndex = poolTag.prefabIndex;
+        }
+        
         patch.SetActive(false);
         patch.transform.SetParent(poolContainer.transform);
-        grassPool.Enqueue(patch);
+        
+        // Return to appropriate pool
+        if (!grassPools.TryGetValue(prefabIndex, out Queue<GameObject> pool))
+        {
+            grassPools[prefabIndex] = new Queue<GameObject>();
+            pool = grassPools[prefabIndex];
+        }
+        
+        pool.Enqueue(patch);
         activeGrass.Remove(patch);
     }
     
@@ -441,4 +532,119 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
             StopCoroutine(spawnCoroutine);
         }
     }
+    
+    /// <summary>
+    /// Find the ground position using multiple detection strategies
+    /// </summary>
+    Vector3 FindGroundPosition(Vector3 worldPos)
+    {
+        // Strategy 1: Raycast from above
+        RaycastHit hit;
+        Vector3 rayStart = worldPos + Vector3.up * 100f;
+        
+        if (terrainLayerMask != 0)
+        {
+            // Use specific layer mask if set
+            if (Physics.Raycast(rayStart, Vector3.down, out hit, raycastDistance, terrainLayerMask))
+            {
+                return hit.point + Vector3.up * heightOffset;
+            }
+        }
+        else
+        {
+            // Raycast against everything
+            if (Physics.Raycast(rayStart, Vector3.down, out hit, raycastDistance))
+            {
+                return hit.point + Vector3.up * heightOffset;
+            }
+        }
+        
+        // Strategy 2: Raycast from below (in case we're inside terrain)
+        rayStart = worldPos + Vector3.down * 50f;
+        if (Physics.Raycast(rayStart, Vector3.up, out hit, raycastDistance))
+        {
+            return hit.point + Vector3.up * heightOffset;
+        }
+        
+        // Strategy 3: Multiple raycasts around the position
+        Vector3[] offsets = {
+            Vector3.zero,
+            Vector3.forward * 2f,
+            Vector3.back * 2f,
+            Vector3.left * 2f,
+            Vector3.right * 2f
+        };
+        
+        foreach (Vector3 offset in offsets)
+        {
+            Vector3 testPos = worldPos + offset;
+            rayStart = testPos + Vector3.up * 100f;
+            
+            if (Physics.Raycast(rayStart, Vector3.down, out hit, raycastDistance))
+            {
+                return hit.point + Vector3.up * heightOffset;
+            }
+        }
+        
+        // Strategy 4: Use map tiles as fallback
+        if (map != null)
+        {
+            // Try to get height from map tiles
+            Vector3 tilePos = map.transform.InverseTransformPoint(worldPos);
+            UnityTile[] tiles = map.GetComponentsInChildren<UnityTile>();
+            
+            foreach (UnityTile tile in tiles)
+            {
+                Vector3 tileSize = new Vector3((float)tile.Rect.Size.x, 10f, (float)tile.Rect.Size.y);
+                Bounds tileBounds = new Bounds(tile.transform.position, tileSize);
+                if (tileBounds.Contains(worldPos))
+                {
+                    // Use tile surface height
+                    return new Vector3(worldPos.x, tile.transform.position.y + heightOffset, worldPos.z);
+                }
+            }
+        }
+        
+        // Final fallback: Use original position with slight adjustment
+        if (debugMode)
+        {
+            Debug.LogWarning($"[OptimizedGrassSpawner] Could not find ground at {worldPos}, using fallback position");
+        }
+        
+        return new Vector3(worldPos.x, worldPos.y + heightOffset, worldPos.z);
+    }
+    
+    /// <summary>
+    /// Get surface normal for terrain alignment
+    /// </summary>
+    Vector3 GetSurfaceNormal(Vector3 position)
+    {
+        RaycastHit hit;
+        Vector3 rayStart = position + Vector3.up * 5f;
+        
+        if (terrainLayerMask != 0)
+        {
+            if (Physics.Raycast(rayStart, Vector3.down, out hit, 10f, terrainLayerMask))
+            {
+                return hit.normal;
+            }
+        }
+        else
+        {
+            if (Physics.Raycast(rayStart, Vector3.down, out hit, 10f))
+            {
+                return hit.normal;
+            }
+        }
+        
+        return Vector3.up; // Default normal
+    }
+}
+
+/// <summary>
+/// Simple component to tag grass patches with their prefab index for pool management
+/// </summary>
+public class GrassPrefabTag : MonoBehaviour
+{
+    public int prefabIndex;
 }
