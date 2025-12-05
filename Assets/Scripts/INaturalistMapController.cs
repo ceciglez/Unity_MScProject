@@ -50,6 +50,58 @@ public class INaturalistMapController : MonoBehaviour
     [SerializeField] private GameObject observationPrefab;
     [SerializeField] private Transform observationContainer;
     
+    [Header("Taxon-Specific Prefabs")]
+    [Tooltip("Enable taxon-specific prefab spawning instead of using single observationPrefab")]
+    [SerializeField] private bool useTaxonSpecificPrefabs = false;
+    [Tooltip("Prefabs for plant observations (Plantae)")]
+    [SerializeField] private GameObject[] plantPrefabs = new GameObject[0];
+    [Tooltip("Prefabs for animal observations (Animalia)")]
+    [SerializeField] private GameObject[] animalPrefabs = new GameObject[0];
+    [Tooltip("Prefabs for bird observations (Aves)")]
+    [SerializeField] private GameObject[] birdPrefabs = new GameObject[0];
+    [Tooltip("Prefabs for fungi observations (Fungi)")]
+    [SerializeField] private GameObject[] fungiPrefabs = new GameObject[0];
+    [Tooltip("Prefabs for insect observations (Insecta)")]
+    [SerializeField] private GameObject[] insectPrefabs = new GameObject[0];
+    [Tooltip("Prefabs for other/unknown taxon observations")]
+    [SerializeField] private GameObject[] unknownPrefabs = new GameObject[0];
+    
+    [Header("Taxon Settings")]
+    [Tooltip("Scale multiplier for plant prefabs")]
+    [Range(0.1f, 5f)]
+    [SerializeField] private float plantScale = 1.2f;
+    [Tooltip("Scale multiplier for animal prefabs")]
+    [Range(0.1f, 5f)]
+    [SerializeField] private float animalScale = 0.8f;
+    [Tooltip("Scale multiplier for bird prefabs")]
+    [Range(0.1f, 5f)]
+    [SerializeField] private float birdScale = 0.6f;
+    [Tooltip("Scale multiplier for fungi prefabs")]
+    [Range(0.1f, 5f)]
+    [SerializeField] private float fungiScale = 0.8f;
+    [Tooltip("Scale multiplier for insect prefabs")]
+    [Range(0.1f, 5f)]
+    [SerializeField] private float insectScale = 0.4f;
+    [Tooltip("Random scale variation (±percentage)")]
+    [Range(0f, 0.5f)]
+    [SerializeField] private float scaleVariation = 0.2f;
+    
+    [Header("Y Offset Override for Taxon Prefabs")]
+    [Tooltip("Override Y offset for taxon-specific prefabs (useful if custom prefabs should sit on ground)")]
+    [SerializeField] private bool useCustomYOffset = true;
+    [Tooltip("Y offset for plant prefabs (0 = sits on ground)")]
+    [SerializeField] private float plantYOffset = 0f;
+    [Tooltip("Y offset for animal prefabs (0 = sits on ground)")]
+    [SerializeField] private float animalYOffset = 0f;
+    [Tooltip("Y offset for bird prefabs (might want higher for flying)")]
+    [SerializeField] private float birdYOffset = 2f;
+    [Tooltip("Y offset for fungi prefabs (0 = sits on ground)")]
+    [SerializeField] private float fungiYOffset = 0f;
+    [Tooltip("Y offset for insect prefabs (0 = sits on ground)")]
+    [SerializeField] private float insectYOffset = 0f;
+    [Tooltip("Y offset for unknown/default observation prefab")]
+    [SerializeField] private float unknownYOffset = 2f;
+    
     [Header("API Settings")]
     [SerializeField] private int maxObservations = 500;
     [SerializeField] private float updateDelay = 2f;
@@ -74,10 +126,31 @@ public class INaturalistMapController : MonoBehaviour
     [Tooltip("Sort by distance to player after receiving API response")]
     [SerializeField] private bool sortByDistanceToPlayer = true;
     
-    [Header("Visual Settings")]
-    [SerializeField] private float prefabScale = 1f;
-    [SerializeField] private float prefabYOffset = 2f; // Height above ground
-    [SerializeField] private float recentObservationPulseDays = 7f;
+
+    
+    [Header("Ground Detection")]
+
+
+    [Tooltip("Layer mask for ground detection raycasting")]
+    [SerializeField] private LayerMask groundLayerMask = -1;
+    [Tooltip("Maximum distance to raycast for ground detection")]
+    [Range(10f, 1000f)]
+    [SerializeField] private float groundDetectionDistance = 500f;
+    [Tooltip("Multiple raycast attempts for better ground detection")]
+    [Range(1, 9)]
+    [SerializeField] private int raycastAttempts = 5;
+    [Tooltip("Radius around position to search for ground (meters)")]
+    [Range(1f, 50f)]
+    [SerializeField] private float groundSearchRadius = 10f;
+    [Tooltip("Enable debug visualization for ground detection")]
+    [SerializeField] private bool showGroundDetectionDebug = false;
+    [Tooltip("Show debug rays in scene view")]
+    [SerializeField] private bool showDebugRays = false;
+    [Tooltip("Force all prefabs to specific Y height (for testing)")]
+    [SerializeField] private bool forceYHeight = false;
+    [Tooltip("Fixed Y height to use when force enabled")]
+    [SerializeField] private float forcedYHeight = 0f;
+    
     [Header("Layer Settings")]
     [Tooltip("Layer for observation prefabs (should not interact with grass)")]
     [SerializeField] private string observationLayer = "Observations";
@@ -85,8 +158,6 @@ public class INaturalistMapController : MonoBehaviour
     [SerializeField] private string grassExclusionLayer = "GrassExclusion";
     [SerializeField] private float grassExclusionRadius = 5f; // Clear grass around observations
     [SerializeField] private bool showDebugInfo = true;
-    [SerializeField] private bool showDebugOverlay = true;
-    [SerializeField] private int debugOverlayFontSize = 11;
     
     // Private variables
     private List<ObservationData> observations = new List<ObservationData>();
@@ -99,7 +170,6 @@ public class INaturalistMapController : MonoBehaviour
     private float timeSinceLastUpdate = 0f;
     private float minUpdateInterval = 1f; // Don't update more than once per second
     private const string INATURALIST_API_URL = "https://api.inaturalist.org/v1/observations";
-    private GameObject debugOverlay;
     
     void Start()
     {
@@ -135,11 +205,7 @@ public class INaturalistMapController : MonoBehaviour
             Debug.LogWarning("INaturalistMapController: No player found - auto-reload based on movement will not work");
         }
         
-        // Create debug overlay if enabled
-        if (showDebugOverlay)
-        {
-            CreateDebugOverlay();
-        }
+
         
         // Store initial map state
         lastMapCenter = map.CenterLatitudeLongitude;
@@ -149,22 +215,9 @@ public class INaturalistMapController : MonoBehaviour
         StartCoroutine(InitialLoad());
     }
     
-    private void CreateDebugOverlay()
-    {
-        debugOverlay = new GameObject("DebugCoordinateOverlay");
-        DebugCoordinateOverlay overlay = debugOverlay.AddComponent<DebugCoordinateOverlay>();
-        overlay.SetFontSize(debugOverlayFontSize);
-        // The overlay script will auto-find the map and player
-        Debug.Log("Debug coordinate overlay created");
-    }
+
     
-    void OnDestroy()
-    {
-        if (debugOverlay != null)
-        {
-            Destroy(debugOverlay);
-        }
-    }
+
     
     void Update()
     {
@@ -350,119 +403,7 @@ public class INaturalistMapController : MonoBehaviour
         isLoading = false;
     }
 
-    /// <summary>
-    /// Debug method - Test a simple API call to see raw results
-    /// Call this from Unity Inspector or another script to test
-    /// </summary>
-    [ContextMenu("Debug: Test Simple API Call")]
-    public void DebugTestSimpleAPICall()
-    {
-        StartCoroutine(TestSimpleAPICall());
-    }
-    
-    /// <summary>
-    /// Test both unfiltered and filtered API calls
-    /// </summary>
-    [ContextMenu("Debug: Compare Filtered vs Unfiltered")]
-    public void DebugCompareAPICalls()
-    {
-        StartCoroutine(CompareAPICalls());
-    }
-    
-    private IEnumerator CompareAPICalls()
-    {
-        // Test 1: Unfiltered call
-        string unfilteredUrl = "https://api.inaturalist.org/v1/observations?" +
-                              "swlat=51.46&swlng=-0.11&nelat=51.48&nelng=-0.08&per_page=200";
-        
-        Debug.Log($"[API COMPARE] === TEST 1: UNFILTERED ===");
-        Debug.Log($"[API COMPARE] URL: {unfilteredUrl}");
-        
-        using (UnityWebRequest request1 = UnityWebRequest.Get(unfilteredUrl))
-        {
-            yield return request1.SendWebRequest();
-            
-            if (request1.result == UnityWebRequest.Result.Success)
-            {
-                INaturalistResponse response1 = JsonUtility.FromJson<INaturalistResponse>(request1.downloadHandler.text);
-                Debug.Log($"[API COMPARE] UNFILTERED: {response1.results?.Length ?? 0} returned, {response1.total_results} total available");
-            }
-        }
-        
-        // Test 2: Your current filtered call
-        if (playerTransform != null)
-        {
-            Vector2d center = map.WorldToGeoPosition(playerTransform.position);
-            float radius = fixedSearchRadiusKm / 111f;
-            float swlat = (float)(center.x - radius);
-            float swlng = (float)(center.y - radius);
-            float nelat = (float)(center.x + radius);
-            float nelng = (float)(center.y + radius);
-            
-            string filteredUrl = BuildApiUrl(swlng, swlat, nelng, nelat, 200);
-            
-            Debug.Log($"[API COMPARE] === TEST 2: YOUR FILTERS ===");
-            Debug.Log($"[API COMPARE] URL: {filteredUrl}");
-            
-            using (UnityWebRequest request2 = UnityWebRequest.Get(filteredUrl))
-            {
-                yield return request2.SendWebRequest();
-                
-                if (request2.result == UnityWebRequest.Result.Success)
-                {
-                    INaturalistResponse response2 = JsonUtility.FromJson<INaturalistResponse>(request2.downloadHandler.text);
-                    Debug.Log($"[API COMPARE] FILTERED: {response2.results?.Length ?? 0} returned, {response2.total_results} total available");
-                    
-                    Debug.Log($"[API COMPARE] === COMPARISON ===");
-                    Debug.Log($"[API COMPARE] Filter impact: {response2.total_results} vs unfiltered results");
-                    Debug.Log($"[API COMPARE] Current settings: requirePhotos={requirePhotos}, includeCaptive={includeCaptive}");
-                }
-            }
-        }
-    }
-    
-    private IEnumerator TestSimpleAPICall()
-    {
-        // Simple test call around Camberwell Green area
-        // 51.4705° N, 0.0938° W (rough Camberwell coordinates)
-        string testUrl = "https://api.inaturalist.org/v1/observations?" +
-                        "swlat=51.46&swlng=-0.11&nelat=51.48&nelng=-0.08"; // No per_page limit to see max
-        
-        Debug.Log($"[API TEST] Testing simple call (NO LIMITS): {testUrl}");
-        
-        using (UnityWebRequest request = UnityWebRequest.Get(testUrl))
-        {
-            yield return request.SendWebRequest();
-            
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                try
-                {
-                    INaturalistResponse response = JsonUtility.FromJson<INaturalistResponse>(request.downloadHandler.text);
-                    Debug.Log($"[API TEST] SUCCESS! Got {response.results?.Length ?? 0} observations out of {response.total_results} total");
-                    
-                    // Show first few results
-                    if (response.results != null && response.results.Length > 0)
-                    {
-                        for (int i = 0; i < Mathf.Min(5, response.results.Length); i++)
-                        {
-                            var obs = response.results[i];
-                            Debug.Log($"[API TEST] #{i+1}: {obs.taxon?.preferred_common_name ?? "Unknown"} " +
-                                     $"at {obs.location}, photos: {obs.photos?.Length ?? 0}");
-                        }
-                    }
-                }
-                catch (System.Exception e)
-                {
-                    Debug.LogError($"[API TEST] Parse error: {e.Message}");
-                }
-            }
-            else
-            {
-                Debug.LogError($"[API TEST] FAILED: {request.error}");
-            }
-        }
-    }
+
     
     private void ProcessObservations(INaturalistResponse response)
     {
@@ -647,40 +588,29 @@ public class INaturalistMapController : MonoBehaviour
             {
                 // Convert lat/lng to Unity world position
                 Vector3 worldPosition = map.GeoToWorldPosition(latLng, true);
-                float originalY = worldPosition.y;
                 
-                // Try raycast to find ground (but don't fail if it doesn't work)
-                RaycastHit hit;
-                Vector3 rayStart = worldPosition + Vector3.up * 500f;
-                bool hitGround = Physics.Raycast(rayStart, Vector3.down, out hit, 1000f);
+                // Advanced ground detection
+                Vector3 groundPosition = FindGroundPositionAdvanced(worldPosition, obs);
                 
-                if (hitGround)
+                // Get appropriate prefab for this observation's taxon
+                GameObject prefabToUse = GetPrefabForObservation(obs);
+                if (prefabToUse == null)
                 {
-                    worldPosition.y = hit.point.y + prefabYOffset;
-                    if (showDebugInfo)
-                    {
-                        Debug.Log($"[iNaturalist] Raycast HIT: Ground Y={hit.point.y:F2}, Final Y={worldPosition.y:F2}");
-                    }
-                }
-                else
-                {
-                    // Just use original Y + offset
-                    worldPosition.y = originalY + prefabYOffset;
-                    if (showDebugInfo && Time.frameCount % 10 == 0) // Log only occasionally to avoid spam
-                    {
-                        Debug.Log($"[iNaturalist] Raycast MISS: Using original Y={originalY:F2} + offset={prefabYOffset}, Final Y={worldPosition.y:F2}");
-                    }
+                    Debug.LogWarning($"[iNaturalist] No prefab available for observation {obs.id} (taxon: {GetTaxonCategory(obs)})");
+                    continue;
                 }
                 
                 // Instantiate prefab
-                GameObject prefabInstance = Instantiate(observationPrefab, worldPosition, Quaternion.identity, map.transform);
+                GameObject prefabInstance = Instantiate(prefabToUse, groundPosition, GetRandomYRotation(), map.transform);
                 if (prefabInstance == null)
                 {
                     Debug.LogError($"[iNaturalist] Failed to instantiate prefab for observation {obs.id}!");
                     continue;
                 }
                 
-                prefabInstance.transform.localScale = Vector3.one * prefabScale;
+                // Apply taxon-specific scaling
+                float finalScale = GetScaleForObservation(obs);
+                prefabInstance.transform.localScale = Vector3.one * finalScale;
                 
                 // Set observation to proper layer (should not collide with grass)
                 int obsLayer = LayerMask.NameToLayer(observationLayer);
@@ -690,11 +620,11 @@ public class INaturalistMapController : MonoBehaviour
                 }
                 
                 // Create grass exclusion zone around this observation
-                CreateGrassExclusionZone(worldPosition, grassExclusionRadius);
+                CreateGrassExclusionZone(groundPosition, grassExclusionRadius);
                 
                 if (showDebugInfo)
                 {
-                    Debug.Log($"[iNaturalist] Created prefab '{prefabInstance.name}' at world pos {worldPosition}, layer {obsLayer}, active={prefabInstance.activeSelf}");
+                    Debug.Log($"[iNaturalist] Created prefab '{prefabInstance.name}' at ground pos {groundPosition}, scale={finalScale:F2}, layer {obsLayer}, active={prefabInstance.activeSelf}");
                 }
                 
                 // Add or update ObservationDisplay component
@@ -704,10 +634,6 @@ public class INaturalistMapController : MonoBehaviour
                     display = prefabInstance.AddComponent<ObservationDisplay>();
                 }
                 display.Initialize(obs);
-                
-                // Add a component to track and update position
-                ObservationPositionTracker tracker = prefabInstance.AddComponent<ObservationPositionTracker>();
-                tracker.Initialize(map, latLng);
                 
                 // Add trigger interaction for collision detection
                 ObservationTriggerInteraction trigger = prefabInstance.GetComponent<ObservationTriggerInteraction>();
@@ -809,21 +735,7 @@ public class INaturalistMapController : MonoBehaviour
         }
     }
     
-    private bool IsRecentObservation(ObservationData obs)
-    {
-        if (string.IsNullOrEmpty(obs.created_at)) return false;
-        
-        try
-        {
-            DateTime observationDate = DateTime.Parse(obs.created_at);
-            TimeSpan difference = DateTime.Now - observationDate;
-            return difference.TotalDays <= recentObservationPulseDays;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+
     
     /// <summary>
     /// Manually trigger a data reload
@@ -939,17 +851,517 @@ public class INaturalistMapController : MonoBehaviour
             SetLayerRecursively(child.gameObject, layer);
         }
     }
+    
+    /// <summary>
+    /// Get the appropriate prefab for an observation based on its taxon
+    /// </summary>
+    private GameObject GetPrefabForObservation(ObservationData obs)
+    {
+        if (!useTaxonSpecificPrefabs)
+        {
+            return observationPrefab;
+        }
+        
+        string taxonCategory = GetTaxonCategory(obs);
+        GameObject[] prefabArray = null;
+        
+        switch (taxonCategory.ToLower())
+        {
+            case "plantae":
+                prefabArray = plantPrefabs;
+                break;
+            case "animalia":
+                prefabArray = animalPrefabs;
+                break;
+            case "aves":
+                prefabArray = birdPrefabs;
+                break;
+            case "fungi":
+                prefabArray = fungiPrefabs;
+                break;
+            case "insecta":
+            case "arachnida":
+                prefabArray = insectPrefabs;
+                break;
+            default:
+                prefabArray = unknownPrefabs;
+                break;
+        }
+        
+        // Return random prefab from the appropriate array, or fallback to default
+        if (prefabArray != null && prefabArray.Length > 0)
+        {
+            return prefabArray[UnityEngine.Random.Range(0, prefabArray.Length)];
+        }
+        
+        // Fallback to default observation prefab
+        return observationPrefab;
+    }
+    
+    /// <summary>
+    /// Get the taxon category for an observation
+    /// </summary>
+    private string GetTaxonCategory(ObservationData obs)
+    {
+        if (obs.taxon != null && !string.IsNullOrEmpty(obs.taxon.iconic_taxon_name))
+        {
+            return obs.taxon.iconic_taxon_name;
+        }
+        return "unknown";
+    }
+    
+    /// <summary>
+    /// Get the appropriate scale for an observation based on its taxon
+    /// </summary>
+    private float GetScaleForObservation(ObservationData obs)
+    {
+        if (!useTaxonSpecificPrefabs)
+        {
+            return 1.0f; // Default scale
+        }
+        
+        string taxonCategory = GetTaxonCategory(obs);
+        float baseScale = 1.0f; // Default scale
+        
+        switch (taxonCategory.ToLower())
+        {
+            case "plantae":
+                baseScale = plantScale;
+                break;
+            case "animalia":
+                baseScale = animalScale;
+                break;
+            case "aves":
+                baseScale = birdScale;
+                break;
+            case "fungi":
+                baseScale = fungiScale;
+                break;
+            case "insecta":
+            case "arachnida":
+                baseScale = insectScale;
+                break;
+        }
+        
+        // Apply random variation
+        float variation = baseScale * scaleVariation * UnityEngine.Random.Range(-1f, 1f);
+        return baseScale + variation;
+    }
+    
+    /// <summary>
+    /// Advanced ground detection with multiple raycast attempts and fallback strategies
+    /// </summary>
+    private Vector3 FindGroundPositionAdvanced(Vector3 worldPosition, ObservationData obs = null)
+    {
+        float yOffset = GetYOffsetForObservation(obs);
+        
+        if (forceYHeight)
+        {
+            Vector3 forcedPos = new Vector3(worldPosition.x, forcedYHeight + yOffset, worldPosition.z);
+            if (showGroundDetectionDebug)
+                Debug.Log($"[iNaturalist] Using forced Y height: {forcedPos}");
+            return forcedPos;
+        }
+        
+        Vector3 bestGroundPosition = worldPosition;
+        bool foundGround = false;
+        float bestDistance = float.MaxValue;
+        RaycastHit bestHit = new RaycastHit();
+        
+        // Method 1: Primary raycast from above
+        Vector3 rayStart = worldPosition + Vector3.up * groundDetectionDistance;
+        Vector3 rayEnd = worldPosition - Vector3.up * groundDetectionDistance;
+        
+        if (showDebugRays)
+            Debug.DrawRay(rayStart, Vector3.down * (groundDetectionDistance * 2f), Color.red, 5f);
+        
+        if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, groundDetectionDistance * 2f, groundLayerMask))
+        {
+            bestGroundPosition = hit.point + Vector3.up * yOffset;
+            foundGround = true;
+            bestDistance = Vector3.Distance(worldPosition, hit.point);
+            bestHit = hit;
+            
+            if (showGroundDetectionDebug)
+                Debug.Log($"[iNaturalist] Primary raycast hit: Y={hit.point.y:F2}, collider={hit.collider.name}, yOffset={yOffset:F2}, final Y={bestGroundPosition.y:F2}");
+        }
+        else if (showGroundDetectionDebug)
+        {
+            Debug.LogWarning($"[iNaturalist] Primary raycast MISSED from {rayStart} to {rayEnd}, layerMask={groundLayerMask.value}");
+        }
+        
+        // Method 2: Multiple raycast attempts in a radius pattern
+        if (!foundGround || raycastAttempts > 1)
+        {
+            for (int i = 0; i < raycastAttempts; i++)
+            {
+                // Create a circular pattern around the original position
+                float angle = (360f / raycastAttempts) * i * Mathf.Deg2Rad;
+                float searchRadius = groundSearchRadius * (i + 1) / raycastAttempts;
+                
+                Vector3 offset = new Vector3(
+                    Mathf.Cos(angle) * searchRadius,
+                    0f,
+                    Mathf.Sin(angle) * searchRadius
+                );
+                
+                Vector3 searchPos = worldPosition + offset;
+                Vector3 searchRayStart = searchPos + Vector3.up * groundDetectionDistance;
+                
+                if (showDebugRays)
+                    Debug.DrawRay(searchRayStart, Vector3.down * (groundDetectionDistance * 2f), Color.yellow, 5f);
+                
+                if (Physics.Raycast(searchRayStart, Vector3.down, out RaycastHit searchHit, groundDetectionDistance * 2f, groundLayerMask))
+                {
+                    float distance = Vector3.Distance(worldPosition, searchHit.point);
+                    
+                    if (!foundGround || distance < bestDistance)
+                    {
+                        bestGroundPosition = searchHit.point + Vector3.up * yOffset;
+                        bestDistance = distance;
+                        foundGround = true;
+                        bestHit = searchHit;
+                        
+                        if (showGroundDetectionDebug)
+                            Debug.Log($"[iNaturalist] Search raycast {i} hit: Y={searchHit.point.y:F2}, collider={searchHit.collider.name}, yOffset={yOffset:F2}, final Y={bestGroundPosition.y:F2}");
+                    }
+                }
+            }
+        }
+        
+        // Method 3: Sphere cast fallback (wider detection)
+        if (!foundGround)
+        {
+            Vector3 sphereStart = worldPosition + Vector3.up * groundDetectionDistance;
+            if (Physics.SphereCast(sphereStart, 2f, Vector3.down, out RaycastHit sphereHit, groundDetectionDistance * 2f, groundLayerMask))
+            {
+                bestGroundPosition = sphereHit.point + Vector3.up * yOffset;
+                foundGround = true;
+                bestHit = sphereHit;
+                
+                if (showGroundDetectionDebug)
+                    Debug.Log($"[iNaturalist] Sphere cast hit: Y={sphereHit.point.y:F2}, collider={sphereHit.collider.name}, yOffset={yOffset:F2}, final Y={bestGroundPosition.y:F2}");
+            }
+        }
+        
+        // Method 4: Check for nearby terrain using overlap sphere
+        if (!foundGround)
+        {
+            Collider[] nearbyColliders = Physics.OverlapSphere(worldPosition, groundSearchRadius, groundLayerMask);
+            if (nearbyColliders.Length > 0)
+            {
+                // Find the closest collider and get its top surface
+                Collider closestCollider = null;
+                float closestDistance = float.MaxValue;
+                
+                foreach (var col in nearbyColliders)
+                {
+                    float distance = Vector3.Distance(worldPosition, col.ClosestPoint(worldPosition));
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestCollider = col;
+                    }
+                }
+                
+                if (closestCollider != null)
+                {
+                    Vector3 closestPoint = closestCollider.ClosestPoint(worldPosition);
+                    bestGroundPosition = new Vector3(worldPosition.x, closestPoint.y + yOffset, worldPosition.z);
+                    foundGround = true;
+                    
+                    if (showGroundDetectionDebug)
+                        Debug.Log($"[iNaturalist] Overlap sphere found: {closestCollider.name}, Y={closestPoint.y:F2}, yOffset={yOffset:F2}, final Y={bestGroundPosition.y:F2}");
+                }
+            }
+        }
+        
+        // Fallback: Use original position with offset if no ground found
+        if (!foundGround)
+        {
+            bestGroundPosition = worldPosition + Vector3.up * yOffset;
+            if (showGroundDetectionDebug)
+                Debug.LogError($"[iNaturalist] NO GROUND FOUND! Using fallback position Y={bestGroundPosition.y:F2} (yOffset={yOffset:F2}) for position {worldPosition}. Check layer mask and terrain setup.");
+        }
+        else
+        {
+            // Validate the result - check if it seems reasonable
+            float heightDifference = Mathf.Abs(bestGroundPosition.y - worldPosition.y);
+            if (heightDifference > groundDetectionDistance)
+            {
+                if (showGroundDetectionDebug)
+                    Debug.LogWarning($"[iNaturalist] Ground position seems unreasonable: height difference {heightDifference:F2}m, using fallback");
+                bestGroundPosition = worldPosition + Vector3.up * yOffset;
+            }
+        }
+        
+        // Final debug output
+        if (showGroundDetectionDebug)
+        {
+            string taxonInfo = obs != null ? $", taxon={GetTaxonCategory(obs)}" : "";
+            Debug.Log($"[iNaturalist] Final ground position: {bestGroundPosition}, foundGround={foundGround}, surface={bestHit.collider?.name}, yOffset={yOffset:F2}{taxonInfo}");
+        }
+        
+        return bestGroundPosition;
+    }
+    
+
+    
+    /// <summary>
+    /// Get random Y rotation for more natural placement
+    /// </summary>
+    private Quaternion GetRandomYRotation()
+    {
+        return Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+    }
+    
+
+    
+    /// <summary>
+    /// Get the appropriate Y offset for an observation based on its taxon
+    /// </summary>
+    private float GetYOffsetForObservation(ObservationData obs)
+    {
+        if (!useTaxonSpecificPrefabs || !useCustomYOffset || obs == null)
+        {
+            return 2.0f; // Default Y offset
+        }
+        
+        string taxonCategory = GetTaxonCategory(obs);
+        
+        switch (taxonCategory.ToLower())
+        {
+            case "plantae":
+                return plantYOffset;
+            case "animalia":
+                return animalYOffset;
+            case "aves":
+                return birdYOffset;
+            case "fungi":
+                return fungiYOffset;
+            case "insecta":
+            case "arachnida":
+                return insectYOffset;
+            default:
+                return unknownYOffset;
+        }
+    }
+    
+    /// <summary>
+    /// Update scaling for all currently spawned observations (useful for runtime adjustments)
+    /// </summary>
+    [ContextMenu("Update All Observation Scales")]
+    public void UpdateAllObservationScales()
+    {
+        if (spawnedPrefabs == null || observations == null) return;
+        
+        for (int i = 0; i < spawnedPrefabs.Count && i < observations.Count; i++)
+        {
+            if (spawnedPrefabs[i] != null)
+            {
+                float newScale = GetScaleForObservation(observations[i]);
+                spawnedPrefabs[i].transform.localScale = Vector3.one * newScale;
+            }
+        }
+        
+        if (showDebugInfo)
+            Debug.Log($"[iNaturalist] Updated scales for {spawnedPrefabs.Count} observation prefabs");
+    }
+    
+    /// <summary>
+    /// Reposition all observations with improved ground detection
+    /// </summary>
+    [ContextMenu("Reposition All Observations")]
+    public void RepositionAllObservations()
+    {
+        if (spawnedPrefabs == null || observations == null) return;
+        
+        for (int i = 0; i < spawnedPrefabs.Count && i < observations.Count; i++)
+        {
+            if (spawnedPrefabs[i] != null)
+            {
+                Vector2d latLng = ParseLocation(observations[i].location);
+                if (latLng != Vector2d.zero)
+                {
+                    Vector3 worldPosition = map.GeoToWorldPosition(latLng, true);
+                    Vector3 groundPosition = FindGroundPositionAdvanced(worldPosition, observations[i]);
+                    
+                    spawnedPrefabs[i].transform.position = groundPosition;
+                }
+            }
+        }
+        
+        if (showDebugInfo)
+            Debug.Log($"[iNaturalist] Repositioned {spawnedPrefabs.Count} observation prefabs");
+    }
+    
+    /// <summary>
+    /// Debug method to analyze ground detection issues
+    /// </summary>
+    [ContextMenu("Debug Ground Detection")]
+    public void DebugGroundDetection()
+    {
+        Debug.Log("=== GROUND DETECTION DEBUG ===");
+        
+        // Check layer mask
+        Debug.Log($"Ground Layer Mask: {groundLayerMask.value} (binary: {System.Convert.ToString(groundLayerMask.value, 2)})");
+        
+        // List all active layers
+        for (int i = 0; i < 32; i++)
+        {
+            string layerName = LayerMask.LayerToName(i);
+            if (!string.IsNullOrEmpty(layerName))
+            {
+                bool isInMask = (groundLayerMask.value & (1 << i)) != 0;
+                Debug.Log($"Layer {i}: '{layerName}' - In mask: {isInMask}");
+            }
+        }
+        
+        // Find all colliders in scene and their layers
+        Collider[] allColliders = FindObjectsOfType<Collider>();
+        Debug.Log($"Found {allColliders.Length} colliders in scene:");
+        
+        var layerGroups = new Dictionary<int, List<string>>();
+        foreach (var col in allColliders)
+        {
+            if (!layerGroups.ContainsKey(col.gameObject.layer))
+                layerGroups[col.gameObject.layer] = new List<string>();
+            layerGroups[col.gameObject.layer].Add(col.name);
+        }
+        
+        foreach (var group in layerGroups)
+        {
+            string layerName = LayerMask.LayerToName(group.Key);
+            bool isInMask = (groundLayerMask.value & (1 << group.Key)) != 0;
+            Debug.Log($"Layer {group.Key} ('{layerName}'): {group.Value.Count} colliders, In ground mask: {isInMask}");
+            
+            if (group.Value.Count <= 10) // Don't spam if too many
+            {
+                Debug.Log($"  Colliders: {string.Join(", ", group.Value)}");
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Remove ObservationPositionTracker from all existing observation prefabs
+    /// Call this to clean up old prefabs that might have the tracker
+    /// </summary>
+    [ContextMenu("Remove Position Trackers")]
+    public void RemoveObservationPositionTrackers()
+    {
+        int removedCount = 0;
+        
+        foreach (var prefab in spawnedPrefabs)
+        {
+            if (prefab != null)
+            {
+                ObservationPositionTracker tracker = prefab.GetComponent<ObservationPositionTracker>();
+                if (tracker != null)
+                {
+                    if (Application.isPlaying)
+                    {
+                        Destroy(tracker);
+                    }
+                    else
+                    {
+                        DestroyImmediate(tracker);
+                    }
+                    removedCount++;
+                }
+            }
+        }
+        
+        Debug.Log($"[iNaturalist] Removed {removedCount} ObservationPositionTracker components");
+    }
+    
+    /// <summary>
+    /// Debug method to analyze Y offset issues in spawned prefabs
+    /// </summary>
+    [ContextMenu("Debug Y Offset Issues")]
+    public void DebugYOffsetIssues()
+    {
+        Debug.Log("=== Y OFFSET DEBUG ANALYSIS ===");
+        
+        if (spawnedPrefabs == null || spawnedPrefabs.Count == 0)
+        {
+            Debug.LogWarning("No spawned prefabs to analyze!");
+            return;
+        }
+        
+        Debug.Log($"Analyzing {spawnedPrefabs.Count} spawned observation prefabs...");
+        
+        for (int i = 0; i < spawnedPrefabs.Count && i < observations.Count; i++)
+        {
+            if (spawnedPrefabs[i] != null)
+            {
+                GameObject prefab = spawnedPrefabs[i];
+                ObservationData obs = observations[i];
+                
+                // Check for ObservationPositionTracker
+                ObservationPositionTracker tracker = prefab.GetComponent<ObservationPositionTracker>();
+                string trackerInfo = tracker != null ? $"TRACKER(offset={tracker.GetComponent<ObservationPositionTracker>()})" : "NO TRACKER";
+                
+                // Get expected Y offset
+                float expectedYOffset = GetYOffsetForObservation(obs);
+                
+                // Get current position
+                Vector3 currentPos = prefab.transform.position;
+                
+                Debug.Log($"Prefab {i}: '{prefab.name}' at Y={currentPos.y:F2}");
+                Debug.Log($"  - Taxon: {GetTaxonCategory(obs)}");
+                Debug.Log($"  - Expected Y offset: {expectedYOffset:F2}");
+                Debug.Log($"  - Position tracker: {trackerInfo}");
+                Debug.Log($"  - Components: {string.Join(", ", prefab.GetComponents<Component>().Select(c => c.GetType().Name))}");
+            }
+        }
+        
+        // Check INaturalist controller settings
+        Debug.Log($"INaturalist Controller Settings:");
+        Debug.Log($"  - useTaxonSpecificPrefabs: {useTaxonSpecificPrefabs}");
+        Debug.Log($"  - useCustomYOffset: {useCustomYOffset}");
+        Debug.Log($"  - plantYOffset: {plantYOffset}");
+        Debug.Log($"  - animalYOffset: {animalYOffset}");
+        Debug.Log($"  - birdYOffset: {birdYOffset}");
+        Debug.Log($"  - unknownYOffset: {unknownYOffset}");
+    }
+    
+    /// <summary>
+    /// Test ground detection at a specific position
+    /// </summary>
+    [ContextMenu("Test Ground Detection At Player")]
+    public void TestGroundDetectionAtPlayer()
+    {
+        if (playerTransform == null)
+        {
+            Debug.LogError("No player found! Assign playerTransform or move the player in the scene.");
+            return;
+        }
+        
+        Vector3 testPos = playerTransform.position;
+        Debug.Log($"=== TESTING GROUND DETECTION AT PLAYER POSITION: {testPos} ===");
+        
+        bool oldDebug = showGroundDetectionDebug;
+        bool oldRays = showDebugRays;
+        showGroundDetectionDebug = true;
+        showDebugRays = true;
+        
+        Vector3 advancedResult = FindGroundPositionAdvanced(testPos, null);
+        Debug.Log($"Ground detection result: {advancedResult}");
+        
+        showGroundDetectionDebug = oldDebug;
+        showDebugRays = oldRays;
+    }
 }
 
 // Data structures for JSON parsing
-[Serializable]
+[System.Serializable]
 public class INaturalistResponse
 {
     public int total_results;
     public ObservationData[] results;
 }
 
-[Serializable]
+[System.Serializable]
 public class ObservationData
 {
     public int id;
@@ -959,16 +1371,17 @@ public class ObservationData
     public PhotoData[] photos;
     public TaxonData taxon;
     public UserData user;
+    public string species_guess;
 }
 
-[Serializable]
+[System.Serializable]
 public class PhotoData
 {
     public int id;
     public string url;
 }
 
-[Serializable]
+[System.Serializable]
 public class TaxonData
 {
     public int id;
@@ -977,7 +1390,7 @@ public class TaxonData
     public string iconic_taxon_name; // Plantae, Animalia, Fungi, etc.
 }
 
-[Serializable]
+[System.Serializable]
 public class UserData
 {
     public int id;

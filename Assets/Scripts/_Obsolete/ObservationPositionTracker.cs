@@ -20,12 +20,13 @@ public class ObservationPositionTracker : MonoBehaviour
     private bool isInitialized = false;
     
     /// <summary>
-    /// Initialize the tracker with the map and coordinates
+    /// Initialize the tracker with the map, coordinates, and custom Y offset
     /// </summary>
-    public void Initialize(AbstractMap mapReference, Vector2d coordinates)
+    public void Initialize(AbstractMap mapReference, Vector2d coordinates, float customYOffset = 2f)
     {
         map = mapReference;
         latLng = coordinates;
+        heightOffset = customYOffset; // Use the passed Y offset
         isInitialized = true;
     }
     

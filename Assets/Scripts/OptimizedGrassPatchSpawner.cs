@@ -79,6 +79,14 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
     [Tooltip("Use random seed based on position for consistent placement")]
     public bool deterministicPlacement = true;
     
+    [Header("WebGL Optimization")]
+    [Tooltip("Reduce quality for WebGL builds")]
+    public bool webGLOptimizations = false;
+    
+    [Tooltip("WebGL-specific grass density multiplier")]
+    [Range(0.1f, 1f)]
+    public float webGLDensityScale = 0.7f;
+    
     [Header("Debug")]
     [Tooltip("Show debug logs")]
     public bool debugMode = false;
@@ -122,6 +130,15 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
             enabled = false;
             return;
         }
+        
+        // Auto-enable WebGL optimizations
+#if UNITY_WEBGL && !UNITY_EDITOR
+        webGLOptimizations = true;
+        if (debugMode)
+        {
+            Debug.Log("[OptimizedGrassSpawner] WebGL optimizations auto-enabled");
+        }
+#endif
         
         if (player == null)
         {
@@ -354,7 +371,17 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
         
         // Calculate patches for this chunk based on density
         float chunkArea = chunkSize * chunkSize;
-        int patchCount = Mathf.RoundToInt((chunkArea / 100f) * grassDensity);
+        float effectiveDensity = grassDensity;
+        
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // Apply WebGL optimizations
+        if (webGLOptimizations)
+        {
+            effectiveDensity *= webGLDensityScale;
+        }
+#endif
+        
+        int patchCount = Mathf.RoundToInt((chunkArea / 100f) * effectiveDensity);
         
         List<GameObject> chunkPatches = new List<GameObject>();
         
