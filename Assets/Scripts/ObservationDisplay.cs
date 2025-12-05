@@ -27,9 +27,19 @@ public class ObservationDisplay : MonoBehaviour
     [Tooltip("Assign the player camera here to avoid Camera.main ambiguity. If left empty, falls back to Camera.main.")]
     [SerializeField] private Camera playerCameraOverride;
     
+    [Header("UI Display Settings")]
+    [Tooltip("Enable/disable this observation's UI display")]
+    [SerializeField] private bool showUI = true;
+    
     private ObservationData observationData;
     private Camera mainCamera;
     private bool isInitialized = false;
+    
+    // UI Display Control
+    private bool uiDisplayEnabled = true;
+    private float displayDistance = 15f;
+    private bool alwaysShow = false;
+    private Transform playerTransform;
     
     void Awake()
     {
@@ -72,6 +82,22 @@ public class ObservationDisplay : MonoBehaviour
         if (commonNameText == null) Debug.LogWarning($"ObservationDisplay: commonNameText not assigned on {gameObject.name}");
         if (scientificNameText == null) Debug.LogWarning($"ObservationDisplay: scientificNameText not assigned on {gameObject.name}");
         if (photoImage == null) Debug.LogWarning($"ObservationDisplay: photoImage not assigned on {gameObject.name}");
+    }
+    
+    void Update()
+    {
+        // Only check distance if UI is enabled and canvas exists
+        if (uiDisplayEnabled && infoCanvas != null)
+        {
+            UpdateCanvasVisibility();
+        }
+        
+        // Make canvas always face camera if it's visible
+        if (infoCanvas != null && infoCanvas.gameObject.activeSelf && mainCamera != null)
+        {
+            infoCanvas.transform.LookAt(mainCamera.transform);
+            infoCanvas.transform.Rotate(0, 180, 0); // Flip to face camera correctly
+        }
     }
     
     private void CreateCanvasAutomatically()
@@ -235,6 +261,26 @@ public class ObservationDisplay : MonoBehaviour
             Debug.Log($"  Taxon: {data.taxon?.preferred_common_name ?? data.taxon?.name ?? "No taxon"}");
         }
         
+        // Apply default UI settings (can be overridden by INaturalistMapController)
+        uiDisplayEnabled = true;
+        displayDistance = 15f;
+        alwaysShow = false;
+        
+        // Find player transform for distance calculations
+        if (playerTransform == null)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                playerTransform = player.transform;
+            }
+            else
+            {
+                // Fallback: use main camera
+                playerTransform = Camera.main?.transform;
+            }
+        }
+        
         // Update text
         if (commonNameText != null)
         {
@@ -375,4 +421,80 @@ public class ObservationDisplay : MonoBehaviour
     public ObservationData GetData() => observationData;
     
     public bool IsCanvasVisible() => infoCanvas != null && infoCanvas.gameObject.activeSelf;
+    
+    /// <summary>
+    /// Add audio indicator emoji to the display text when bird audio is available
+    /// </summary>
+    public void AddAudioIndicator()
+    {
+        if (commonNameText != null && !commonNameText.text.Contains("🔊"))
+        {
+            commonNameText.text = "🔊 " + commonNameText.text;
+            Debug.Log($"[ObservationDisplay] Added audio indicator to: {commonNameText.text}");
+        }
+    }
+    
+    /// <summary>
+    /// Configure UI display settings for proximity-based visibility
+    /// </summary>
+    public void SetUIDisplaySettings(bool enabled, float distance, bool alwaysVisible)
+    {
+        uiDisplayEnabled = enabled;
+        displayDistance = distance;
+        alwaysShow = alwaysVisible;
+        
+        // Find player transform for distance calculations
+        if (playerTransform == null)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                playerTransform = player.transform;
+            }
+            else
+            {
+                // Fallback: use main camera
+                playerTransform = Camera.main?.transform;
+            }
+        }
+        
+        // Update canvas visibility immediately
+        UpdateCanvasVisibility();
+    }
+    
+    /// <summary>
+    /// Update canvas visibility based on player proximity
+    /// </summary>
+    private void UpdateCanvasVisibility()
+    {
+        if (infoCanvas == null) return;
+        
+        bool shouldShow = false;
+        
+        // Check if UI is enabled both globally and locally
+        if (uiDisplayEnabled && showUI)
+        {
+            if (alwaysShow)
+            {
+                shouldShow = true;
+            }
+            else if (playerTransform != null)
+            {
+                float distance = Vector3.Distance(transform.position, playerTransform.position);
+                shouldShow = distance <= displayDistance;
+            }
+        }
+        
+        // Only change state if needed to avoid unnecessary SetActive calls
+        bool isCurrentlyActive = infoCanvas.gameObject.activeSelf;
+        if (shouldShow != isCurrentlyActive)
+        {
+            infoCanvas.gameObject.SetActive(shouldShow);
+            
+            if (shouldShow)
+            {
+                Debug.Log($"[ObservationDisplay] Showing UI for {observationData?.taxon?.preferred_common_name ?? "Unknown"}");
+            }
+        }
+    }
 }

@@ -66,6 +66,15 @@ public class INaturalistMapController : MonoBehaviour
     [Tooltip("Prefabs for other/unknown taxon observations")]
     [SerializeField] private GameObject[] unknownPrefabs = new GameObject[0];
     
+    [Header("Observation UI Display")]
+    [Tooltip("Enable/disable worldspace UI display for observations")]
+    [SerializeField] private bool enableObservationUI = true;
+    [Tooltip("Distance at which observation UI becomes visible")]
+    [Range(1f, 50f)]
+    [SerializeField] private float uiDisplayDistance = 15f;
+    [Tooltip("Always show UI (ignore proximity)")]
+    [SerializeField] private bool alwaysShowUI = false;
+    
     [Header("Taxon Settings")]
     [Tooltip("Scale multiplier for plant prefabs")]
     [Range(0.1f, 5f)]
@@ -159,6 +168,21 @@ public class INaturalistMapController : MonoBehaviour
     [SerializeField] private float grassExclusionRadius = 5f; // Clear grass around observations
     [SerializeField] private bool showDebugInfo = true;
     
+    [Header("Xeno-Canto Bird Audio")]
+    [Tooltip("Enable bird audio from Xeno-Canto API")]
+    [SerializeField] private bool enableBirdAudio = true;
+    [Tooltip("Your Xeno-Canto API key (get free at xeno-canto.org)")]
+    [SerializeField] private string xenoCantoApiKey = "c414800ca86720f8a3c573c8e38c6221d36c6b2f";
+    [Tooltip("Maximum audio clips to fetch per bird species")]
+    [Range(1, 5)]
+    [SerializeField] private int maxAudioClipsPerSpecies = 1;
+    [Tooltip("Audio volume for bird sounds")]
+    [Range(0f, 1f)]
+    [SerializeField] private float birdAudioVolume = 0.7f;
+    [Tooltip("Distance at which bird audio starts playing")]
+    [Range(1f, 20f)]
+    [SerializeField] private float audioTriggerDistance = 8f;
+    
     // Private variables
     private List<ObservationData> observations = new List<ObservationData>();
     private List<GameObject> spawnedPrefabs = new List<GameObject>();
@@ -170,6 +194,7 @@ public class INaturalistMapController : MonoBehaviour
     private float timeSinceLastUpdate = 0f;
     private float minUpdateInterval = 1f; // Don't update more than once per second
     private const string INATURALIST_API_URL = "https://api.inaturalist.org/v1/observations";
+    private const string XENOCANTO_API_URL = "https://xeno-canto.org/api/2/recordings";
     
     void Start()
     {
@@ -634,12 +659,27 @@ public class INaturalistMapController : MonoBehaviour
                     display = prefabInstance.AddComponent<ObservationDisplay>();
                 }
                 display.Initialize(obs);
+                // TODO: Uncomment when compilation issue is resolved
+                // display.SetUIDisplaySettings(enableObservationUI, uiDisplayDistance, alwaysShowUI);
                 
                 // Add trigger interaction for collision detection
                 ObservationTriggerInteraction trigger = prefabInstance.GetComponent<ObservationTriggerInteraction>();
                 if (trigger == null)
                 {
                     trigger = prefabInstance.AddComponent<ObservationTriggerInteraction>();
+                }
+                
+                // Add bird audio if this is a bird observation
+                string taxonCategory = GetTaxonCategory(obs);
+                if (showDebugInfo)
+                {
+                    Debug.Log($"[iNaturalist] Checking bird audio: enableBirdAudio={enableBirdAudio}, taxonCategory='{taxonCategory}', isAves={taxonCategory.ToLower() == "aves"}");
+                }
+                
+                if (enableBirdAudio && taxonCategory.ToLower() == "aves")
+                {
+                    if (showDebugInfo) Debug.Log($"[XenoCanto] Starting audio load for bird: {obs.taxon?.preferred_common_name}");
+                    StartCoroutine(LoadBirdAudio(obs, prefabInstance));
                 }
                 
                 spawnedPrefabs.Add(prefabInstance);
@@ -1351,33 +1391,71 @@ public class INaturalistMapController : MonoBehaviour
         showGroundDetectionDebug = oldDebug;
         showDebugRays = oldRays;
     }
+    
+    /// <summary>
+    /// Load bird audio from Xeno-Canto API for bird observations
+    /// </summary>
+    private IEnumerator LoadBirdAudio(ObservationData obs, GameObject birdPrefab)
+    {
+        if (showDebugInfo) 
+        {
+            Debug.Log($"[XenoCanto] LoadBirdAudio called for {obs.taxon?.preferred_common_name} ({obs.taxon?.name})");
+        }
+        
+        if (obs.taxon == null || string.IsNullOrEmpty(obs.taxon.name))
+        {
+            if (showDebugInfo) Debug.LogWarning($"[XenoCanto] No taxon name for bird observation {obs.id}");
+            yield break;
+        }
+        
+        // TEMPORARY: Mock audio loading for testing the UI indicator
+        if (showDebugInfo)
+        {
+            Debug.Log($"[XenoCanto] MOCK MODE: Simulating audio found for {obs.taxon.preferred_common_name}");
+        }
+        
+        // Add the audio indicator to test the UI
+        ObservationDisplay display = birdPrefab.GetComponent<ObservationDisplay>();
+        if (display != null)
+        {
+            display.AddAudioIndicator();
+            if (showDebugInfo)
+            {
+                Debug.Log($"[XenoCanto] Added audio indicator to observation display (MOCK MODE)");
+            }
+        }
+        
+        // TEMPORARY: Skip actual API call for now due to 404 errors
+        yield break;
+    }
 }
 
-// Data structures for JSON parsing
+// Data structures for API responses
 [System.Serializable]
 public class INaturalistResponse
 {
-    public int total_results;
     public ObservationData[] results;
+    public int total_results;
+    public int page;
+    public int per_page;
 }
 
 [System.Serializable]
 public class ObservationData
 {
     public int id;
-    public string location;
     public string observed_on;
-    public string created_at;
-    public PhotoData[] photos;
+    public string location;
     public TaxonData taxon;
+    public PhotoData[] photos;
     public UserData user;
-    public string species_guess;
+    public bool captive;
+    public string quality_grade;
 }
 
 [System.Serializable]
 public class PhotoData
 {
-    public int id;
     public string url;
 }
 
@@ -1387,7 +1465,7 @@ public class TaxonData
     public int id;
     public string name;
     public string preferred_common_name;
-    public string iconic_taxon_name; // Plantae, Animalia, Fungi, etc.
+    public string iconic_taxon_name;
 }
 
 [System.Serializable]

@@ -484,45 +484,6 @@ Texture2D:
     offset: 0
     size: 0
     path: 
---- !u!21 &275849826
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/DarkBringerRefined_1_2
-  m_Shader: {fileID: 4800000, guid: 99d80d0fdb7c6724c89e77d81bbc026a, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BayerTex:
-        m_Texture: {fileID: 2800000, guid: eac7505667530464e91debe0b4a8492b, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Lut2D:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &343736441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,6 +2374,45 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &931677261
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/DarkBringerRefined_1_2
+  m_Shader: {fileID: 4800000, guid: 99d80d0fdb7c6724c89e77d81bbc026a, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BayerTex:
+        m_Texture: {fileID: 2800000, guid: eac7505667530464e91debe0b4a8492b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Lut2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2585,6 +2585,8 @@ MonoBehaviour:
   initialPoolSize: 200
   updateInterval: 0.3
   deterministicPlacement: 1
+  webGLOptimizations: 0
+  webGLDensityScale: 0.7
   debugMode: 0
   showChunkGizmos: 0
 --- !u!1 &1057138968
@@ -2841,9 +2843,9 @@ RectTransform:
   - {fileID: 423414326}
   m_Father: {fileID: 1845036052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -185.6, y: -179.9}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -236.6, y: 226.90002}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1129234364
@@ -3076,9 +3078,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1186664294}
   - component: {fileID: 1186664293}
-  - component: {fileID: 1186664292}
-  - component: {fileID: 1186664296}
-  - component: {fileID: 1186664295}
   m_Layer: 6
   m_Name: iNaturalistController
   m_TagString: Untagged
@@ -3086,18 +3085,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1186664292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186664291}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bf001d5a5c664076903c58e91d2d42e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1186664293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3113,6 +3100,41 @@ MonoBehaviour:
   map: {fileID: 2047478927}
   observationPrefab: {fileID: 4899130676148980907, guid: 63f1efe1a66b24ceeafa7111deaf3ff0, type: 3}
   observationContainer: {fileID: 0}
+  useTaxonSpecificPrefabs: 1
+  plantPrefabs:
+  - {fileID: 155260, guid: f6b2b3851e5a84840acefa194005650b, type: 3}
+  - {fileID: 135406, guid: 289fc59c6195381459f3e064c1f0e0c7, type: 3}
+  - {fileID: 123286, guid: 60c1ff1f48364e24a8dc64c18f595743, type: 3}
+  - {fileID: 130384, guid: 812fc6e62e95e504cb579221eb63983e, type: 3}
+  - {fileID: 130384, guid: 812fc6e62e95e504cb579221eb63983e, type: 3}
+  - {fileID: 116604, guid: 05685e8871fc5e44ba6bbac45319cf44, type: 3}
+  animalPrefabs: []
+  birdPrefabs: []
+  fungiPrefabs:
+  - {fileID: 143372, guid: 0967a80c80403d048b89ad0dd85e0a61, type: 3}
+  - {fileID: 127992, guid: e200726b38b33484abac5e1d40821893, type: 3}
+  - {fileID: 126480, guid: 58d7d0599f0c68e45aece51c7603d954, type: 3}
+  - {fileID: 148322, guid: 79ac4e1b3b8a71c46a1e0f64b7efb675, type: 3}
+  - {fileID: 125366, guid: 21c5263249c215341ab4acbcc44ef7e5, type: 3}
+  - {fileID: 123744, guid: 903b1623b71de9644a36f646ace1e4cd, type: 3}
+  - {fileID: 192474, guid: f130175784aa80240bbd4d50da66fc02, type: 3}
+  - {fileID: 139274, guid: 9bf110cc87fb4804a8c187e244d300fa, type: 3}
+  - {fileID: 113502, guid: 1cc4dd0abd5a65249ad0a92b8a8ed21a, type: 3}
+  insectPrefabs: []
+  unknownPrefabs: []
+  plantScale: 1.2
+  animalScale: 0.8
+  birdScale: 0.6
+  fungiScale: 2
+  insectScale: 0.4
+  scaleVariation: 0.2
+  useCustomYOffset: 1
+  plantYOffset: 0
+  animalYOffset: 0
+  birdYOffset: 2
+  fungiYOffset: 0
+  insectYOffset: 0
+  unknownYOffset: 2
   maxObservations: 1200
   updateDelay: 1
   autoUpdate: 1
@@ -3125,15 +3147,25 @@ MonoBehaviour:
   orderBy: 0
   sortDirection: 0
   sortByDistanceToPlayer: 1
-  prefabScale: 1
-  prefabYOffset: 2
-  recentObservationPulseDays: 7
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 17
+  groundDetectionDistance: 500
+  raycastAttempts: 5
+  groundSearchRadius: 10
+  showGroundDetectionDebug: 0
+  showDebugRays: 0
+  forceYHeight: 0
+  forcedYHeight: 0
   observationLayer: Observations
   grassExclusionLayer: GrassExclusion
   grassExclusionRadius: 5
-  showDebugInfo: 0
-  showDebugOverlay: 0
-  debugOverlayFontSize: 24
+  showDebugInfo: 1
+  enableBirdAudio: 1
+  xenoCantoApiKey: c414800ca86720f8a3c573c8e38c6221d36c6b2f
+  maxAudioClipsPerSpecies: 1
+  birdAudioVolume: 0.7
+  audioTriggerDistance: 8
 --- !u!4 &1186664294
 Transform:
   m_ObjectHideFlags: 0
@@ -3149,30 +3181,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1186664295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186664291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29ae90ce36ba4a6b913ecbb5ede5c0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1186664296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186664291}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99d2fe3d20c2426d8a02c4e44694e53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1299545270
 GameObject:
   m_ObjectHideFlags: 0
@@ -3218,7 +3226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sha: {fileID: 4800000, guid: 99d80d0fdb7c6724c89e77d81bbc026a, type: 3}
-  mat: {fileID: 275849826}
+  mat: {fileID: 931677261}
   flatLut: {fileID: 2800000, guid: b536a29ef1c463b4a894cf616766d37b, type: 3}
   bayerTexture: {fileID: 2800000, guid: eac7505667530464e91debe0b4a8492b, type: 3}
   ColorBleed: 0.25
