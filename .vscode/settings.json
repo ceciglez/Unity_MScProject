@@ -51,5 +51,9 @@
         "temp/": true,
         "Temp/": true
     },
+<<<<<<< HEAD
     "dotnet.defaultSolution": "MapBoxiNaturalistTest_02.sln"
+=======
+    "dotnet.defaultSolution": "Unity_MScProject-main.sln"
+>>>>>>> da2b9a467 (had to load backup file and change location because of iCloud issues)
 }
