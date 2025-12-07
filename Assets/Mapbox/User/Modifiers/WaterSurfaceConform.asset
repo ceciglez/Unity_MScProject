@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WaterSurfaceConform
   m_EditorClassIdentifier: 
   Active: 1
-  heightAboveTerrain: 0.1
+  heightAboveTerrain: 0.24
   conformVerticesToTerrain: 1
-  debugMode: 1
+  debugMode: 0

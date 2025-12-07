@@ -41,7 +41,7 @@ public class StaticMapMinimap : MonoBehaviour
     public int mapHeight = 1024;
     
     [Tooltip("Map zoom level (higher = more zoomed in)")]
-    [Range(10, 18)]
+    [Range(10, 30)]
     public int zoomLevel = 16;
     
     [Tooltip("Radius around player to show in meters (for calculating scale)")]
