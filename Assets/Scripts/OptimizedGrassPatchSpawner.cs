@@ -27,7 +27,7 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
     public GameObject grassPatchPrefab;
     
     [Tooltip("Grass density - patches per 100 square meters")]
-    [Range(0.1f, 5f)]
+    [Range(0.1f, 10f)]
     public float grassDensity = 1f;
     
     [Tooltip("Radius around player to spawn grass (in meters)")]

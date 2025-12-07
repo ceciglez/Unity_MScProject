@@ -13,6 +13,16 @@ public class ObservationDisplay : MonoBehaviour
     [SerializeField] private Text scientificNameText;
     [SerializeField] private RawImage photoImage;
     
+    [Header("Canvas Prefab")]
+    [Tooltip("Drag your custom-designed canvas prefab here. If assigned, this will be used instead of auto-generation.")]
+    [SerializeField] private GameObject canvasPrefab;
+
+    [Header("Interaction Prompt")]
+    [Tooltip("Canvas prefab for the interaction prompt. If not assigned, a simple default will be created.")]
+    [SerializeField] private GameObject interactionPromptPrefab;
+    [Tooltip("Text to display in interaction prompt (only used if no prefab is assigned)")]
+    [SerializeField] private string interactionPromptText = "E, learn more";
+    
     [Header("Canvas Settings")]
     [SerializeField] private Vector3 canvasOffset = new Vector3(0, 2f, 0);
     [SerializeField] private float canvasSize = 0.5f;
@@ -34,6 +44,11 @@ public class ObservationDisplay : MonoBehaviour
     private ObservationData observationData;
     private Camera mainCamera;
     private bool isInitialized = false;
+
+    // Interaction System
+    private Canvas interactionPromptCanvas;
+    private bool playerInRange = false;
+    private bool infoDisplayed = false;
     
     // UI Display Control
     private bool uiDisplayEnabled = true;
@@ -47,11 +62,19 @@ public class ObservationDisplay : MonoBehaviour
         // Use explicit override if assigned, otherwise fall back to Camera.main
         mainCamera = playerCameraOverride != null ? playerCameraOverride : Camera.main;
         
-        // If no canvas assigned, create one automatically
+        // If no canvas assigned, create one
         if (infoCanvas == null)
         {
-            Debug.Log($"ObservationDisplay.Awake: Creating canvas on {gameObject.name}");
-            CreateCanvasAutomatically();
+            if (canvasPrefab != null)
+            {
+                Debug.Log($"ObservationDisplay.Awake: Instantiating custom canvas prefab on {gameObject.name}");
+                CreateCanvasFromPrefab();
+            }
+            else
+            {
+                Debug.Log($"ObservationDisplay.Awake: Creating auto-generated canvas on {gameObject.name}");
+                CreateCanvasAutomatically();
+            }
         }
         
         // Ensure canvas starts hidden immediately
@@ -60,6 +83,9 @@ public class ObservationDisplay : MonoBehaviour
             infoCanvas.gameObject.SetActive(false);
             Debug.Log($"ObservationDisplay.Awake: Canvas created and hidden on {gameObject.name}");
         }
+        
+        // Create interaction prompt
+        CreateInteractionPrompt();
     }
     
     void Start()
@@ -86,6 +112,15 @@ public class ObservationDisplay : MonoBehaviour
     
     void Update()
     {
+        // Handle interaction input when player is in range
+        if (playerInRange && !infoDisplayed)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                ShowInformation();
+            }
+        }
+        
         // Only check distance if UI is enabled and canvas exists
         if (uiDisplayEnabled && infoCanvas != null)
         {
@@ -97,6 +132,13 @@ public class ObservationDisplay : MonoBehaviour
         {
             infoCanvas.transform.LookAt(mainCamera.transform);
             infoCanvas.transform.Rotate(0, 180, 0); // Flip to face camera correctly
+        }
+        
+        // Make interaction prompt face camera
+        if (interactionPromptCanvas != null && interactionPromptCanvas.gameObject.activeSelf && mainCamera != null)
+        {
+            interactionPromptCanvas.transform.LookAt(mainCamera.transform);
+            interactionPromptCanvas.transform.Rotate(0, 180, 0);
         }
     }
     
@@ -217,6 +259,140 @@ public class ObservationDisplay : MonoBehaviour
         Debug.Log($"ObservationDisplay: Canvas UI created on {gameObject.name}");
     }
     
+    private void CreateCanvasFromPrefab()
+    {
+        // Instantiate the prefab
+        GameObject canvasObj = Instantiate(canvasPrefab, transform);
+        canvasObj.transform.localPosition = canvasOffset;
+        
+        // Get the canvas component
+        infoCanvas = canvasObj.GetComponent<Canvas>();
+        if (infoCanvas == null)
+        {
+            Debug.LogError($"ObservationDisplay: Canvas prefab doesn't have Canvas component! Falling back to auto-generation.");
+            CreateCanvasAutomatically();
+            return;
+        }
+        
+        // Configure for world space
+        infoCanvas.renderMode = RenderMode.WorldSpace;
+        canvasObj.transform.localScale = Vector3.one * 0.005f; // Adjust scale as needed
+        
+        // Auto-find UI components by name (you can customize these names)
+        commonNameText = canvasObj.GetComponentInChildren<Text>();
+        if (commonNameText == null)
+        {
+            // Try finding by GameObject name
+            Transform commonNameTransform = canvasObj.transform.Find("CommonName") ?? 
+                                          canvasObj.transform.Find("Panel/CommonName");
+            commonNameText = commonNameTransform?.GetComponent<Text>();
+        }
+        
+        // Find scientific name text (look for italic or name containing "Scientific")
+        Text[] allTexts = canvasObj.GetComponentsInChildren<Text>();
+        foreach (Text text in allTexts)
+        {
+            if (text != commonNameText && 
+                (text.fontStyle == FontStyle.Italic || 
+                 text.gameObject.name.Contains("Scientific")))
+            {
+                scientificNameText = text;
+                break;
+            }
+        }
+        
+        // Find photo image
+        photoImage = canvasObj.GetComponentInChildren<RawImage>();
+        
+        // Log what we found
+        Debug.Log($"ObservationDisplay: Canvas from prefab - CommonName: {commonNameText != null}, " +
+                 $"ScientificName: {scientificNameText != null}, Photo: {photoImage != null}");
+        
+        isInitialized = true;
+    }
+    
+    private void CreateInteractionPrompt()
+    {
+        GameObject promptObj;
+        
+        if (interactionPromptPrefab != null)
+        {
+            // Use custom prefab
+            promptObj = Instantiate(interactionPromptPrefab, transform);
+            promptObj.transform.localPosition = canvasOffset + Vector3.up * 0.5f; // Position above main canvas
+            
+            // Get canvas component from prefab
+            interactionPromptCanvas = promptObj.GetComponent<Canvas>();
+            if (interactionPromptCanvas == null)
+            {
+                Debug.LogError($"ObservationDisplay: Interaction prompt prefab doesn't have Canvas component! Creating fallback.");
+                // Don't create fallback here - just log error and continue without prompt
+                return;
+            }
+            
+            // Configure the prefab canvas for world space
+            interactionPromptCanvas.renderMode = RenderMode.WorldSpace;
+            promptObj.transform.localScale = Vector3.one * 0.003f; // Smaller than main canvas
+            
+            Debug.Log($"ObservationDisplay: Using custom interaction prompt prefab on {gameObject.name}");
+        }
+        else
+        {
+            // Create simple default prompt only if no prefab is assigned
+            promptObj = new GameObject("InteractionPrompt");
+            promptObj.transform.SetParent(transform);
+            
+            interactionPromptCanvas = promptObj.AddComponent<Canvas>();
+            interactionPromptCanvas.renderMode = RenderMode.WorldSpace;
+            
+            // Create simple text
+            GameObject textObj = new GameObject("PromptText");
+            textObj.transform.SetParent(promptObj.transform, false);
+            
+            Text promptText = textObj.AddComponent<Text>();
+            Font defaultFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            if (defaultFont != null) promptText.font = defaultFont;
+            
+            promptText.text = interactionPromptText;
+            promptText.fontSize = 16;
+            promptText.color = Color.yellow;
+            promptText.alignment = TextAnchor.MiddleCenter;
+            
+            // Create background
+            GameObject bgObj = new GameObject("Background");
+            bgObj.transform.SetParent(promptObj.transform, false);
+            bgObj.transform.SetAsFirstSibling();
+            
+            Image bgImage = bgObj.AddComponent<Image>();
+            bgImage.color = new Color(0, 0, 0, 0.7f);
+            
+            // Set sizes
+            RectTransform canvasRect = promptObj.GetComponent<RectTransform>();
+            canvasRect.sizeDelta = new Vector2(200, 50);
+            
+            RectTransform bgRect = bgObj.GetComponent<RectTransform>();
+            bgRect.anchorMin = Vector2.zero;
+            bgRect.anchorMax = Vector2.one;
+            bgRect.offsetMin = Vector2.zero;
+            bgRect.offsetMax = Vector2.zero;
+            
+            RectTransform textRect = textObj.GetComponent<RectTransform>();
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.offsetMin = Vector2.zero;
+            textRect.offsetMax = Vector2.zero;
+            
+            // Configure prompt
+            promptObj.transform.localPosition = canvasOffset + Vector3.up * 0.5f; // Slightly above main canvas
+            promptObj.transform.localScale = Vector3.one * 0.003f; // Smaller than main canvas
+            
+            Debug.Log($"ObservationDisplay: Created default interaction prompt on {gameObject.name}");
+        }
+        
+        // Start hidden
+        promptObj.SetActive(false);
+    }
+    
     void LateUpdate()
     {
         // Make canvas face camera (billboard effect)
@@ -316,9 +492,58 @@ public class ObservationDisplay : MonoBehaviour
             StartCoroutine(LoadPhoto(data.photos[0].url));
         }
         
-        // CRITICAL: Show the canvas after initialization
+        // CRITICAL: Don't auto-show canvas after initialization anymore
+        // ShowCanvas();
+        Debug.Log($"  Canvas ready but hidden - waiting for player interaction");
+    }
+    
+    private void ShowInformation()
+    {
+        infoDisplayed = true;
+        
+        // Hide interaction prompt
+        if (interactionPromptCanvas != null)
+        {
+            interactionPromptCanvas.gameObject.SetActive(false);
+        }
+        
+        // Show full information canvas
         ShowCanvas();
-        Debug.Log($"  Canvas shown after initialization");
+        
+        Debug.Log($"ObservationDisplay: Showing information for {observationData?.taxon?.preferred_common_name ?? "Unknown"}");
+    }
+    
+    /// <summary>
+    /// Called when player enters interaction range
+    /// </summary>
+    public void OnPlayerEnterRange()
+    {
+        playerInRange = true;
+        
+        if (!infoDisplayed && interactionPromptCanvas != null)
+        {
+            interactionPromptCanvas.gameObject.SetActive(true);
+            Debug.Log($"ObservationDisplay: Player entered range - showing interaction prompt");
+        }
+    }
+    
+    /// <summary>
+    /// Called when player exits interaction range
+    /// </summary>
+    public void OnPlayerExitRange()
+    {
+        playerInRange = false;
+        infoDisplayed = false;
+        
+        // Hide both prompt and information
+        if (interactionPromptCanvas != null)
+        {
+            interactionPromptCanvas.gameObject.SetActive(false);
+        }
+        
+        HideCanvas();
+        
+        Debug.Log($"ObservationDisplay: Player exited range - hiding all UI");
     }
     
     private IEnumerator LoadPhoto(string photoUrl)

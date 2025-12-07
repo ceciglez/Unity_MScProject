@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 using Mapbox.Unity.Map;
 using Mapbox.Utils;
 using Mapbox.Unity.Utilities;
-using StylizedGrass; // For grass masking
+// using StylizedGrass; // DISABLED - For grass masking
 
 /// <summary>
 /// iNaturalist API quality grades
@@ -754,11 +754,12 @@ public class INaturalistMapController : MonoBehaviour
         }
         
         // Method 1: Use GrassMaskingSphere for Stylized Grass Shader compatibility
-        var grassMasking = exclusionZone.AddComponent<StylizedGrass.GrassMaskingSphere>();
-        if (grassMasking != null)
-        {
-            grassMasking.radius = radius;
-        }
+        // DISABLED: Grass shader removed
+        // var grassMasking = exclusionZone.AddComponent<StylizedGrass.GrassMaskingSphere>();
+        // if (grassMasking != null)
+        // {
+        //     grassMasking.radius = radius;
+        // }
         
         // Method 2: Add sphere collider for physics-based detection
         SphereCollider exclusionCollider = exclusionZone.AddComponent<SphereCollider>();

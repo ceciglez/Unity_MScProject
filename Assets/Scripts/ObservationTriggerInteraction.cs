@@ -59,8 +59,8 @@ public class ObservationTriggerInteraction : MonoBehaviour
         {
             playerNearby = true;
             playerTransform = other.transform;
-            Debug.Log($"ObservationTriggerInteraction: Player detected! Showing canvas on {gameObject.name}");
-            ShowCanvas();
+            Debug.Log($"ObservationTriggerInteraction: Player detected! Showing interaction prompt on {gameObject.name}");
+            ShowInteractionPrompt();
         }
         else
         {
@@ -74,8 +74,8 @@ public class ObservationTriggerInteraction : MonoBehaviour
         {
             playerNearby = false;
             playerTransform = null;
-            Debug.Log($"ObservationTriggerInteraction: Player exited trigger. Hiding canvas on {gameObject.name}");
-            HideCanvas();
+            Debug.Log($"ObservationTriggerInteraction: Player exited trigger. Hiding UI on {gameObject.name}");
+            HideInteractionPrompt();
         }
     }
     
@@ -88,7 +88,7 @@ public class ObservationTriggerInteraction : MonoBehaviour
             
             if (distance > hideDistance)
             {
-                HideCanvas();
+                observationDisplay.OnPlayerExitRange();
             }
         }
     }
@@ -113,19 +113,19 @@ public class ObservationTriggerInteraction : MonoBehaviour
         return false;
     }
     
-    private void ShowCanvas()
+    private void ShowInteractionPrompt()
     {
         if (observationDisplay != null)
         {
-            observationDisplay.ShowCanvas();
+            observationDisplay.OnPlayerEnterRange();
         }
     }
     
-    private void HideCanvas()
+    private void HideInteractionPrompt()
     {
         if (observationDisplay != null)
         {
-            //observationDisplay.HideCanvas();
+            observationDisplay.OnPlayerExitRange();
         }
     }
     
