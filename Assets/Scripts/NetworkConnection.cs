@@ -77,18 +77,9 @@ public class NetworkConnection : MonoBehaviour
             float t = i / (float)(curveResolution - 1);
             Vector3 interpolatedPos = Vector3.Lerp(start, end, t);
             
-            // Raycast down to find terrain height, ignoring observation prefabs
-            int terrainLayerMask = ~(1 << LayerMask.NameToLayer("Network")); // Ignore Network layer
-            if (Physics.Raycast(interpolatedPos + Vector3.up * 100f, Vector3.down, out RaycastHit hit, 200f, terrainLayerMask))
-            {
-                // Use the terrain hit point, not the observation prefab position
-                curvePoints[i] = hit.point + Vector3.up * terrainOffset;
-            }
-            else
-            {
-                // Fallback: use interpolated position at terrain offset height
-                curvePoints[i] = new Vector3(interpolatedPos.x, 0f, interpolatedPos.z) + Vector3.up * terrainOffset;
-            }
+            // Get terrain height using the same method as other spawners
+            Vector3 terrainPos = GetTerrainPosition(interpolatedPos);
+            curvePoints[i] = terrainPos + Vector3.up * terrainOffset;
         }
         
         lineRenderer.positionCount = curveResolution;
@@ -106,6 +97,71 @@ public class NetworkConnection : MonoBehaviour
         
         float distance = Vector3.Distance(start, end);
         Debug.Log($"[NetworkConnection] Terrain-following line created: {start} to {end}, distance: {distance:F1}m, points: {curveResolution}, offset: {terrainOffset}m");
+    }
+    
+    /// <summary>
+    /// Get terrain position using multiple raycast strategies (same as OptimizedGrassPatchSpawner)
+    /// </summary>
+    private Vector3 GetTerrainPosition(Vector3 worldPos)
+    {
+        float raycastDistance = 200f;
+        
+        // Strategy 1: Raycast from above - try with specific terrain layers first
+        RaycastHit hit;
+        Vector3 rayStart = new Vector3(worldPos.x, worldPos.y + 100f, worldPos.z);
+        
+        // Try terrain-specific layers first (if any defined)
+        int terrainOnlyMask = LayerMask.GetMask("Default", "Terrain"); // Common terrain layers
+        if (terrainOnlyMask != 0)
+        {
+            if (Physics.Raycast(rayStart, Vector3.down, out hit, raycastDistance, terrainOnlyMask))
+            {
+                return hit.point;
+            }
+        }
+        
+        // Strategy 2: Raycast against everything EXCEPT known non-terrain layers
+        int excludeMask = LayerMask.GetMask("UI", "Water", "TransparentFX", "Network");
+        int allExceptExcluded = ~excludeMask;
+        if (Physics.Raycast(rayStart, Vector3.down, out hit, raycastDistance, allExceptExcluded))
+        {
+            // Skip objects that are clearly not terrain (observation prefabs, etc.)
+            if (hit.collider.gameObject.name.ToLower().Contains("observation") || 
+                hit.collider.gameObject.name.ToLower().Contains("prefab"))
+            {
+                // Continue raycast from this hit point to find terrain underneath
+                Vector3 continueStart = hit.point + Vector3.down * 0.1f;
+                if (Physics.Raycast(continueStart, Vector3.down, out RaycastHit terrainHit, raycastDistance, allExceptExcluded))
+                {
+                    return terrainHit.point;
+                }
+            }
+            else
+            {
+                return hit.point;
+            }
+        }
+        
+        // Strategy 3: Multiple raycasts around the position
+        for (int i = 0; i < 4; i++)
+        {
+            float angle = (90f * i) * Mathf.Deg2Rad;
+            float searchRadius = 2f;
+            Vector3 offset = new Vector3(
+                Mathf.Cos(angle) * searchRadius,
+                0f,
+                Mathf.Sin(angle) * searchRadius
+            );
+            
+            Vector3 searchStart = rayStart + offset;
+            if (Physics.Raycast(searchStart, Vector3.down, out hit, raycastDistance, allExceptExcluded))
+            {
+                return hit.point;
+            }
+        }
+        
+        // Fallback: use ground level
+        return new Vector3(worldPos.x, 0f, worldPos.z);
     }
 
     public void SetActive(bool active)
