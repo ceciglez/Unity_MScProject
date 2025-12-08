@@ -85,8 +85,8 @@ public class ObservationNetworkManager : MonoBehaviour
         container.transform.SetParent(transform);
         connectionContainer = container.transform;
         
-        // Create UI (but don't require it for testing)
-        CreateNetworkUI();
+        // DISABLED: Create UI (but don't require it for testing)
+        // CreateNetworkUI();
         
         // Initialize connection pool
         InitializeConnectionPool();
@@ -106,8 +106,8 @@ public class ObservationNetworkManager : MonoBehaviour
             Debug.Log("[ObservationNetworkManager] Initialized network manager - WAITING FOR PLAYER INTERACTION");
         }
         
-        // Create a simple test line to verify LineRenderer works
-        CreateTestLine();
+        // DISABLED: Create a simple test line to verify LineRenderer works
+        // CreateTestLine();
         
         // Also create a GameObject-based test line for comparison
         // CreateGameObjectTestLine(); // DISABLED - no more spheres
@@ -517,16 +517,16 @@ public class ObservationNetworkManager : MonoBehaviour
         
         Debug.Log($"[ObservationNetworkManager] CreateConnections finished. Created {connectionsCreated} connections total.");
         
-        // DEBUGGING: Create a visible test line at the same position as first connection
-        if (activeConnections.Count > 0 && activeConnections[0] != null)
-        {
-            Vector3[] points = activeConnections[0].GetConnectionPoints();
-            if (points.Length >= 2)
-            {
-                CreateVisibleTestLineAtPosition(points[0], points[1]);
-                Debug.Log($"[ObservationNetworkManager] Created visible test line at connection position: {points[0]} to {points[1]}");
-            }
-        }
+        // DISABLED: DEBUGGING: Create a visible test line at the same position as first connection
+        // if (activeConnections.Count > 0 && activeConnections[0] != null)
+        // {
+        //     Vector3[] points = activeConnections[0].GetConnectionPoints();
+        //     if (points.Length >= 2)
+        //     {
+        //         CreateVisibleTestLineAtPosition(points[0], points[1]);
+        //         Debug.Log($"[ObservationNetworkManager] Created visible test line at connection position: {points[0]} to {points[1]}");
+        //     }
+        // }
     }
     
     private List<ObservationDisplay> GetNearbyObservations(ObservationDisplay centerObs, List<ObservationDisplay> allObs)
@@ -905,8 +905,8 @@ public class ObservationNetworkManager : MonoBehaviour
             // Create a guaranteed visible test line between first two observations
             Vector3 pos1 = allObservations[0].transform.position + Vector3.up * 10f;
             Vector3 pos2 = allObservations[1].transform.position + Vector3.up * 10f;
-            CreateVisibleTestLineAtPosition(pos1, pos2);
-            Debug.Log($"[ObservationNetworkManager] MANUAL TRIGGER: Created guaranteed GREEN test line between observations!");
+            // DISABLED: CreateVisibleTestLineAtPosition(pos1, pos2);
+            Debug.Log($"[ObservationNetworkManager] MANUAL TRIGGER: Test line creation disabled - using real network connections only!");
         }
         else
         {
