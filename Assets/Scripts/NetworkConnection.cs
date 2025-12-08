@@ -30,16 +30,36 @@ public class NetworkConnection : MonoBehaviour
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
         
-        // Create transparent material using Unlit shader (better for transparency)
-        Material lineMaterial = new Material(Shader.Find("Unlit/Transparent"));
+        // Create transparent material using reliable Sprites/Default shader
+        Material lineMaterial = new Material(Shader.Find("Sprites/Default"));
         lineMaterial.color = new Color(0f, 1f, 1f, lineOpacity); // Cyan with custom opacity
+        
+        // Simple transparency setup
+        lineMaterial.SetFloat("_Mode", 2); // Fade mode
+        lineMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        lineMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        lineMaterial.SetInt("_ZWrite", 0);
+        lineMaterial.DisableKeyword("_ALPHATEST_ON");
+        lineMaterial.EnableKeyword("_ALPHABLEND_ON");
+        lineMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        lineMaterial.renderQueue = 3000; // Standard transparent queue
         
         lineRenderer.material = lineMaterial;
         lineRenderer.useWorldSpace = true;
         lineRenderer.allowOcclusionWhenDynamic = false;
-        lineRenderer.sortingOrder = 1000;
         
-        Debug.Log($"[NetworkConnection] Created terrain-following LineRenderer with width: {lineWidth}, opacity: {lineOpacity}");
+        // Set rendering order to be behind other objects but still visible
+        lineRenderer.sortingOrder = -10; // Less negative to ensure visibility
+        lineRenderer.sortingLayerName = "Default"; // Use default layer for now
+        
+        // Disable shadows to prevent lines from casting/receiving shadows
+        lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        lineRenderer.receiveShadows = false;
+        
+        // Set the GameObject layer to Network
+        gameObject.layer = LayerMask.NameToLayer("Network");
+        
+        Debug.Log($"[NetworkConnection] Created terrain-following LineRenderer with width: {lineWidth}, opacity: {lineOpacity}, layer: Network, sortingOrder: -100");
     }
 
     
@@ -57,15 +77,17 @@ public class NetworkConnection : MonoBehaviour
             float t = i / (float)(curveResolution - 1);
             Vector3 interpolatedPos = Vector3.Lerp(start, end, t);
             
-            // Raycast down to find terrain height
-            if (Physics.Raycast(interpolatedPos + Vector3.up * 100f, Vector3.down, out RaycastHit hit, 200f))
+            // Raycast down to find terrain height, ignoring observation prefabs
+            int terrainLayerMask = ~(1 << LayerMask.NameToLayer("Network")); // Ignore Network layer
+            if (Physics.Raycast(interpolatedPos + Vector3.up * 100f, Vector3.down, out RaycastHit hit, 200f, terrainLayerMask))
             {
+                // Use the terrain hit point, not the observation prefab position
                 curvePoints[i] = hit.point + Vector3.up * terrainOffset;
             }
             else
             {
-                // Fallback if no terrain hit
-                curvePoints[i] = interpolatedPos + Vector3.up * terrainOffset;
+                // Fallback: use interpolated position at terrain offset height
+                curvePoints[i] = new Vector3(interpolatedPos.x, 0f, interpolatedPos.z) + Vector3.up * terrainOffset;
             }
         }
         
