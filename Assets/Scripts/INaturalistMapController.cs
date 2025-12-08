@@ -369,7 +369,7 @@ public class INaturalistMapController : MonoBehaviour
         int requestLimit = sortByDistanceToPlayer ? 200 : maxObservations; // Always use 200 when sorting by distance
         string url = BuildApiUrl(swlng, swlat, nelng, nelat, requestLimit);
         
-        if (showDebugInfo) 
+        if (showDebugInfo)
         {
             Debug.Log($"[iNaturalist] === API REQUEST DEBUG ===");
             Debug.Log($"[iNaturalist] Player/Query center: Lat {queryCenter.x:F6}, Lng {queryCenter.y:F6}");
@@ -380,11 +380,97 @@ public class INaturalistMapController : MonoBehaviour
             Debug.Log($"[iNaturalist] {url}");
             Debug.Log($"[iNaturalist] === MAKING REQUEST ===");
         }
-        
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        Debug.Log("[iNaturalist] Using WebGL JavaScript bridge for API call");
+
+        // Use JavaScript bridge in WebGL builds
+        bool requestComplete = false;
+        string responseData = null;
+        string fetchError = null;
+
+        WebGLNetworkBridge.Instance.FetchJSON(
+            url,
+            (data) => {
+                // Success callback
+                Debug.Log($"[iNaturalist] API fetch successful, data length: {data.Length}");
+                responseData = data;
+                requestComplete = true;
+            },
+            (error) => {
+                // Error callback
+                Debug.LogError($"[iNaturalist] API fetch failed: {error}");
+                Debug.LogError("[iNaturalist] WEBGL TROUBLESHOOTING:");
+                Debug.LogError("  1. Check browser console (F12) for CORS or network errors");
+                Debug.LogError("  2. Ensure you're using a local server (not file://)");
+                Debug.LogError("  3. Check if ad blocker is blocking iNaturalist");
+                Debug.LogError("  4. Try disabling all browser extensions");
+                Debug.LogError("  5. Try in incognito/private browsing mode");
+                Debug.LogError("  6. iNaturalist API might be rate-limited");
+                fetchError = error;
+                requestComplete = true;
+            }
+        );
+
+        // Wait for JavaScript callback
+        while (!requestComplete)
+        {
+            yield return null;
+        }
+
+        if (responseData != null)
+        {
+            try
+            {
+                if (showDebugInfo)
+                {
+                    Debug.Log($"[iNaturalist] === API RESPONSE DEBUG ===");
+                    Debug.Log($"[iNaturalist] Response size: {responseData.Length} characters");
+
+                    string responseStart = responseData.Length > 1000 ?
+                        responseData.Substring(0, 1000) + "..." :
+                        responseData;
+                    Debug.Log($"[iNaturalist] Response start: {responseStart}");
+
+                    if (responseData.Contains("total_results"))
+                    {
+                        var match = System.Text.RegularExpressions.Regex.Match(
+                            responseData, @"""total_results"":([0-9]+)");
+                        if (match.Success)
+                        {
+                            Debug.Log($"[iNaturalist] Raw total_results from API: {match.Groups[1].Value}");
+                        }
+                    }
+                }
+
+                INaturalistResponse response = JsonUtility.FromJson<INaturalistResponse>(responseData);
+
+                if (showDebugInfo)
+                {
+                    Debug.Log($"[iNaturalist] API returned {response.results?.Length ?? 0} total observations, total_results: {response.total_results}");
+                    Debug.Log($"[iNaturalist] Current filters: requirePhotos={requirePhotos}, includeCaptive={includeCaptive}, qualityGrades=[{string.Join(",", qualityGrades)}]");
+                }
+
+                ProcessObservations(response);
+                SpawnObservationPrefabs();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error parsing iNaturalist data: {e.Message}");
+            }
+        }
+        else
+        {
+            Debug.LogError($"[iNaturalist] No data received, error: {fetchError}");
+        }
+#else
+        Debug.Log("[iNaturalist] Using UnityWebRequest (Editor mode)");
+
+        // Use UnityWebRequest in Editor
+        using (UnityWebRequest request = WebGLCorsHelper.CreateCorsRequest(url))
         {
             yield return request.SendWebRequest();
-            
+
             if (request.result == UnityWebRequest.Result.Success)
             {
                 try
@@ -394,33 +480,15 @@ public class INaturalistMapController : MonoBehaviour
                         Debug.Log($"[iNaturalist] === API RESPONSE DEBUG ===");
                         Debug.Log($"[iNaturalist] Response code: {request.responseCode}");
                         Debug.Log($"[iNaturalist] Response size: {request.downloadHandler.text.Length} characters");
-                        
-                        // Log first part of response to see structure
-                        string responseStart = request.downloadHandler.text.Length > 1000 ? 
-                            request.downloadHandler.text.Substring(0, 1000) + "..." : 
-                            request.downloadHandler.text;
-                        Debug.Log($"[iNaturalist] Response start: {responseStart}");
-                        
-                        // Try to extract total_results before parsing
-                        if (request.downloadHandler.text.Contains("total_results"))
-                        {
-                            var match = System.Text.RegularExpressions.Regex.Match(
-                                request.downloadHandler.text, @"""total_results"":([0-9]+)");
-                            if (match.Success)
-                            {
-                                Debug.Log($"[iNaturalist] Raw total_results from API: {match.Groups[1].Value}");
-                            }
-                        }
                     }
-                    
+
                     INaturalistResponse response = JsonUtility.FromJson<INaturalistResponse>(request.downloadHandler.text);
-                    
+
                     if (showDebugInfo)
                     {
-                        Debug.Log($"[iNaturalist] API returned {response.results?.Length ?? 0} total observations, total_results: {response.total_results}");
-                        Debug.Log($"[iNaturalist] Current filters: requirePhotos={requirePhotos}, includeCaptive={includeCaptive}, qualityGrades=[{string.Join(",", qualityGrades)}]");
+                        Debug.Log($"[iNaturalist] API returned {response.results?.Length ?? 0} total observations");
                     }
-                    
+
                     ProcessObservations(response);
                     SpawnObservationPrefabs();
                 }
@@ -431,17 +499,12 @@ public class INaturalistMapController : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"[iNaturalist] === API REQUEST FAILED ===");
-                Debug.LogError($"[iNaturalist] Error: {request.error}");
-                Debug.LogError($"[iNaturalist] Response Code: {request.responseCode}");
-                Debug.LogError($"[iNaturalist] URL: {url}");
-                if (!string.IsNullOrEmpty(request.downloadHandler?.text))
-                {
-                    Debug.LogError($"[iNaturalist] Response body: {request.downloadHandler.text}");
-                }
+                Debug.LogError($"[iNaturalist] API REQUEST FAILED: {request.error}");
+                WebGLCorsHelper.LogRequestError(request, "iNaturalist API");
             }
         }
-        
+#endif
+
         isLoading = false;
     }
 

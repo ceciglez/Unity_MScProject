@@ -1,0 +1,137 @@
+================================================================================
+                    WEBGL BUILD SETTINGS CHECKLIST
+              (Print this and check off before building!)
+================================================================================
+
+BEFORE BUILDING - VERIFY THESE SETTINGS IN UNITY:
+================================================================================
+
+Edit → Project Settings → Player → WebGL Settings
+--------------------------------------------------
+
+OTHER SETTINGS → CONFIGURATION:
+  [ ] Scripting Backend: IL2CPP (MUST be IL2CPP, NOT Mono)
+  [ ] API Compatibility Level: .NET Standard 2.1
+  [ ] Managed Stripping Level: Minimal (NOT Medium or High!)
+
+PUBLISHING SETTINGS:
+  [ ] Compression Format: Gzip (or Disabled)
+  [ ] Enable Exceptions: None (or Explicitly Thrown for debugging)
+  [ ] Data Caching: ✓ CHECKED
+  [ ] Decompression Fallback: ✓ CHECKED
+  [ ] Initial Memory Size: 512 MB (minimum)
+  [ ] Maximum Memory Size: 2048 MB (default)
+
+CODE OPTIMIZATION:
+  [ ] C++ Compiler Configuration: Master (for production) or Release (for testing)
+  [ ] Code Optimization: Runtime Speed (recommended)
+
+FILE VERIFICATION:
+  [ ] Assets/Plugins/WebGL/WebGLNetworking.jslib exists
+  [ ] Assets/Scripts/WebGLNetworkBridge.cs exists
+  [ ] Assets/Scripts/WebGLCorsHelper.cs exists
+  [ ] Assets/Scripts/StaticMapMinimap.cs modified
+  [ ] Assets/Scripts/INaturalistMapController.cs modified
+
+================================================================================
+BUILDING IN UNITY:
+================================================================================
+
+File → Build Settings → WebGL
+------------------------------
+
+  [ ] Platform: WebGL (switch if needed)
+  [ ] Scenes In Build: Your main scene is at index 0
+  [ ] Development Build: ✓ CHECKED (for testing) or ✗ UNCHECKED (for production)
+
+  [ ] Click "Build" (NOT "Build and Run")
+  [ ] Choose output folder
+  [ ] Wait 10-30 minutes for build to complete
+
+================================================================================
+AFTER BUILDING - TESTING:
+================================================================================
+
+START LOCAL WEB SERVER:
+  [ ] Open terminal/command prompt
+  [ ] Navigate to build folder: cd YourBuildFolder
+  [ ] Run: python3 -m http.server 8000
+  [ ] Keep terminal open
+
+OPEN IN BROWSER:
+  [ ] Open Chrome (or any browser)
+  [ ] Go to: http://localhost:8000 (NOT file://)
+  [ ] Open Browser Console: Press F12
+
+CHECK CONSOLE LOGS:
+  [ ] Look for: [WebGLNetworking] Fetching texture from: https://api.mapbox.com/...
+  [ ] Look for: [WebGLNetworking] Texture response status: 200
+  [ ] Look for: [StaticMapMinimap] Map loaded successfully via WebGL bridge!
+  [ ] Look for: [WebGLNetworking] Fetching JSON from: https://api.inaturalist.org/...
+  [ ] Look for: [iNaturalist] API fetch successful
+
+VERIFY FUNCTIONALITY:
+  [ ] Minimap appears in UI
+  [ ] Minimap updates as player moves
+  [ ] iNaturalist observations spawn in world (3D models)
+  [ ] No red CORS errors in console
+
+================================================================================
+IF SOMETHING ISN'T WORKING:
+================================================================================
+
+FIRST STEPS:
+  [ ] Clear browser cache: Ctrl+Shift+Delete (Windows) or Cmd+Shift+Delete (Mac)
+  [ ] Or use Incognito/Private browsing mode
+  [ ] Hard reload page: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
+
+STILL NOT WORKING:
+  [ ] Check if Managed Stripping Level is "Minimal" (NOT High)
+  [ ] Verify using local server (http://localhost, NOT file://)
+  [ ] Check browser console for specific error messages
+  [ ] Try different browser (Chrome, Firefox, Safari)
+  [ ] Disable ad blocker and browser extensions
+  [ ] Rebuild Unity project from scratch
+
+READ DOCUMENTATION:
+  [ ] WEBGL_QUICK_START.md - Quick guide
+  [ ] CHROME_WEBGL_FIX.md - Complete technical documentation
+  [ ] WEBGL_BUILD_SETTINGS.md - Detailed settings explanation
+
+================================================================================
+COMMON MISTAKES TO AVOID:
+================================================================================
+
+❌ Opening index.html directly (file://) - MUST use local server!
+❌ Managed Stripping Level set to "High" - Breaks JavaScript bridge!
+❌ Compression Format set to "Brotli" - Not all servers support it!
+❌ Forgetting to rebuild after adding fix files
+❌ Testing with old cached version - Clear cache!
+❌ Initial Memory too low (<256 MB) - Set to 512+ MB!
+❌ Using .NET Framework instead of .NET Standard 2.1
+
+================================================================================
+SUCCESS INDICATORS:
+================================================================================
+
+✅ Build completes without errors (10-30 minutes)
+✅ Browser console shows [WebGLNetworking] messages
+✅ Minimap appears and updates
+✅ Observations spawn in world
+✅ No CORS errors (red messages about "Cross-Origin")
+✅ Both Mapbox and iNaturalist APIs working
+
+IF ALL CHECKED: YOU'RE DONE! 🎉
+
+================================================================================
+NOTES:
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+________________________________________________________________________________
+
+Date Built: _______________________
+Build Size: _______________________
+Load Time: ________________________
+Tested Browsers: __________________

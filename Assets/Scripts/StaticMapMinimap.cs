@@ -239,77 +239,133 @@ public class StaticMapMinimap : MonoBehaviour
     private IEnumerator FetchStaticMap(Vector2d center)
     {
         isLoadingMap = true;
-        
+
         // Validate coordinates
-        if (double.IsNaN(center.x) || double.IsNaN(center.y) || 
+        if (double.IsNaN(center.x) || double.IsNaN(center.y) ||
             center.x < -90 || center.x > 90 || center.y < -180 || center.y > 180)
         {
             Debug.LogError($"[StaticMapMinimap] Invalid coordinates: {center.x}, {center.y}");
             isLoadingMap = false;
             yield break;
         }
-        
+
         // Ensure dimensions are valid (must be between 1-1280)
         int validWidth = Mathf.Clamp(mapWidth, 1, 1280);
         int validHeight = Mathf.Clamp(mapHeight, 1, 1280);
         int validZoom = Mathf.Clamp(zoomLevel, 0, 22);
-        
+
         // Build Mapbox Static Images API URL
-        // Format: https://api.mapbox.com/styles/v1/{username}/{style_id}/static/{lon},{lat},{zoom}/{width}x{height}?access_token={token}
         string url = $"https://api.mapbox.com/styles/v1/mapbox/{mapStyle}/static/" +
                      $"{center.y:F6},{center.x:F6},{validZoom}/{validWidth}x{validHeight}" +
                      $"?access_token={mapboxAccessToken}";
-        
+
         if (debugMode)
         {
             Debug.Log($"[StaticMapMinimap] Fetching map: Lat={center.x:F6}, Lon={center.y:F6}, Zoom={validZoom}");
             Debug.Log($"[StaticMapMinimap] URL: {url}");
         }
-        
-        using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(url))
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        Debug.Log("[StaticMapMinimap] Using WebGL JavaScript bridge for texture fetch");
+
+        // Use JavaScript bridge in WebGL builds
+        bool requestComplete = false;
+        Texture2D fetchedTexture = null;
+
+        WebGLNetworkBridge.Instance.FetchTexture(
+            url,
+            (base64Data) => {
+                // Success callback
+                Debug.Log($"[StaticMapMinimap] Texture fetch successful, converting from base64");
+                fetchedTexture = WebGLNetworkBridge.Base64ToTexture(base64Data);
+                requestComplete = true;
+            },
+            (error) => {
+                // Error callback
+                Debug.LogError($"[StaticMapMinimap] Texture fetch failed: {error}");
+                Debug.LogError("[StaticMapMinimap] WEBGL TROUBLESHOOTING:");
+                Debug.LogError("  1. Check browser console (F12) for CORS or network errors");
+                Debug.LogError("  2. Ensure you're using a local server (not file://)");
+                Debug.LogError("  3. Verify Mapbox access token is valid");
+                Debug.LogError("  4. Check if ad blocker is blocking Mapbox");
+                Debug.LogError("  5. Try in incognito/private browsing mode");
+                requestComplete = true;
+            }
+        );
+
+        // Wait for JavaScript callback
+        while (!requestComplete)
+        {
+            yield return null;
+        }
+
+        if (fetchedTexture != null)
+        {
+            currentMapTexture = fetchedTexture;
+            minimapImage.texture = currentMapTexture;
+
+            // Store the center coordinates for this map
+            mapCenterCoords = center;
+
+            // Reset the map image position to center
+            RectTransform mapRect = minimapImage.GetComponent<RectTransform>();
+            if (mapRect != null)
+            {
+                mapRect.anchoredPosition = Vector2.zero;
+            }
+
+            // Calculate meters per pixel
+            double earthCircumference = 40075017.0;
+            double latitudeRadians = center.x * Mathf.Deg2Rad;
+            float baseMetersPerPixel = (float)(earthCircumference * Mathf.Cos((float)latitudeRadians) / (256.0 * Mathf.Pow(2, validZoom)));
+            metersPerPixel = baseMetersPerPixel * scaleMultiplier;
+
+            if (debugMode)
+            {
+                Debug.Log($"[StaticMapMinimap] Map loaded successfully via WebGL bridge!");
+                Debug.Log($"[StaticMapMinimap] Center: {center.x:F6}, {center.y:F6}");
+                Debug.Log($"[StaticMapMinimap] Meters/pixel: {metersPerPixel:F3}");
+            }
+        }
+#else
+        Debug.Log("[StaticMapMinimap] Using UnityWebRequest (Editor mode)");
+
+        // Use UnityWebRequest in Editor
+        using (UnityWebRequest request = WebGLCorsHelper.CreateCorsTextureRequest(url))
         {
             yield return request.SendWebRequest();
-            
+
             if (request.result == UnityWebRequest.Result.Success)
             {
                 currentMapTexture = DownloadHandlerTexture.GetContent(request);
                 minimapImage.texture = currentMapTexture;
-                
-                // Store the center coordinates for this map
+
                 mapCenterCoords = center;
-                
-                // Reset the map image position to center when loading new map
+
                 RectTransform mapRect = minimapImage.GetComponent<RectTransform>();
                 if (mapRect != null)
                 {
                     mapRect.anchoredPosition = Vector2.zero;
                 }
-                
-                // Calculate meters per pixel for this zoom level
-                // Formula: metersPerPixel = (Earth circumference * cos(latitude)) / (256 * 2^zoom)
-                // This gives meters per pixel at the standard 256x256 tile size
-                // Since our image is larger (e.g., 1024x1024), the scale is the same
-                double earthCircumference = 40075017.0; // meters at equator
+
+                double earthCircumference = 40075017.0;
                 double latitudeRadians = center.x * Mathf.Deg2Rad;
                 float baseMetersPerPixel = (float)(earthCircumference * Mathf.Cos((float)latitudeRadians) / (256.0 * Mathf.Pow(2, validZoom)));
-                
-                // Apply manual scale multiplier for calibration
                 metersPerPixel = baseMetersPerPixel * scaleMultiplier;
-                
+
                 if (debugMode)
                 {
-                    Debug.Log($"[StaticMapMinimap] Map loaded successfully. Center: {center.x:F6}, {center.y:F6}");
-                    Debug.Log($"[StaticMapMinimap] Base meters/pixel: {baseMetersPerPixel:F3}, Multiplier: {scaleMultiplier:F2}, Final: {metersPerPixel:F3}");
-                    Debug.Log($"[StaticMapMinimap] Zoom: {validZoom}, Latitude: {center.x:F2}°");
-                    Debug.Log($"[StaticMapMinimap] Map image reset to center (0, 0)");
+                    Debug.Log($"[StaticMapMinimap] Map loaded successfully");
                 }
             }
             else
             {
                 Debug.LogError($"[StaticMapMinimap] Failed to load map: {request.error}");
+                WebGLCorsHelper.LogRequestError(request, "Minimap Load");
             }
         }
-        
+#endif
+
         isLoadingMap = false;
     }
     

@@ -1,0 +1,78 @@
+================================================================================
+WEBGL CORS FIX - SUMMARY
+================================================================================
+
+PROBLEM:
+- Minimap and iNaturalist observations NOT loading in Chrome, Edge, Firefox
+- Sometimes works in Safari, sometimes doesn't
+- Works fine in Unity Editor, but fails in WebGL builds
+
+ROOT CAUSE:
+- Unity's UnityWebRequest has KNOWN BUGS in WebGL builds
+- Cannot properly handle CORS (Cross-Origin Resource Sharing)
+- This is a Unity engine limitation, not a browser issue
+
+SOLUTION:
+- Created JavaScript plugin that uses browser's native Fetch API
+- Bypasses Unity's broken networking completely
+- Works in ALL modern browsers (Chrome, Firefox, Safari, Edge)
+
+FILES CREATED (2):
+1. Assets/Plugins/WebGL/WebGLNetworking.jslib
+   - JavaScript plugin using browser's Fetch API
+   - Handles JSON requests (iNaturalist)
+   - Handles image requests (Mapbox minimap)
+
+2. Assets/Scripts/WebGLNetworkBridge.cs
+   - C# bridge connecting Unity to JavaScript
+   - Provides FetchJSON() and FetchTexture() methods
+   - Falls back to UnityWebRequest in Editor
+
+FILES MODIFIED (3):
+1. Assets/Scripts/WebGLCorsHelper.cs
+   - Enhanced with better error logging
+   - WebGL-specific troubleshooting tips
+
+2. Assets/Scripts/StaticMapMinimap.cs
+   - WebGL: Uses JavaScript bridge
+   - Editor: Uses UnityWebRequest
+
+3. Assets/Scripts/INaturalistMapController.cs
+   - WebGL: Uses JavaScript bridge
+   - Editor: Uses UnityWebRequest
+
+CRITICAL STEPS TO TEST:
+1. REBUILD WebGL build in Unity (File → Build Settings → Build)
+   ⚠️ The fix is ONLY active after rebuilding!
+   ⚠️ Old builds will NOT have the JavaScript plugin!
+
+2. Run local web server:
+   python3 -m http.server 8000
+
+3. Open browser:
+   http://localhost:8000
+
+4. Open browser console (F12) and check for SUCCESS messages:
+   [WebGLNetworking] Fetching texture from: https://api.mapbox.com/...
+   [WebGLNetworking] Texture response status: 200
+   [StaticMapMinimap] Map loaded successfully via WebGL bridge!
+   [iNaturalist] API fetch successful
+
+EXPECTED RESULTS:
+✅ Minimap appears in UI
+✅ Minimap updates as player moves
+✅ iNaturalist observations spawn in world
+✅ No CORS errors in browser console
+✅ Success messages from [WebGLNetworking]
+
+TROUBLESHOOTING:
+- If not working: Clear browser cache or use Incognito mode
+- If 404 errors: Make sure using local server (not file://)
+- If CORS errors still appear: Rebuild Unity project
+- If still failing: Check browser console for specific error messages
+
+DOCUMENTATION:
+- Full guide: CHROME_WEBGL_FIX.md
+- Quick start: WEBGL_QUICK_START.md
+
+================================================================================

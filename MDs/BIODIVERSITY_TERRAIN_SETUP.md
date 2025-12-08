@@ -1,104 +1,147 @@
-# Biodiversity-Based Terrain Color System Setup
+# Biodiversity-Responsive Terrain Setup Guide
 
-This system creates dynamic terrain coloration based on the density of iNaturalist observations, making areas with higher biodiversity appear more vibrant and saturated.
+This guide explains TWO complementary systems that make terrain visually respond to biodiversity:
+
+1. **Color/Saturation Changes** (Post-Processing Volumes) - Makes high biodiversity areas vibrant
+2. **Density-Based Object Spawning** (NEW Prefab Spawner) - Spawns more objects in biodiverse areas
 
 ## Overview
 
-The system works by:
-1. **BiodiversityScoreManager**: Calculates observation density in grid cells around the player
-2. **Enhanced Shaders**: Terrain shaders that respond to biodiversity data via saturation changes
-3. **BiodiversityUI**: Optional UI to show current biodiversity information and controls
+### System 1: Post-Processing Saturation (BiodiversityVolumeSpawner)
+Already working! See [BIODIVERSITY_VOLUME_SETUP.md](BIODIVERSITY_VOLUME_SETUP.md)
+- High biodiversity → Vibrant, saturated colors
+- Low biodiversity → Desaturated, gray colors
 
-## 🚀 Quick Setup Instructions
+### System 2: Biodiversity-Driven Prefab Spawning (NEW BiodiversityPrefabSpawner)
+This document focuses on the NEW prefab spawner:
+- High biodiversity → MANY trees, plants, decorations
+- Low biodiversity → FEW rocks, sparse vegetation
 
-### Step 1: Add BiodiversityScoreManager to Scene
+Both systems work together for maximum visual impact!
 
-1. **Create Empty GameObject**:
-   - Right-click in Hierarchy → Create Empty
-   - Name it `BiodiversityManager`
+---
 
-2. **Add Component**:
-   - Select the GameObject
-   - Add Component → `BiodiversityScoreManager`
+## 🚀 NEW System Setup: Biodiversity Prefab Spawner
 
-3. **Configure Settings**:
+### Step 1: Create the Modifier Asset
+
+1. **Right-click in Project** → **Create → Mapbox → Modifiers → Biodiversity Prefab Spawner**
+2. Name it: `BiodiversityPrefabSpawner`
+
+### Step 2: Prepare Your Prefabs
+
+Gather or create prefabs for different biodiversity levels:
+
+**High Biodiversity** (lush areas):
+- Trees, flowering plants, dense bushes, ferns
+
+**Medium Biodiversity** (moderate areas):
+- Small bushes, grass clumps, wildflowers
+
+**Low Biodiversity** (barren areas):
+- Rocks, dead trees, dry grass
+
+### Step 3: Configure the Spawner
+
+Select `BiodiversityPrefabSpawner` and set:
+
+```
+Prefab Categories:
+├─ High Biodiversity Prefabs: [Your lush vegetation]
+├─ Medium Biodiversity Prefabs: [Your moderate decoration]
+├─ Low Biodiversity Prefabs: [Your sparse objects]
+└─ Universal Prefabs: [Optional - works everywhere]
+
+Spawn Density:
+├─ Base Density: 0.05 (5 objects per 100m²)
+├─ Max Density: 0.3 (high biodiversity)
+└─ Min Density: 0.01 (low biodiversity)
+
+Placement:
+├─ Snap To Terrain: ✓ (raycast to surface)
+├─ Random Rotation: ✓
+├─ Scale Variation: 0.2 (±20%)
+└─ Min/Max Scale: 0.8 - 1.5
+
+Thresholds:
+├─ High Biodiversity: 0.6 (Simpson's Index ≥ 0.6)
+└─ Medium Biodiversity: 0.3
+
+Performance:
+├─ Max Objects Per Tile: 100
+└─ Min Biodiversity To Spawn: 0.05
+```
+
+### Step 4: Add to Mapbox Terrain
+
+1. Find your **AbstractMap** GameObject in Hierarchy
+2. Navigate to **Terrain → Factories → Terrain Factory**
+3. Find **Game Object Modifiers** section
+4. Click **[+]** and add `BiodiversityPrefabSpawner`
+
+### Step 5: Test!
+
+1. Enter **Play Mode**
+2. Wait for terrain generation
+3. Check **Console** for logs:
    ```
-   Cell Size: 50 (size of calculation areas)
-   Max Calculation Distance: 200 (how far to calculate around player)
-   Update Interval: 3 (seconds between updates)
-   Min Saturation: 0.4 (low biodiversity areas)
-   Max Saturation: 1.8 (high biodiversity areas)
+   [BiodiversityPrefabSpawner] Tile biodiversity: 0.734
+   [BiodiversityPrefabSpawner] Completed: 42/42 objects spawned
    ```
+4. **Look around** - high biodiversity areas should have more objects!
 
-### Step 2: Update Terrain Materials
+---
 
-**Option A: Use Enhanced HeightBasedTerrain Shader**
-1. Select your terrain materials
-2. Change shader to `Custom/HeightBasedTerrain` (now includes biodiversity)
-3. Enable "Use Biodiversity Saturation"
-4. Set "Biodiversity Effect Intensity" to 0.5-1.0
+## 🌍 Combined Effect (Both Systems Together)
 
-**Option B: Use Enhanced Mapbox Shaders**
-1. Your Mapbox materials now automatically support biodiversity
-2. Enable "Use Biodiversity Saturation" on materials
-3. Set "Biodiversity Effect Intensity" to 0.8
+When both systems work together:
 
-**Option C: Use New BiodiversityTerrain Shader**
-1. Create new material
-2. Set shader to `Custom/BiodiversityTerrain`
-3. Assign base texture and configure colors
+### High Biodiversity Area (Simpson's Index 0.8)
+- ✅ **Vibrant, saturated colors** (Post-processing volume)
+- ✅ **Dense vegetation spawning** (Prefab spawner)
+- **Result:** Lush, colorful, alive-looking terrain
 
-### Step 3: Setup UI (Optional)
+### Low Biodiversity Area (Simpson's Index 0.2)
+- ✅ **Desaturated, gray colors** (Post-processing volume)
+- ✅ **Sparse rock/debris spawning** (Prefab spawner)
+- **Result:** Barren, lifeless, desolate terrain
 
-1. **Add to Canvas**:
-   - Find your existing game UI canvas
-   - Create Empty GameObject as child
-   - Name it `BiodiversityUI`
+### Visual Progression
+```
+Player walks from low → high biodiversity:
 
-2. **Add Component**:
-   - Add `BiodiversityUI` script to the GameObject
+Low Bio Area          Medium Bio Area       High Bio Area
+┌─────────────┐      ┌─────────────┐      ┌─────────────┐
+│  Gray/dull  │  →   │ Some color  │  →   │   Vibrant   │
+│  Few rocks  │      │ Some bushes │      │ Many trees  │
+│   Sparse    │      │  Moderate   │      │    Dense    │
+└─────────────┘      └─────────────┘      └─────────────┘
+Simpson: 0.2         Simpson: 0.5         Simpson: 0.9
+```
 
-3. **Create UI Panel** (optional):
-   - Create UI → Panel as child
-   - Add Text components for biodiversity info
-   - Add Slider for saturation control
-   - Add Toggle for enable/disable
-   - Assign references in BiodiversityUI component
+---
 
-## 🎮 Player Controls
+## ⚙️ Tuning Tips
 
-- **B Key**: Toggle biodiversity UI display
-- The system automatically updates as you move around
-- Areas with more observations become more vibrant
-- Effect is most noticeable in areas with varied observation density
+### Too Many Objects?
+- Lower `baseDensity` (try 0.02)
+- Lower `maxDensity` (try 0.15)
+- Increase `minimumBiodiversityToSpawn` (try 0.1)
 
-## ⚙️ Configuration Options
+### Too Few Objects?
+- Increase `baseDensity` (try 0.1)
+- Increase `maxDensity` (try 0.5)
+- Adjust `densityCurve` for steeper multiplier
 
-### BiodiversityScoreManager Settings
+### Objects Not Snapping to Terrain?
+- Enable `snapToTerrain`
+- Set `terrainLayerMask` correctly
+- Ensure terrain has colliders
 
-**Performance**:
-- `Cell Size`: Larger = less detailed but better performance
-- `Update Interval`: Higher = less frequent updates, better performance
-- `Max Calculation Distance`: Smaller = less area calculated
-
-**Visual Effect**:
-- `Min/Max Saturation`: Control the saturation range
-- `Saturation Smoothness`: How gradually effects change between areas
-
-**Debugging**:
-- `Show Debug Gizmos`: Visualize calculation grid in Scene view
-- `Enable Debug Logging`: See calculation details in Console
-
-### Shader Settings
-
-**BiodiversityTerrain Shader**:
-- `Biodiversity Intensity`: How strong the effect is
-- `High/Low Biodiversity Colors`: Tint colors for different areas
-- `Pulse Speed/Intensity`: Animated effects for high-biodiversity areas
-
-**Enhanced Terrain Shaders**:
-- `Use Biodiversity Saturation`: Enable/disable the effect
-- `Biodiversity Effect Intensity`: Strength of saturation changes
+### Performance Issues?
+- Lower `maxObjectsPerTile`
+- Set `spawnRadius` to limit area
+- Use simpler prefab models
 
 ## 🐛 Troubleshooting
 
