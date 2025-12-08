@@ -10,9 +10,22 @@ public class UIManager : MonoBehaviour
         
     }
 
+    // Reference to INaturalistMapController
+    private INaturalistMapController inatController;
+
+    void Awake()
+    {
+        // Find the INaturalistMapController in the scene
+        inatController = FindObjectOfType<INaturalistMapController>();
+        if (inatController == null)
+        {
+            Debug.LogWarning("UIManager: INaturalistMapController not found in scene.");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        // ...existing code...
     }
 }

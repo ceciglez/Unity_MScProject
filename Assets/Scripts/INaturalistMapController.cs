@@ -256,39 +256,46 @@ public class INaturalistMapController : MonoBehaviour
     
     void Update()
     {
+        // Manual reload with 'O' key
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Debug.Log("INaturalistMapController: Reloading iNaturalist observations via 'O' key.");
+            ReloadData();
+        }
+
         if (!autoUpdate || map == null) return;
-        
+
         timeSinceLastUpdate += Time.deltaTime;
-        
+
         // Check if enough time has passed
         if (timeSinceLastUpdate < minUpdateInterval) return;
-        
+
         bool shouldReload = false;
-        
+
         // Check if map center has moved significantly
         Vector2d currentCenter = map.CenterLatitudeLongitude;
         float currentZoom = map.Zoom;
-        
+
         float centerDiff = (float)Vector2d.Distance(lastMapCenter, currentCenter);
         float zoomDiff = Mathf.Abs(lastMapZoom - currentZoom);
-        
+
         if (centerDiff > 0.01f || zoomDiff > 0.5f)
         {
             shouldReload = true;
             lastMapCenter = currentCenter;
             lastMapZoom = currentZoom;
         }
-        
+
         // Check if player has moved significantly (in world space)
         if (playerTransform != null)
         {
             float playerMovement = Vector3.Distance(lastPlayerPosition, playerTransform.position);
-            
+
             if (playerMovement > reloadDistanceThreshold)
             {
                 shouldReload = true;
                 lastPlayerPosition = playerTransform.position;
-                
+
                 if (showDebugInfo)
                 {
                     Vector2d playerLatLng = map.WorldToGeoPosition(playerTransform.position);
@@ -296,7 +303,7 @@ public class INaturalistMapController : MonoBehaviour
                 }
             }
         }
-        
+
         // Reload if needed
         if (shouldReload)
         {
