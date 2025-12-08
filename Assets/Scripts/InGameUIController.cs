@@ -82,15 +82,18 @@ public class InGameUIController : MonoBehaviour
                 "Network Visualization:\\n" +
                 "• N - Toggle 3D network connections\\n" +
                 "• L - Toggle 2D minimap connections\\n\\n" +
+                "Biodiversity Visualization:\\n" +
+                "• B - Toggle biodiversity display\\n\\n" +
                 "Interface:\\n" +
                 "• H - Toggle this help panel\\n" +
                 "• ESC - Pause menu\\n\\n" +
-                "💡 Get close to observations to see details!";
+                "💡 Get close to observations to see details!\\n" +
+                "🌱 Areas with higher biodiversity appear more colorful!";
         }
         
         if (instructionsText)
         {
-            instructionsText.text = "Press H for controls • Walk near observations to explore • Press N for network connections";
+            instructionsText.text = "Press H for controls • Walk near observations to explore • Press N for networks • Press B for biodiversity";
         }
     }
     

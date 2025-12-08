@@ -24,6 +24,12 @@ Shader "Custom/HeightBasedTerrain"
         _TexScale ("Texture Scale", Float) = 1.0
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
+        
+        [Header(Biodiversity Effects)]
+        [Toggle] _UseBiodiversitySaturation ("Use Biodiversity Saturation", Float) = 1
+        _BiodiversityIntensity ("Biodiversity Effect Intensity", Range(0, 5)) = 1.5
+        [Toggle] _UseSpotlightEffect ("Enable Dramatic Hotspots", Float) = 1
+        _SpotlightBoost ("Hotspot Brightness Boost", Range(1, 8)) = 3.0
     }
     
     SubShader
@@ -51,12 +57,40 @@ Shader "Custom/HeightBasedTerrain"
         float _MidThreshold;
         float _HighThreshold;
         float _BlendDistance;
+        float _UseBiodiversitySaturation;
+        float _BiodiversityIntensity;
+        // float _UseSpotlightEffect; // Removed duplicate
+        float _SpotlightBoost;
+        
+        // Global biodiversity properties
+        float _GlobalSaturation;
+        float _SpotlightIntensity;
+        float _UseSpotlightEffect;
         
         struct Input
         {
             float2 uv_LowTex;
             float3 worldPos;
         };
+        
+        // HSV conversion functions for saturation adjustment
+        float3 rgb2hsv(float3 c)
+        {
+            float4 K = float4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+            float4 p = lerp(float4(c.bg, K.wz), float4(c.gb, K.xy), step(c.b, c.g));
+            float4 q = lerp(float4(p.xyw, c.r), float4(c.r, p.yzx), step(p.x, c.r));
+            
+            float d = q.x - min(q.w, q.y);
+            float e = 1.0e-10;
+            return float3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+        }
+        
+        float3 hsv2rgb(float3 c)
+        {
+            float4 K = float4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+            float3 p = abs(frac(c.xxx + K.xyz) * 6.0 - K.www);
+            return c.z * lerp(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+        }
         
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
@@ -86,6 +120,34 @@ Shader "Custom/HeightBasedTerrain"
             
             // Blend textures
             fixed4 finalColor = lowTex * lowWeight + midTex * midWeight + highTex * highWeight;
+            
+            // Apply biodiversity saturation if enabled
+            if (_UseBiodiversitySaturation > 0.5 && _GlobalSaturation > 0)
+            {
+                // Convert to HSV for saturation adjustment
+                float3 hsv = rgb2hsv(finalColor.rgb);
+                
+                // Apply global biodiversity saturation with dramatic effect
+                float saturationMultiplier = lerp(1.0, _GlobalSaturation, _BiodiversityIntensity);
+                hsv.y *= saturationMultiplier;
+                hsv.y = saturate(hsv.y);
+                
+                // DRAMATIC SPOTLIGHT EFFECT for hotspots
+                if (_UseSpotlightEffect > 0.5 && _GlobalSaturation > 2.0)
+                {
+                    // Brightness boost for biodiversity hotspots
+                    float hotspotStrength = saturate((_GlobalSaturation - 2.0) / 2.0);
+                    hsv.z *= (1.0 + hotspotStrength * _SpotlightBoost);
+                    hsv.z = saturate(hsv.z);
+                    
+                    // Extra saturation for hotspots
+                    hsv.y *= (1.0 + hotspotStrength);
+                    hsv.y = saturate(hsv.y);
+                }
+                
+                // Convert back to RGB
+                finalColor.rgb = hsv2rgb(hsv);
+            }
             
             o.Albedo = finalColor.rgb;
             o.Metallic = _Metallic;

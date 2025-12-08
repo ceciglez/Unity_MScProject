@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f8f6baf5a034afaaa7860ed06ba902, type: 3}
+  m_Name: BIO_SPAWNGREEN
+  m_EditorClassIdentifier: 
+  Active: 1
+  _spawnRateInSquareMeters: 50
+  _maxSpawn: 1000
+  _densityMultiplier: 1
+  _minDistanceBetweenObjects: 2
+  lowBiodiversityPrefabs:
+  - {fileID: 191452, guid: 1a07870c4b0dfdd48a525670d6d9cb87, type: 3}
+  - {fileID: 143606, guid: 2117c38b04f89a14eb83910c12dab81f, type: 3}
+  - {fileID: 160728, guid: 3a4d4ae9deb4f4345b6292e67a42353b, type: 3}
+  - {fileID: 173176, guid: 866e9935cf05f24458f4cdfbd9e0b06a, type: 3}
+  - {fileID: 189280, guid: c735702770d76864da3ecaa5109bc610, type: 3}
+  highBiodiversityPrefabs:
+  - {fileID: 120456, guid: f9f2cecbb72541141b244cca9c92bf95, type: 3}
+  - {fileID: 126992, guid: 178d2fd740c4b624d96daa65392e7c3a, type: 3}
+  - {fileID: 114930, guid: 81cb11400226b2344a09ecc705794ee3, type: 3}
+  - {fileID: 1805876010683542489, guid: 34fea446a9bdff444bf1d9e415e87874, type: 3}
+  - {fileID: 1079032477081438208, guid: 09d140fa73d52f34193f8810f9a007ef, type: 3}
+  minBiodiversityScore: 0
+  maxBiodiversityScore: 1
