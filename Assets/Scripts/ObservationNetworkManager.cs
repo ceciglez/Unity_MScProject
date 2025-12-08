@@ -913,4 +913,30 @@ public class ObservationNetworkManager : MonoBehaviour
             Debug.LogWarning($"[ObservationNetworkManager] MANUAL TRIGGER: Not enough observations ({allObservations.Count}) to create connections");
         }
     }
+    
+    /// <summary>
+    /// Get count of currently active connections for UI display
+    /// </summary>
+    public int GetActiveConnectionCount()
+    {
+        return activeConnections.Count(c => c != null && c.IsActive());
+    }
+    
+    /// <summary>
+    /// Clear all network connections (for returning to main menu)
+    /// </summary>
+    public void ClearAllConnections()
+    {
+        foreach (var connection in activeConnections)
+        {
+            if (connection != null)
+            {
+                connection.SetActive(false);
+                connectionPool.Enqueue(connection);
+            }
+        }
+        
+        activeConnections.Clear();
+        Debug.Log("[ObservationNetworkManager] All connections cleared");
+    }
 }

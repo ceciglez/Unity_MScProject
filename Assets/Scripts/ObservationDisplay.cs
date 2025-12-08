@@ -11,6 +11,7 @@ public class ObservationDisplay : MonoBehaviour
     [SerializeField] private Canvas infoCanvas;
     [SerializeField] private Text commonNameText;
     [SerializeField] private Text scientificNameText;
+    [SerializeField] private Text userInfoText; // NEW: For observer name and date
     [SerializeField] private RawImage photoImage;
     
     [Header("Canvas Prefab")]
@@ -92,6 +93,7 @@ public class ObservationDisplay : MonoBehaviour
         // Check if UI components are assigned
         if (commonNameText == null) Debug.LogWarning($"ObservationDisplay: commonNameText not assigned on {gameObject.name}");
         if (scientificNameText == null) Debug.LogWarning($"ObservationDisplay: scientificNameText not assigned on {gameObject.name}");
+        if (userInfoText == null) Debug.LogWarning($"ObservationDisplay: userInfoText not assigned on {gameObject.name}");
         if (photoImage == null) Debug.LogWarning($"ObservationDisplay: photoImage not assigned on {gameObject.name}");
         
         // Find network manager
@@ -256,6 +258,31 @@ public class ObservationDisplay : MonoBehaviour
         scientificNameText.verticalOverflow = VerticalWrapMode.Overflow;
         scientificNameText.raycastTarget = false;
         
+        // Create user info text (observer name and date)
+        GameObject userInfoObj = new GameObject("UserInfo");
+        userInfoObj.transform.SetParent(panelObj.transform, false);
+        
+        userInfoText = userInfoObj.AddComponent<Text>();
+        if (defaultFont != null)
+        {
+            userInfoText.font = defaultFont;
+        }
+        userInfoText.fontSize = 14;
+        userInfoText.fontStyle = FontStyle.Normal;
+        userInfoText.color = new Color(0.7f, 0.9f, 0.7f, 1f); // Light green
+        userInfoText.alignment = TextAnchor.MiddleCenter;
+        userInfoText.text = "Observer Info";
+        userInfoText.horizontalOverflow = HorizontalWrapMode.Wrap;
+        userInfoText.verticalOverflow = VerticalWrapMode.Overflow;
+        userInfoText.raycastTarget = false;
+        
+        RectTransform userInfoRect = userInfoObj.GetComponent<RectTransform>();
+        userInfoRect.anchorMin = new Vector2(0.5f, 0.5f);
+        userInfoRect.anchorMax = new Vector2(0.5f, 0.5f);
+        userInfoRect.pivot = new Vector2(0.5f, 0.5f);
+        userInfoRect.anchoredPosition = new Vector2(0, -90);
+        userInfoRect.sizeDelta = new Vector2(280, 40);
+        
         RectTransform scientificNameRect = scientificNameObj.GetComponent<RectTransform>();
         scientificNameRect.anchorMin = new Vector2(0.5f, 0.5f);
         scientificNameRect.anchorMax = new Vector2(0.5f, 0.5f);
@@ -305,7 +332,11 @@ public class ObservationDisplay : MonoBehaviour
                  text.gameObject.name.Contains("Scientific")))
             {
                 scientificNameText = text;
-                break;
+            }
+            else if (text != commonNameText && text != scientificNameText &&
+                     text.gameObject.name.Contains("UserInfo"))
+            {
+                userInfoText = text;
             }
         }
         
@@ -427,6 +458,26 @@ public class ObservationDisplay : MonoBehaviour
         else
         {
             Debug.LogWarning($"  scientificNameText is NULL!");
+        }
+        
+        // Update user info (observer name and date)
+        if (userInfoText != null)
+        {
+            string observerName = data.user?.login ?? "Anonymous";
+            string observedDate = "Unknown Date";
+            
+            if (!string.IsNullOrEmpty(data.observed_on))
+            {
+                observedDate = data.observed_on;
+            }
+            
+            userInfoText.text = $"by {observerName}\\n{observedDate}";
+            userInfoText.enabled = true;
+            Debug.Log($"  Set user info: '{observerName}' on '{observedDate}'");
+        }
+        else
+        {
+            Debug.LogWarning($"  userInfoText is NULL!");
         }
         
         // Apply color based on organism type
