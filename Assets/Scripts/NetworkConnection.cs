@@ -18,8 +18,19 @@ public class NetworkConnection : MonoBehaviour
     [Tooltip("Number of points for terrain-following curves")]
     public int curveResolution = 10;
     
+    [Header("Performance Settings")]
+    [Tooltip("Enable terrain following (disable for better performance)")]
+    public bool enableTerrainFollowing = true;
+    
+    [Tooltip("Use simplified straight lines for better performance")]
+    public bool useSimpleLines = false;
+    
     private LineRenderer lineRenderer;
     private bool isActive = false;
+    
+    // Performance optimization: cache terrain heights
+    private static Dictionary<Vector2, float> terrainHeightCache = new Dictionary<Vector2, float>();
+    private static float cacheGridSize = 5f; // Cache every 5 units
     
     // Start is called before the first frame update
     void Awake()
@@ -69,7 +80,46 @@ public class NetworkConnection : MonoBehaviour
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
         
-        // Create terrain-following curve
+        // Choose between simple or terrain-following lines based on performance settings
+        if (useSimpleLines || !enableTerrainFollowing)
+        {
+            SetSimpleConnection(start, end, color);
+        }
+        else
+        {
+            SetTerrainFollowingConnection(start, end, color);
+        }
+        
+        lineRenderer.enabled = true;
+        isActive = true;
+        
+        float distance = Vector3.Distance(start, end);
+        Debug.Log($"[NetworkConnection] Line created: {start} to {end}, distance: {distance:F1}m, mode: {(useSimpleLines ? "Simple" : "Terrain-following")}");
+    }
+    
+    private void SetSimpleConnection(Vector3 start, Vector3 end, Color color)
+    {
+        // Simple 2-point line for better performance
+        lineRenderer.positionCount = 2;
+        
+        // Add slight height offset to keep above ground
+        Vector3 startPos = start + Vector3.up * terrainOffset;
+        Vector3 endPos = end + Vector3.up * terrainOffset;
+        
+        lineRenderer.SetPosition(0, startPos);
+        lineRenderer.SetPosition(1, endPos);
+        
+        // Set color
+        if (lineRenderer.material != null)
+        {
+            Color transparentColor = new Color(color.r, color.g, color.b, lineOpacity);
+            lineRenderer.material.color = transparentColor;
+        }
+    }
+    
+    private void SetTerrainFollowingConnection(Vector3 start, Vector3 end, Color color)
+    {
+        // Create terrain-following curve with caching for performance
         Vector3[] curvePoints = new Vector3[curveResolution];
         
         for (int i = 0; i < curveResolution; i++)
@@ -77,8 +127,8 @@ public class NetworkConnection : MonoBehaviour
             float t = i / (float)(curveResolution - 1);
             Vector3 interpolatedPos = Vector3.Lerp(start, end, t);
             
-            // Get terrain height using the same method as other spawners
-            Vector3 terrainPos = GetTerrainPosition(interpolatedPos);
+            // Get terrain height using cached or optimized method
+            Vector3 terrainPos = GetOptimizedTerrainPosition(interpolatedPos);
             curvePoints[i] = terrainPos + Vector3.up * terrainOffset;
         }
         
@@ -91,16 +141,64 @@ public class NetworkConnection : MonoBehaviour
             Color transparentColor = new Color(color.r, color.g, color.b, lineOpacity);
             lineRenderer.material.color = transparentColor;
         }
-        
-        lineRenderer.enabled = true;
-        isActive = true;
-        
-        float distance = Vector3.Distance(start, end);
-        Debug.Log($"[NetworkConnection] Terrain-following line created: {start} to {end}, distance: {distance:F1}m, points: {curveResolution}, offset: {terrainOffset}m");
     }
     
     /// <summary>
-    /// Get terrain position using multiple raycast strategies (same as OptimizedGrassPatchSpawner)
+    /// Optimized terrain position detection with caching for web performance
+    /// </summary>
+    private Vector3 GetOptimizedTerrainPosition(Vector3 worldPos)
+    {
+        // Use caching to reduce raycast calls
+        Vector2 gridPos = new Vector2(
+            Mathf.Round(worldPos.x / cacheGridSize) * cacheGridSize,
+            Mathf.Round(worldPos.z / cacheGridSize) * cacheGridSize
+        );
+        
+        // Check cache first
+        if (terrainHeightCache.TryGetValue(gridPos, out float cachedHeight))
+        {
+            return new Vector3(worldPos.x, cachedHeight, worldPos.z);
+        }
+        
+        // If not cached, use the proven terrain detection method
+        Vector3 terrainPos = GetTerrainPosition(worldPos);
+        float terrainHeight = terrainPos.y;
+        
+        // Cache the result
+        terrainHeightCache[gridPos] = terrainHeight;
+        
+        // Limit cache size to prevent memory issues
+        if (terrainHeightCache.Count > 1000)
+        {
+            terrainHeightCache.Clear();
+        }
+        
+        return terrainPos;
+    }
+    
+    /// <summary>
+    /// Fast terrain height detection with fewer raycasts
+    /// </summary>
+    private float GetTerrainHeightFast(Vector3 worldPos)
+    {
+        RaycastHit hit;
+        Vector3 rayStart = new Vector3(worldPos.x, worldPos.y + 50f, worldPos.z);
+        
+        // Single raycast with simplified layer filtering
+        int excludeMask = LayerMask.GetMask("UI", "Network", "TransparentFX");
+        int layerMask = ~excludeMask;
+        
+        if (Physics.Raycast(rayStart, Vector3.down, out hit, 100f, layerMask))
+        {
+            return hit.point.y;
+        }
+        
+        // Fallback to ground level
+        return 0f;
+    }
+    
+    /// <summary>
+    /// Get terrain position using multiple raycast strategies (legacy method for compatibility)
     /// </summary>
     private Vector3 GetTerrainPosition(Vector3 worldPos)
     {

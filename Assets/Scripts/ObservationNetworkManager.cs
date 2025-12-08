@@ -26,6 +26,16 @@ public class ObservationNetworkManager : MonoBehaviour
     public float updateInterval = 2f;
     public int maxTotalConnections = 200;
     
+    [Header("Update Optimization")]
+    [Tooltip("Minimum distance player must move before updating network")]
+    public float playerMovementThreshold = 25f;
+    
+    [Tooltip("Update network when player moves this distance")]
+    public bool enableAutomaticUpdates = true;
+    
+    [Tooltip("Reduce terrain raycasts for better performance (web-friendly)")]
+    public bool optimizeForWeb = true;
+    
     [Header("UI References")]
     [Tooltip("Your manually created network UI panel prefab")]
     public GameObject networkUIPrefab;
@@ -49,6 +59,11 @@ public class ObservationNetworkManager : MonoBehaviour
     private ObservationNetworkUI networkUI;
     private float lastUpdateTime;
     private bool networkEnabled = false;
+    
+    // Player movement tracking
+    private Vector3 lastPlayerPosition;
+    private Transform playerTransform;
+    private bool hasValidPlayerPosition = false;
     
     // Connection pooling
     private Queue<NetworkConnection> connectionPool = new Queue<NetworkConnection>();
@@ -79,8 +94,11 @@ public class ObservationNetworkManager : MonoBehaviour
         // Initialize all categories as enabled
         InitializeCategoryFilters();
         
+        // Initialize player tracking
+        InitializePlayerTracking();
+        
         // TESTING: Auto-enable network and force connections
-        networkEnabled = false; // Disabled - now triggered by player interaction
+        networkEnabled = enableAutomaticUpdates; // Enable if automatic updates are on
         connectSameSpeciesOnly = false; // Connect everything for testing
         
         if (showDebugInfo)
@@ -103,21 +121,17 @@ public class ObservationNetworkManager : MonoBehaviour
     
     void Update()
     {
-        // Disabled automatic updates - connections now triggered by player interaction
-        // if (!networkEnabled) return;
-        
-        // if (Time.time - lastUpdateTime >= updateInterval)
-        // {
-        //     UpdateObservationsList();
-        //     UpdateConnections();
-        //     lastUpdateTime = Time.time;
-        // }
-        
         // Manual trigger for testing - press N key to trigger connections
         if (Input.GetKeyDown(KeyCode.N))
         {
             Debug.Log("[ObservationNetworkManager] N key pressed - manually triggering connections!");
             ManualTriggerConnections();
+        }
+        
+        // Automatic updates based on player movement
+        if (enableAutomaticUpdates && networkEnabled && hasValidPlayerPosition)
+        {
+            CheckPlayerMovementAndUpdate();
         }
     }
     
@@ -271,6 +285,49 @@ public class ObservationNetworkManager : MonoBehaviour
         {
             categoryFilterStates[category] = true;
             enabledCategories.Add(category);
+        }
+    }
+    
+    private void InitializePlayerTracking()
+    {
+        // Try to find player transform
+        playerTransform = GetPlayerTransform();
+        if (playerTransform != null)
+        {
+            lastPlayerPosition = playerTransform.position;
+            hasValidPlayerPosition = true;
+            Debug.Log($"[ObservationNetworkManager] Player tracking initialized at {lastPlayerPosition}");
+        }
+        else
+        {
+            Debug.LogWarning("[ObservationNetworkManager] Player not found - network updates disabled");
+            hasValidPlayerPosition = false;
+        }
+    }
+    
+    private void CheckPlayerMovementAndUpdate()
+    {
+        if (playerTransform == null)
+        {
+            // Try to find player again
+            playerTransform = GetPlayerTransform();
+            if (playerTransform == null) return;
+        }
+        
+        Vector3 currentPlayerPosition = playerTransform.position;
+        float distanceMoved = Vector3.Distance(lastPlayerPosition, currentPlayerPosition);
+        
+        // Update if player moved enough distance AND enough time has passed
+        if (distanceMoved >= playerMovementThreshold && Time.time - lastUpdateTime >= updateInterval)
+        {
+            Debug.Log($"[ObservationNetworkManager] Player moved {distanceMoved:F1}m - updating network connections");
+            
+            lastPlayerPosition = currentPlayerPosition;
+            lastUpdateTime = Time.time;
+            
+            // Update network connections
+            UpdateObservationsList();
+            UpdateConnections();
         }
     }
     
