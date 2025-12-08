@@ -18,6 +18,13 @@ public class ObservationDisplay : MonoBehaviour
     [Tooltip("Drag your custom-designed canvas prefab here. If assigned, this will be used instead of auto-generation.")]
     [SerializeField] private GameObject canvasPrefab;
 
+    [Tooltip("If using prefab: manually assign UI components (leave empty to auto-find)")]
+    [SerializeField] private bool manualComponentAssignment = false;
+    [SerializeField] private Text manualCommonNameText;
+    [SerializeField] private Text manualScientificNameText;
+    [SerializeField] private Text manualUserInfoText;
+    [SerializeField] private RawImage manualPhotoImage;
+
     [Header("Interaction Prompt")]
     [Tooltip("Canvas prefab to show when player gets close. If not assigned, will show the auto-generated canvas.")]
     [SerializeField] private GameObject interactionPromptPrefab;
@@ -276,19 +283,19 @@ public class ObservationDisplay : MonoBehaviour
         userInfoText.verticalOverflow = VerticalWrapMode.Overflow;
         userInfoText.raycastTarget = false;
         
-        RectTransform userInfoRect = userInfoObj.GetComponent<RectTransform>();
-        userInfoRect.anchorMin = new Vector2(0.5f, 0.5f);
-        userInfoRect.anchorMax = new Vector2(0.5f, 0.5f);
-        userInfoRect.pivot = new Vector2(0.5f, 0.5f);
-        userInfoRect.anchoredPosition = new Vector2(0, -90);
-        userInfoRect.sizeDelta = new Vector2(280, 40);
-        
         RectTransform scientificNameRect = scientificNameObj.GetComponent<RectTransform>();
         scientificNameRect.anchorMin = new Vector2(0.5f, 0.5f);
         scientificNameRect.anchorMax = new Vector2(0.5f, 0.5f);
         scientificNameRect.pivot = new Vector2(0.5f, 0.5f);
         scientificNameRect.anchoredPosition = new Vector2(0, -100);
         scientificNameRect.sizeDelta = new Vector2(280, 25);
+
+        RectTransform userInfoRect = userInfoObj.GetComponent<RectTransform>();
+        userInfoRect.anchorMin = new Vector2(0.5f, 0.5f);
+        userInfoRect.anchorMax = new Vector2(0.5f, 0.5f);
+        userInfoRect.pivot = new Vector2(0.5f, 0.5f);
+        userInfoRect.anchoredPosition = new Vector2(0, -130); // Below scientific name (-100) + spacing
+        userInfoRect.sizeDelta = new Vector2(280, 40);
         
         isInitialized = true;
         Debug.Log($"ObservationDisplay: Canvas UI created on {gameObject.name}");
@@ -299,7 +306,7 @@ public class ObservationDisplay : MonoBehaviour
         // Instantiate the prefab
         GameObject canvasObj = Instantiate(canvasPrefab, transform);
         canvasObj.transform.localPosition = canvasOffset;
-        
+
         // Get the canvas component
         infoCanvas = canvasObj.GetComponent<Canvas>();
         if (infoCanvas == null)
@@ -308,44 +315,57 @@ public class ObservationDisplay : MonoBehaviour
             CreateCanvasAutomatically();
             return;
         }
-        
+
         // Configure for world space
         infoCanvas.renderMode = RenderMode.WorldSpace;
         canvasObj.transform.localScale = Vector3.one * 0.005f; // Adjust scale as needed
-        
-        // Auto-find UI components by name (you can customize these names)
-        commonNameText = canvasObj.GetComponentInChildren<Text>();
-        if (commonNameText == null)
+
+        // Option 1: Use manually assigned components (if enabled)
+        if (manualComponentAssignment)
         {
-            // Try finding by GameObject name
-            Transform commonNameTransform = canvasObj.transform.Find("CommonName") ?? 
-                                          canvasObj.transform.Find("Panel/CommonName");
-            commonNameText = commonNameTransform?.GetComponent<Text>();
+            commonNameText = manualCommonNameText;
+            scientificNameText = manualScientificNameText;
+            userInfoText = manualUserInfoText;
+            photoImage = manualPhotoImage;
+
+            Debug.Log($"ObservationDisplay: Using manually assigned UI components from prefab");
         }
-        
-        // Find scientific name text (look for italic or name containing "Scientific")
-        Text[] allTexts = canvasObj.GetComponentsInChildren<Text>();
-        foreach (Text text in allTexts)
+        else
         {
-            if (text != commonNameText && 
-                (text.fontStyle == FontStyle.Italic || 
-                 text.gameObject.name.Contains("Scientific")))
+            // Option 2: Auto-find UI components by name (default)
+            commonNameText = canvasObj.GetComponentInChildren<Text>();
+            if (commonNameText == null)
             {
-                scientificNameText = text;
+                // Try finding by GameObject name
+                Transform commonNameTransform = canvasObj.transform.Find("CommonName") ??
+                                              canvasObj.transform.Find("Panel/CommonName");
+                commonNameText = commonNameTransform?.GetComponent<Text>();
             }
-            else if (text != commonNameText && text != scientificNameText &&
-                     text.gameObject.name.Contains("UserInfo"))
+
+            // Find scientific name text (look for italic or name containing "Scientific")
+            Text[] allTexts = canvasObj.GetComponentsInChildren<Text>();
+            foreach (Text text in allTexts)
             {
-                userInfoText = text;
+                if (text != commonNameText &&
+                    (text.fontStyle == FontStyle.Italic ||
+                     text.gameObject.name.Contains("Scientific")))
+                {
+                    scientificNameText = text;
+                }
+                else if (text != commonNameText && text != scientificNameText &&
+                         text.gameObject.name.Contains("UserInfo"))
+                {
+                    userInfoText = text;
+                }
             }
+
+            // Find photo image
+            photoImage = canvasObj.GetComponentInChildren<RawImage>();
         }
-        
-        // Find photo image
-        photoImage = canvasObj.GetComponentInChildren<RawImage>();
-        
+
         // Log what we found
         Debug.Log($"ObservationDisplay: Canvas from prefab - CommonName: {commonNameText != null}, " +
-                 $"ScientificName: {scientificNameText != null}, Photo: {photoImage != null}");
+                 $"ScientificName: {scientificNameText != null}, UserInfo: {userInfoText != null}, Photo: {photoImage != null}");
         isInitialized = true;
     }
     
@@ -668,6 +688,24 @@ public class ObservationDisplay : MonoBehaviour
     }
     
     /// <summary>
+    /// Set UI canvas scale independently from prefab scale
+    /// </summary>
+    public void SetUICanvasScale(float scale, float yOffset)
+    {
+        if (infoCanvas != null)
+        {
+            // Set scale independently - this won't be affected by parent scale
+            infoCanvas.transform.localScale = Vector3.one * scale;
+
+            // Update Y offset
+            canvasOffset.y = yOffset;
+            infoCanvas.transform.localPosition = canvasOffset;
+
+            Debug.Log($"[ObservationDisplay] Set UI canvas scale to {scale} and Y offset to {yOffset} for {gameObject.name}");
+        }
+    }
+
+    /// <summary>
     /// Configure UI display settings for proximity-based visibility
     /// </summary>
     public void SetUIDisplaySettings(bool enabled, float distance, bool alwaysVisible)
@@ -675,7 +713,7 @@ public class ObservationDisplay : MonoBehaviour
         uiDisplayEnabled = enabled;
         displayDistance = distance;
         alwaysShow = alwaysVisible;
-        
+
         // Find player transform for distance calculations
         if (playerTransform == null)
         {
@@ -690,7 +728,7 @@ public class ObservationDisplay : MonoBehaviour
                 playerTransform = Camera.main?.transform;
             }
         }
-        
+
         // Update canvas visibility immediately
         UpdateCanvasVisibility();
     }

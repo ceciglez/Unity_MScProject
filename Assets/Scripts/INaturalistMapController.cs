@@ -74,6 +74,16 @@ public class INaturalistMapController : MonoBehaviour
     [SerializeField] private float uiDisplayDistance = 15f;
     [Tooltip("Always show UI (ignore proximity)")]
     [SerializeField] private bool alwaysShowUI = false;
+
+    [Header("UI Canvas Scaling")]
+    [Tooltip("Override UI canvas scale (independent from prefab scale)")]
+    [SerializeField] private bool overrideUIScale = true;
+    [Tooltip("Fixed scale for UI canvas (0.005 = default size)")]
+    [Range(0.001f, 0.02f)]
+    [SerializeField] private float uiCanvasScale = 0.005f;
+    [Tooltip("Offset of UI canvas above the observation (Y offset)")]
+    [Range(0f, 10f)]
+    [SerializeField] private float uiCanvasYOffset = 2f;
     
     [Header("Taxon Settings")]
     [Tooltip("Scale multiplier for plant prefabs")]
@@ -659,8 +669,15 @@ public class INaturalistMapController : MonoBehaviour
                     display = prefabInstance.AddComponent<ObservationDisplay>();
                 }
                 display.Initialize(obs);
-                // TODO: Uncomment when compilation issue is resolved
-                // display.SetUIDisplaySettings(enableObservationUI, uiDisplayDistance, alwaysShowUI);
+
+                // Set UI display settings (proximity-based visibility)
+                display.SetUIDisplaySettings(enableObservationUI, uiDisplayDistance, alwaysShowUI);
+
+                // Set UI canvas scale independently from prefab scale
+                if (overrideUIScale)
+                {
+                    display.SetUICanvasScale(uiCanvasScale, uiCanvasYOffset);
+                }
                 
                 // Add trigger interaction for collision detection
                 ObservationTriggerInteraction trigger = prefabInstance.GetComponent<ObservationTriggerInteraction>();
