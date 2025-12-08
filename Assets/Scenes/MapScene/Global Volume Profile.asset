@@ -83,10 +83,10 @@ MonoBehaviour:
   active: 1
   temperature:
     m_OverrideState: 1
-    m_Value: 9
+    m_Value: -2
   tint:
     m_OverrideState: 1
-    m_Value: -15
+    m_Value: -28
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,6 +104,33 @@ MonoBehaviour:
   - {fileID: -1515534540871582553}
   - {fileID: -6470200227047905074}
   - {fileID: 4361517730322011055}
+  - {fileID: 7022380702311361863}
+  - {fileID: 1659586061429063560}
+--- !u!114 &1659586061429063560
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf1aba9553839d41ae37dd52e9ebcce, type: 3}
+  m_Name: MotionBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  mode:
+    m_OverrideState: 0
+    m_Value: 0
+  quality:
+    m_OverrideState: 1
+    m_Value: 0
+  intensity:
+    m_OverrideState: 0
+    m_Value: 0
+  clamp:
+    m_OverrideState: 0
+    m_Value: 0.05
 --- !u!114 &4361517730322011055
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -116,11 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb4b772797da9440885e8bd939e9560, type: 3}
   m_Name: ColorCurves
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   master:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 2
+      <length>k__BackingField: 3
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
@@ -132,6 +159,15 @@ MonoBehaviour:
           value: 0
           inSlope: 1
           outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.19735259
+          value: 0.21319795
+          inSlope: 0.8202204
+          outSlope: 0.8202204
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -244,7 +280,7 @@ MonoBehaviour:
   hueVsHue:
     m_OverrideState: 0
     m_Value:
-      <length>k__BackingField: 0
+      <length>k__BackingField: 1
       m_Loop: 1
       m_ZeroValue: 0.5
       m_Range: 1
@@ -255,15 +291,51 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   hueVsSat:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 0
+      <length>k__BackingField: 4
       m_Loop: 1
       m_ZeroValue: 0.5
       m_Range: 1
       m_Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.32009628
+          value: 0.62436545
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.52466905
+          value: 0.62436545
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.5944645
+          value: 0.84263957
+          inSlope: -0
+          outSlope: -0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.6594465
+          value: 0.62436545
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -293,3 +365,49 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+--- !u!114 &7022380702311361863
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
+  m_Name: DepthOfField
+  m_EditorClassIdentifier: 
+  active: 1
+  mode:
+    m_OverrideState: 1
+    m_Value: 2
+  gaussianStart:
+    m_OverrideState: 1
+    m_Value: 200
+  gaussianEnd:
+    m_OverrideState: 1
+    m_Value: 2
+  gaussianMaxRadius:
+    m_OverrideState: 1
+    m_Value: 1.5
+  highQualitySampling:
+    m_OverrideState: 1
+    m_Value: 1
+  focusDistance:
+    m_OverrideState: 1
+    m_Value: 30
+  aperture:
+    m_OverrideState: 1
+    m_Value: 32
+  focalLength:
+    m_OverrideState: 1
+    m_Value: 92
+  bladeCount:
+    m_OverrideState: 0
+    m_Value: 5
+  bladeCurvature:
+    m_OverrideState: 0
+    m_Value: 1
+  bladeRotation:
+    m_OverrideState: 0
+    m_Value: 0
