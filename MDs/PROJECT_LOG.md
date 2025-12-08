@@ -5,7 +5,7 @@
 **Institution:** UAL  
 **Project Type:** MSc Thesis Prototype  
 **Started:** November 27, 2025  
-**Last Updated:** December 2, 2025
+**Last Updated:** December 7, 2025
 
 ---
 
@@ -1097,6 +1097,163 @@ public string observationLayer = "Observations";
 
 ---
 
-**End of Log - December 2, 2025**
+### December 7, 2025 - UI Interaction System & Observation Networks
+
+#### Observation Display Simplification
+**Goal:** Streamline complex interaction system to use custom prefab UI instead of auto-generated canvases
+
+**Problem Identified:**
+- Original ObservationDisplay.cs had complex state management with `infoDisplayed` and `interactionPromptCanvas`
+- Multi-step interaction flow causing UI persistence issues
+- Auto-generated canvases being created even when only custom prompts were desired
+
+**Solution Implemented:**
+- **Simplified State Management:** Removed complex variables, using simple `promptInstance` GameObject
+- **Deferred Canvas Creation:** Canvas now only created when explicitly needed (on Initialize() or E-key press)
+- **Smart Interaction Flow:** Player proximity shows custom prompt → E-key shows main info display
+- **Cleaner Architecture:** Direct prefab instantiation with basic show/hide logic
+
+**Key Changes:**
+- Modified `Awake()` to only create prompt prefabs, defer canvas creation
+- Updated `Initialize()` to create canvas only when observation data is provided
+- Enhanced `Update()` method to create canvas on-demand for E-key interaction
+- Simplified `OnPlayerEnterRange/ExitRange` with logical fallbacks
+
+**Result:** 
+- ✅ No unwanted auto-generated canvases cluttering the scene
+- ✅ Custom prompt prefabs work reliably
+- ✅ Main information display appears only when user presses E
+- ✅ System works with or without custom prefabs assigned
+
+#### Enhanced Terrain Spawning System
+**Goal:** Prevent floating objects when using SpawnInsideModifier with high density settings
+
+**Problem:** Objects were spawning in mid-air when density multiplier was high or minimum distance was large
+
+**Solution - Comprehensive Terrain Validation:**
+- **Height Validation:** Objects only spawn if terrain is within acceptable height range (configurable tolerance)
+- **Slope Validation:** Prevents spawning on steep surfaces where objects would slide off
+- **Enhanced Ground Detection:** Improved raycast system with configurable distance and layer masks
+- **Debug System:** Optional logging for spawn attempts, failures, and validation details
+
+**New Inspector Controls:**
+- `Max Height Difference` (2m default): Prevents spawning too far above/below reference terrain
+- `Max Slope Angle` (45° default): Prevents spawning on steep cliffs or walls
+- `Raycast Distance` (20m default): How far to search for terrain contact
+- `Additional Ground Layers`: Allows buildings, roads, etc. as valid spawn surfaces
+- `Show Debug Info`: Detailed logging for troubleshooting spawn issues
+
+**Technical Implementation:**
+- `IsValidTerrainPosition()`: Pre-validates terrain contact before attempting spawn
+- `IsGroundPositionValid()`: Verifies surface angle is suitable for object placement
+- Enhanced raycast system with combined layer masks for flexibility
+- Performance optimized with early validation checks
+
+**Result:** 
+- ✅ No more floating mountains or objects in mid-air
+- ✅ Objects properly grounded on terrain surfaces
+- ✅ Configurable tolerance for different object types
+- ✅ Debug tools for fine-tuning spawn parameters
+
+#### Universal Render Pipeline Fix
+**Problem:** URP renderer showing "missing RendererFeatures" errors due to removed Stylized Grass Shader components
+
+**Solution:**
+- Removed missing `GrassRenderFeature` and `FullScreenPassRendererFeature` from renderer asset
+- Cleaned up MonoBehaviour references with invalid GUIDs
+- Cleared renderer feature map to eliminate validation errors
+
+**Result:** 
+- ✅ No more URP compilation errors
+- ✅ Clean renderer asset compatible with current systems
+- ✅ Ready for future renderer features without legacy conflicts
+
+#### Observation Network System (Major Feature)
+**Goal:** Create visual network connections between observations with species-based filtering UI
+
+**System Architecture:**
+1. **ObservationNetworkManager** - Main controller managing network logic
+2. **NetworkConnection** - Individual line connections using LineRenderer
+3. **ObservationNetworkUI** - Canvas-based species filtering interface
+
+**Core Features:**
+- **Distance-Based Connections:** Configurable min/max connection ranges (prevents clutter)
+- **Species Filtering:** Connect same species only, different species, or both
+- **Performance Optimized:** Object pooling, update intervals, connection limits
+- **Visual Customization:** Color coding, distance gradients, line width, curved connections
+- **Real-time UI:** Species toggle list, enable/disable all, connection statistics
+
+**Technical Highlights:**
+- **Smart Connection Algorithm:** Finds nearby observations, sorts by distance, creates optimal connections
+- **Object Pooling:** Pre-creates connection objects for performance
+- **Curved Line Rendering:** Long-distance connections use bezier curves for natural appearance
+- **Dynamic Species Detection:** Automatically builds species list from active observations
+- **UI Integration:** Works with custom Canvas prefabs or auto-generates basic UI
+
+**Inspector Controls:**
+- Connection distance limits (10m - 1000m range)
+- Max connections per observation (prevents visual overload)
+- Line appearance (width, colors, animation)
+- Species relationship types (same vs different species)
+- Performance tuning (update intervals, max total connections)
+
+**UI Features:**
+- Scrollable species filter list with individual toggles
+- Enable All / Disable All buttons
+- Real-time connection count display
+- Collapsible panel design
+- Custom prefab support for complete UI control
+
+**Integration:**
+- Automatically finds existing `INaturalistMapController` and `ObservationDisplay` components
+- Updates as observations appear/disappear
+- Compatible with all existing observation systems
+
+**Result:**
+- ✅ Visual network system connecting related observations
+- ✅ Real-time species filtering with custom UI support
+- ✅ Performance optimized for large numbers of observations
+- ✅ Highly configurable appearance and behavior
+- ✅ Seamless integration with existing observation system
+
+#### iNaturalist Auto-Update System Verification
+**Discovery:** Confirmed existing auto-update system already implemented and working
+
+**System Analysis:**
+- **Auto-reload triggers:** Player movement >500m, map changes >0.01°, zoom changes >0.5
+- **Performance optimization:** 1-second minimum update interval
+- **3D World Updates:** Destroys old observation prefabs, spawns new ones based on current position
+- **Minimap Integration:** MinimapImageMarkerManager syncs markers every 1 second via reflection
+- **Update Process:** Clear existing → API request → spawn new → minimap sync
+
+**Current Settings:**
+- Reload distance threshold: 500m (configurable)
+- Update interval: 2s initial delay, 1s minimum between updates
+- Minimap marker updates: Every 1 second + real-time position updates
+
+**Status:** ✅ System working as designed, no changes required
+
+---
+
+**Technical Achievements December 7:**
+- Enhanced UI interaction system with simplified architecture
+- Comprehensive terrain validation for object spawning
+- Major new feature: Observation network system with visual connections
+- URP renderer pipeline cleanup and error resolution
+- Verification of existing auto-update functionality
+
+**Files Created/Modified:**
+- `ObservationDisplay.cs` - Simplified interaction system
+- `SpawnInsideModifier_Fixed.cs` - Enhanced terrain validation
+- `ObservationNetworkManager.cs` - Network system controller (NEW)
+- `NetworkConnection.cs` - Individual connection handler (NEW)
+- `ObservationNetworkUI.cs` - Species filtering UI (NEW)
+- `NetworkConnectionMaterial.mat` - Material for connection lines (NEW)
+- `UniversalRP-HighQuality_Renderer.asset` - Cleaned up missing references
+- `OBSERVATION_NETWORK_SETUP.md` - Comprehensive setup guide (NEW)
+
+---
+
+**End of Log - December 7, 2025**
 
 ```

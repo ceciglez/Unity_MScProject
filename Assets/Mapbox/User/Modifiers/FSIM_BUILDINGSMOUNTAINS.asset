@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31eceb017a2646f7b219819359de977, type: 3}
+  m_Name: FSIM_BUILDINGSMOUNTAINS
+  m_EditorClassIdentifier: 
+  Active: 1
+  _spawnRateInSquareMeters: 200
+  _maxSpawn: 1000
+  _densityMultiplier: 0.5
+  _minDistanceBetweenObjects: 55.6
+  _prefabs:
+  - {fileID: 138970, guid: 643ee08e3bbdea64bb5f99c58cb7734c, type: 3}
+  - {fileID: 128966, guid: e5b608db2696ae94d918923e7e990dd9, type: 3}
+  - {fileID: 132110, guid: 7bbee382f7d677a47b21bf13eb02125b, type: 3}
+  - {fileID: 138970, guid: 643ee08e3bbdea64bb5f99c58cb7734c, type: 3}
+  - {fileID: 190362, guid: cb74054fc7c8c164aaa38d5c72309eb6, type: 3}
+  - {fileID: 194716, guid: a15f83831073b2d4eabe9e5ec38bb0bb, type: 3}
+  - {fileID: 152022, guid: 6294a219386d12b4ca6890c66142df23, type: 3}
+  - {fileID: 175684, guid: eae31e79e5a0f9641a3670c53c5db36c, type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  _maxHeightDifference: 0.1
+  _raycastDistance: 20
+  _maxSlopeAngle: 45
+  _additionalGroundLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  _useStrictBoundsCheck: 1
+  _insideDistanceTolerance: 0.02
+  _showDebugInfo: 0
+  _scaleDownWithWorld: 0
+  _randomizeScale: 0
+  _randomizeRotation: 0

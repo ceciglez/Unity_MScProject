@@ -115,7 +115,7 @@ public class INaturalistMapController : MonoBehaviour
     [SerializeField] private int maxObservations = 500;
     [SerializeField] private float updateDelay = 2f;
     [SerializeField] private bool autoUpdate = true;
-    [SerializeField] private float reloadDistanceThreshold = 500f; // Reload when player moves 500m
+    [SerializeField] private float reloadDistanceThreshold = 300f; // Reload when player moves 500m
     
     [Header("Query Filters")]
     [Tooltip("Search radius in kilometers (overrides zoom-based calculation if > 0)")]

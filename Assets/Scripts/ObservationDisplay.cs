@@ -18,10 +18,8 @@ public class ObservationDisplay : MonoBehaviour
     [SerializeField] private GameObject canvasPrefab;
 
     [Header("Interaction Prompt")]
-    [Tooltip("Canvas prefab for the interaction prompt. If not assigned, a simple default will be created.")]
+    [Tooltip("Canvas prefab to show when player gets close. If not assigned, will show the auto-generated canvas.")]
     [SerializeField] private GameObject interactionPromptPrefab;
-    [Tooltip("Text to display in interaction prompt (only used if no prefab is assigned)")]
-    [SerializeField] private string interactionPromptText = "E, learn more";
     
     [Header("Canvas Settings")]
     [SerializeField] private Vector3 canvasOffset = new Vector3(0, 2f, 0);
@@ -45,47 +43,34 @@ public class ObservationDisplay : MonoBehaviour
     private Camera mainCamera;
     private bool isInitialized = false;
 
-    // Interaction System
-    private Canvas interactionPromptCanvas;
+    // Interaction System - SIMPLIFIED
+    private GameObject promptInstance;
     private bool playerInRange = false;
-    private bool infoDisplayed = false;
     
     // UI Display Control
     private bool uiDisplayEnabled = true;
     private float displayDistance = 15f;
     private bool alwaysShow = false;
     private Transform playerTransform;
+    private ObservationNetworkManager networkManager; // Add reference to network manager
     
     void Awake()
     {
-        // Create canvas in Awake so it exists before Start
-        // Use explicit override if assigned, otherwise fall back to Camera.main
+        // Find camera
         mainCamera = playerCameraOverride != null ? playerCameraOverride : Camera.main;
         
-        // If no canvas assigned, create one
-        if (infoCanvas == null)
+        // Create interaction prompt if prefab is assigned
+        if (interactionPromptPrefab != null)
         {
-            if (canvasPrefab != null)
-            {
-                Debug.Log($"ObservationDisplay.Awake: Instantiating custom canvas prefab on {gameObject.name}");
-                CreateCanvasFromPrefab();
-            }
-            else
-            {
-                Debug.Log($"ObservationDisplay.Awake: Creating auto-generated canvas on {gameObject.name}");
-                CreateCanvasAutomatically();
-            }
+            promptInstance = Instantiate(interactionPromptPrefab, transform);
+            promptInstance.transform.localPosition = canvasOffset + Vector3.up * 0.5f; // Slightly above main canvas
+            promptInstance.transform.localScale = Vector3.one * 0.003f; // Small scale for world space
+            promptInstance.SetActive(false); // Start hidden
+            Debug.Log($"ObservationDisplay: Created interaction prompt from prefab on {gameObject.name}");
         }
         
-        // Ensure canvas starts hidden immediately
-        if (infoCanvas != null)
-        {
-            infoCanvas.gameObject.SetActive(false);
-            Debug.Log($"ObservationDisplay.Awake: Canvas created and hidden on {gameObject.name}");
-        }
-        
-        // Create interaction prompt
-        CreateInteractionPrompt();
+        // DON'T auto-create canvas here - only create when Initialize() is called or canvas prefab is assigned
+        Debug.Log($"ObservationDisplay.Awake: Component ready on {gameObject.name} - canvas creation deferred until needed");
     }
     
     void Start()
@@ -108,16 +93,39 @@ public class ObservationDisplay : MonoBehaviour
         if (commonNameText == null) Debug.LogWarning($"ObservationDisplay: commonNameText not assigned on {gameObject.name}");
         if (scientificNameText == null) Debug.LogWarning($"ObservationDisplay: scientificNameText not assigned on {gameObject.name}");
         if (photoImage == null) Debug.LogWarning($"ObservationDisplay: photoImage not assigned on {gameObject.name}");
+        
+        // Find network manager
+        if (networkManager == null)
+        {
+            networkManager = FindObjectOfType<ObservationNetworkManager>();
+        }
     }
     
     void Update()
     {
-        // Handle interaction input when player is in range
-        if (playerInRange && !infoDisplayed)
+        // Handle E key when player is in range
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            // Create canvas if it doesn't exist yet
+            if (infoCanvas == null)
             {
-                ShowInformation();
+                if (canvasPrefab != null)
+                {
+                    Debug.Log($"ObservationDisplay.Update: Creating canvas from prefab for E-key interaction on {gameObject.name}");
+                    CreateCanvasFromPrefab();
+                }
+                else
+                {
+                    Debug.Log($"ObservationDisplay.Update: Creating auto-generated canvas for E-key interaction on {gameObject.name}");
+                    CreateCanvasAutomatically();
+                }
+                isInitialized = true;
+            }
+            
+            ShowCanvas(); // Show the main observation info
+            if (promptInstance != null)
+            {
+                promptInstance.SetActive(false); // Hide the prompt
             }
         }
         
@@ -134,11 +142,11 @@ public class ObservationDisplay : MonoBehaviour
             infoCanvas.transform.Rotate(0, 180, 0); // Flip to face camera correctly
         }
         
-        // Make interaction prompt face camera
-        if (interactionPromptCanvas != null && interactionPromptCanvas.gameObject.activeSelf && mainCamera != null)
+        // Make interaction prompt face camera if it exists and is visible
+        if (promptInstance != null && promptInstance.activeSelf && mainCamera != null)
         {
-            interactionPromptCanvas.transform.LookAt(mainCamera.transform);
-            interactionPromptCanvas.transform.Rotate(0, 180, 0);
+            promptInstance.transform.LookAt(mainCamera.transform);
+            promptInstance.transform.Rotate(0, 180, 0);
         }
     }
     
@@ -307,90 +315,7 @@ public class ObservationDisplay : MonoBehaviour
         // Log what we found
         Debug.Log($"ObservationDisplay: Canvas from prefab - CommonName: {commonNameText != null}, " +
                  $"ScientificName: {scientificNameText != null}, Photo: {photoImage != null}");
-        
         isInitialized = true;
-    }
-    
-    private void CreateInteractionPrompt()
-    {
-        GameObject promptObj;
-        
-        if (interactionPromptPrefab != null)
-        {
-            // Use custom prefab
-            promptObj = Instantiate(interactionPromptPrefab, transform);
-            promptObj.transform.localPosition = canvasOffset + Vector3.up * 0.5f; // Position above main canvas
-            
-            // Get canvas component from prefab
-            interactionPromptCanvas = promptObj.GetComponent<Canvas>();
-            if (interactionPromptCanvas == null)
-            {
-                Debug.LogError($"ObservationDisplay: Interaction prompt prefab doesn't have Canvas component! Creating fallback.");
-                // Don't create fallback here - just log error and continue without prompt
-                return;
-            }
-            
-            // Configure the prefab canvas for world space
-            interactionPromptCanvas.renderMode = RenderMode.WorldSpace;
-            promptObj.transform.localScale = Vector3.one * 0.003f; // Smaller than main canvas
-            
-            Debug.Log($"ObservationDisplay: Using custom interaction prompt prefab on {gameObject.name}");
-        }
-        else
-        {
-            // Create simple default prompt only if no prefab is assigned
-            promptObj = new GameObject("InteractionPrompt");
-            promptObj.transform.SetParent(transform);
-            
-            interactionPromptCanvas = promptObj.AddComponent<Canvas>();
-            interactionPromptCanvas.renderMode = RenderMode.WorldSpace;
-            
-            // Create simple text
-            GameObject textObj = new GameObject("PromptText");
-            textObj.transform.SetParent(promptObj.transform, false);
-            
-            Text promptText = textObj.AddComponent<Text>();
-            Font defaultFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            if (defaultFont != null) promptText.font = defaultFont;
-            
-            promptText.text = interactionPromptText;
-            promptText.fontSize = 16;
-            promptText.color = Color.yellow;
-            promptText.alignment = TextAnchor.MiddleCenter;
-            
-            // Create background
-            GameObject bgObj = new GameObject("Background");
-            bgObj.transform.SetParent(promptObj.transform, false);
-            bgObj.transform.SetAsFirstSibling();
-            
-            Image bgImage = bgObj.AddComponent<Image>();
-            bgImage.color = new Color(0, 0, 0, 0.7f);
-            
-            // Set sizes
-            RectTransform canvasRect = promptObj.GetComponent<RectTransform>();
-            canvasRect.sizeDelta = new Vector2(200, 50);
-            
-            RectTransform bgRect = bgObj.GetComponent<RectTransform>();
-            bgRect.anchorMin = Vector2.zero;
-            bgRect.anchorMax = Vector2.one;
-            bgRect.offsetMin = Vector2.zero;
-            bgRect.offsetMax = Vector2.zero;
-            
-            RectTransform textRect = textObj.GetComponent<RectTransform>();
-            textRect.anchorMin = Vector2.zero;
-            textRect.anchorMax = Vector2.one;
-            textRect.offsetMin = Vector2.zero;
-            textRect.offsetMax = Vector2.zero;
-            
-            // Configure prompt
-            promptObj.transform.localPosition = canvasOffset + Vector3.up * 0.5f; // Slightly above main canvas
-            promptObj.transform.localScale = Vector3.one * 0.003f; // Smaller than main canvas
-            
-            Debug.Log($"ObservationDisplay: Created default interaction prompt on {gameObject.name}");
-        }
-        
-        // Start hidden
-        promptObj.SetActive(false);
     }
     
     void LateUpdate()
@@ -435,6 +360,28 @@ public class ObservationDisplay : MonoBehaviour
         if (data != null)
         {
             Debug.Log($"  Taxon: {data.taxon?.preferred_common_name ?? data.taxon?.name ?? "No taxon"}");
+        }
+        
+        // Create canvas now if it doesn't exist (only when actually needed)
+        if (infoCanvas == null)
+        {
+            if (canvasPrefab != null)
+            {
+                Debug.Log($"ObservationDisplay.Initialize: Creating canvas from prefab on {gameObject.name}");
+                CreateCanvasFromPrefab();
+            }
+            else
+            {
+                Debug.Log($"ObservationDisplay.Initialize: Creating auto-generated canvas on {gameObject.name}");
+                CreateCanvasAutomatically();
+            }
+            
+            // Ensure canvas starts hidden
+            if (infoCanvas != null)
+            {
+                infoCanvas.gameObject.SetActive(false);
+                isInitialized = true;
+            }
         }
         
         // Apply default UI settings (can be overridden by INaturalistMapController)
@@ -497,22 +444,6 @@ public class ObservationDisplay : MonoBehaviour
         Debug.Log($"  Canvas ready but hidden - waiting for player interaction");
     }
     
-    private void ShowInformation()
-    {
-        infoDisplayed = true;
-        
-        // Hide interaction prompt
-        if (interactionPromptCanvas != null)
-        {
-            interactionPromptCanvas.gameObject.SetActive(false);
-        }
-        
-        // Show full information canvas
-        ShowCanvas();
-        
-        Debug.Log($"ObservationDisplay: Showing information for {observationData?.taxon?.preferred_common_name ?? "Unknown"}");
-    }
-    
     /// <summary>
     /// Called when player enters interaction range
     /// </summary>
@@ -520,10 +451,38 @@ public class ObservationDisplay : MonoBehaviour
     {
         playerInRange = true;
         
-        if (!infoDisplayed && interactionPromptCanvas != null)
+        // Trigger network connections when player approaches an observation
+        if (networkManager == null)
         {
-            interactionPromptCanvas.gameObject.SetActive(true);
-            Debug.Log($"ObservationDisplay: Player entered range - showing interaction prompt");
+            networkManager = FindObjectOfType<ObservationNetworkManager>();
+        }
+        
+        if (networkManager != null && observationData != null)
+        {
+            Debug.Log($"[ObservationDisplay] Player approached {gameObject.name} - triggering network connections!");
+            networkManager.TriggerConnectionsFromObservation(this);
+        }
+        else
+        {
+            Debug.LogWarning($"[ObservationDisplay] Cannot trigger connections from {gameObject.name} - NetworkManager: {networkManager != null}, Data: {observationData != null}");
+        }
+        
+        // Show interaction prompt if prefab exists (preferred behavior)
+        if (promptInstance != null)
+        {
+            promptInstance.SetActive(true);
+            Debug.Log($"ObservationDisplay: Player entered range - showing custom prompt for {gameObject.name}");
+        }
+        else if (infoCanvas != null)
+        {
+            // Fallback: show main canvas if no prompt prefab but canvas exists
+            ShowCanvas();
+            Debug.Log($"ObservationDisplay: Player entered range - showing main canvas (no prompt prefab) for {gameObject.name}");
+        }
+        else
+        {
+            // No prompt prefab AND no canvas - do nothing (wait for E key to trigger canvas creation)
+            Debug.Log($"ObservationDisplay: Player entered range - no prompt or canvas available for {gameObject.name}");
         }
     }
     
@@ -533,17 +492,15 @@ public class ObservationDisplay : MonoBehaviour
     public void OnPlayerExitRange()
     {
         playerInRange = false;
-        infoDisplayed = false;
         
-        // Hide both prompt and information
-        if (interactionPromptCanvas != null)
+        // Hide prompt and main canvas
+        if (promptInstance != null)
         {
-            interactionPromptCanvas.gameObject.SetActive(false);
+            promptInstance.SetActive(false);
         }
-        
         HideCanvas();
         
-        Debug.Log($"ObservationDisplay: Player exited range - hiding all UI");
+        Debug.Log($"ObservationDisplay: Player exited range - hiding UI for {gameObject.name}");
     }
     
     private IEnumerator LoadPhoto(string photoUrl)
