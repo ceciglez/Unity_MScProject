@@ -6,16 +6,28 @@ using System.Collections.Generic;
 /// Spawns Unity Post-Processing Volumes in a grid aligned with BiodiversityScoreManager
 /// Applies color saturation effects based on Simpson's Biodiversity Index per cell
 ///
-/// APPROACH: Grid-Based Volumes
+/// APPROACH: Grid-Based Volumes with Dynamic Updates
 /// - Aligns with existing BiodiversityScoreManager grid system (cellSize)
 /// - Spawns one volume per grid cell with biodiversity data
 /// - Sets color saturation based on Simpson's Index (low bio = low sat, high bio = high sat)
 /// - Global volume provides baseline low saturation
 ///
-/// SOURCE: Unity Post-Processing Stack V2 documentation
-/// AI CONTRIBUTION: ~75% - System design, grid alignment, volume management
-/// HUMAN CONTRIBUTION: ~25% - Parameters, biodiversity integration, testing
+/// OPTIMIZATIONS (v2):
+/// - Dynamic volume updates: Updates existing volumes instead of destroying/recreating
+/// - Profile cloning: Each volume gets unique profile instance to prevent conflicts
+/// - Smart culling: Only spawns volumes near player and removes distant ones
+/// - Public API: Query methods for saturation values and volume data
+///
+/// INTEGRATION WITH GLOBAL VOLUME:
+/// - Global Volume should have Priority = 0, Is Global = true, low saturation
+/// - Local volumes have Priority = volumePriority (default 5), override in biodiverse areas
+/// - Smooth blending controlled by blendDistance parameter
+///
+/// SOURCE: Unity URP Post-Processing documentation
+/// AI CONTRIBUTION: ~85% - System design, optimization, profile management
+/// HUMAN CONTRIBUTION: ~15% - Parameters, biodiversity integration, testing
 /// </summary>
+
 public class BiodiversityVolumeSpawner : MonoBehaviour
 {
     [Header("References")]
@@ -136,6 +148,7 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
 
     /// <summary>
     /// Main method: Spawns/updates volumes based on current biodiversity data
+    /// NOW OPTIMIZED: Updates existing volumes instead of destroying and recreating
     /// </summary>
     public void SpawnBiodiversityVolumes()
     {
@@ -164,17 +177,20 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         // Get player position for radius filtering
         Vector3 playerPos = playerTransform != null ? playerTransform.position : Vector3.zero;
 
-        // Clear existing volumes (we'll respawn)
-        ClearAllVolumes();
+        // Track which grid cells should have volumes
+        HashSet<Vector2Int> activeHotspotCells = new HashSet<Vector2Int>();
+        Dictionary<Vector2Int, BiodiversityHotspot> hotspotByCell = new Dictionary<Vector2Int, BiodiversityHotspot>();
 
         int spawnedCount = 0;
+        int updatedCount = 0;
         int skippedDistance = 0;
         int skippedLimit = 0;
 
+        // First pass: identify which cells need volumes
         foreach (var hotspot in hotspots)
         {
             // Check spawn limit
-            if (spawnedCount >= maxVolumes)
+            if (activeHotspotCells.Count >= maxVolumes)
             {
                 skippedLimit++;
                 continue;
@@ -187,29 +203,68 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
                 continue;
             }
 
-            // Convert hotspot position to grid cell
             Vector2Int gridCell = WorldToGridPosition(hotspot.position);
+            activeHotspotCells.Add(gridCell);
+            hotspotByCell[gridCell] = hotspot;
+        }
 
-            // Spawn volume
-            GameObject volumeObj = SpawnVolume(gridCell, hotspot);
-
-            if (volumeObj != null)
+        // Second pass: Remove volumes that are no longer needed
+        List<Vector2Int> cellsToRemove = new List<Vector2Int>();
+        foreach (var kvp in spawnedVolumes)
+        {
+            if (!activeHotspotCells.Contains(kvp.Key))
             {
-                spawnedVolumes[gridCell] = volumeObj;
-                spawnedCount++;
+                cellsToRemove.Add(kvp.Key);
+            }
+        }
 
-                if (enableDebugLogging && spawnedCount <= 5) // Log first 5
+        foreach (var cell in cellsToRemove)
+        {
+            if (spawnedVolumes[cell] != null)
+            {
+                Destroy(spawnedVolumes[cell]);
+            }
+            spawnedVolumes.Remove(cell);
+        }
+
+        // Third pass: Spawn new volumes or update existing ones
+        foreach (var gridCell in activeHotspotCells)
+        {
+            BiodiversityHotspot hotspot = hotspotByCell[gridCell];
+
+            if (spawnedVolumes.ContainsKey(gridCell) && spawnedVolumes[gridCell] != null)
+            {
+                // Volume already exists - just update its saturation
+                UpdateVolumeData(spawnedVolumes[gridCell], hotspot);
+                updatedCount++;
+            }
+            else
+            {
+                // Spawn new volume
+                GameObject volumeObj = SpawnVolume(gridCell, hotspot);
+
+                if (volumeObj != null)
                 {
-                    Debug.Log($"[BiodiversityVolumeSpawner] Volume #{spawnedCount}: " +
-                             $"Grid {gridCell}, Simpson's Index {hotspot.simpsonsIndex:F3}, " +
-                             $"Saturation {CalculateSaturation(hotspot.simpsonsIndex):F2}");
+                    spawnedVolumes[gridCell] = volumeObj;
+                    spawnedCount++;
+
+                    if (enableDebugLogging && spawnedCount <= 5) // Log first 5
+                    {
+                        Debug.Log($"[BiodiversityVolumeSpawner] New Volume #{spawnedCount}: " +
+                                 $"Grid {gridCell}, Simpson's Index {hotspot.simpsonsIndex:F3}, " +
+                                 $"Saturation {CalculateSaturation(hotspot.simpsonsIndex):F2}");
+                    }
                 }
             }
         }
 
         if (enableDebugLogging)
         {
-            Debug.Log($"[BiodiversityVolumeSpawner] ✅ Spawned {spawnedCount} volumes\n" +
+            Debug.Log($"[BiodiversityVolumeSpawner] ✅ Volume Update Complete\n" +
+                     $"  New volumes: {spawnedCount}\n" +
+                     $"  Updated volumes: {updatedCount}\n" +
+                     $"  Removed volumes: {cellsToRemove.Count}\n" +
+                     $"  Total active: {spawnedVolumes.Count}\n" +
                      $"  Skipped (distance): {skippedDistance}\n" +
                      $"  Skipped (limit): {skippedLimit}\n" +
                      $"  Total hotspots: {hotspots.Count}");
@@ -217,17 +272,40 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
     }
 
     /// <summary>
+    /// Updates an existing volume's saturation value without recreating it
+    /// </summary>
+    private void UpdateVolumeData(GameObject volumeObj, BiodiversityHotspot hotspot)
+    {
+        Volume volume = volumeObj.GetComponent<Volume>();
+        if (volume == null || volume.profile == null)
+            return;
+
+        float saturation = CalculateSaturation(hotspot.simpsonsIndex);
+
+        UnityEngine.Rendering.Universal.ColorAdjustments colorAdj;
+        if (volume.profile.TryGet(out colorAdj))
+        {
+            colorAdj.saturation.Override(saturation);
+        }
+    }
+
+    /// <summary>
     /// Spawns a single volume at grid position with biodiversity-based saturation
+    /// IMPROVED: Creates unique profile instance to avoid shared profile conflicts
     /// </summary>
     private GameObject SpawnVolume(Vector2Int gridCell, BiodiversityHotspot hotspot)
     {
         // Calculate world position (center of cell)
         Vector3 worldPos = GridToWorldPosition(gridCell);
-        worldPos.y = 0f; // Ground level
+        worldPos.y = 0.5f; // Slight offset above ground to avoid rendering conflicts with LineRenderers
 
         // Instantiate volume prefab
         GameObject volumeObj = Instantiate(volumePrefab, worldPos, Quaternion.identity, volumeContainer.transform);
         volumeObj.name = $"BiodiversityVolume_{gridCell.x}_{gridCell.y}";
+
+        // Keep on Default layer - volumes are filtered out of raycasts by name in NetworkConnection
+        // This ensures camera can still detect triggers for post-processing activation
+        volumeObj.layer = LayerMask.NameToLayer("Default");
 
         // Get or add Volume component
         Volume volume = volumeObj.GetComponent<Volume>();
@@ -242,6 +320,18 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         volume.weight = 1f;
         volume.blendDistance = blendDistance;
 
+        // IMPORTANT: Clone the profile to create a unique instance
+        // This prevents all volumes from sharing the same profile and settings
+        if (volume.profile != null)
+        {
+            volume.profile = Instantiate(volume.profile);
+        }
+        else
+        {
+            Debug.LogWarning($"[BiodiversityVolumeSpawner] Volume prefab has no VolumeProfile! Cannot set saturation.");
+            return volumeObj;
+        }
+
         // Add box collider for local volume trigger
         BoxCollider boxCollider = volumeObj.GetComponent<BoxCollider>();
         if (boxCollider == null)
@@ -250,31 +340,23 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         }
         boxCollider.isTrigger = true;
         boxCollider.size = new Vector3(biodiversityManager.cellSize, volumeHeight, biodiversityManager.cellSize);
+        // Center adjusted: volume is at y=0.5f, so collider extends from 0.5f to (0.5f + volumeHeight)
         boxCollider.center = new Vector3(0f, volumeHeight / 2f, 0f);
 
         // Calculate saturation based on Simpson's Index
         float saturation = CalculateSaturation(hotspot.simpsonsIndex);
 
-        // Apply color adjustment (you'll need to add ColorAdjustments to the volume profile)
-        // NOTE: This requires a VolumeProfile with ColorAdjustments override
-        if (volume.profile != null)
+        // Apply color adjustment with the cloned profile
+        UnityEngine.Rendering.Universal.ColorAdjustments colorAdj;
+        if (volume.profile.TryGet(out colorAdj))
         {
-            // Try to get existing ColorAdjustments
-            UnityEngine.Rendering.Universal.ColorAdjustments colorAdj;
-            if (volume.profile.TryGet(out colorAdj))
-            {
-                colorAdj.saturation.Override(saturation);
-            }
-            else
-            {
-                // Add new ColorAdjustments
-                colorAdj = volume.profile.Add<UnityEngine.Rendering.Universal.ColorAdjustments>();
-                colorAdj.saturation.Override(saturation);
-            }
+            colorAdj.saturation.Override(saturation);
         }
         else
         {
-            Debug.LogWarning($"[BiodiversityVolumeSpawner] Volume prefab has no VolumeProfile! Cannot set saturation.");
+            // Add new ColorAdjustments if not present
+            colorAdj = volume.profile.Add<UnityEngine.Rendering.Universal.ColorAdjustments>();
+            colorAdj.saturation.Override(saturation);
         }
 
         return volumeObj;
@@ -367,6 +449,85 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(position + Vector3.up * volumeHeight / 2f, new Vector3(cellSize, volumeHeight, cellSize));
         }
+    }
+
+    // ==================== PUBLIC API METHODS ====================
+
+    /// <summary>
+    /// Manually refresh volumes without full respawn (calls the optimized update)
+    /// </summary>
+    public void RefreshVolumes()
+    {
+        SpawnBiodiversityVolumes();
+    }
+
+    /// <summary>
+    /// Runtime adjustment of saturation range
+    /// </summary>
+    public void SetSaturationRange(float low, float high)
+    {
+        lowBiodiversitySaturation = Mathf.Clamp(low, -1f, 0f);
+        highBiodiversitySaturation = Mathf.Clamp(high, 0f, 1f);
+
+        if (enableDebugLogging)
+            Debug.Log($"[BiodiversityVolumeSpawner] Saturation range updated: {lowBiodiversitySaturation:F2} to {highBiodiversitySaturation:F2}");
+
+        // Refresh all volumes with new saturation values
+        RefreshVolumes();
+    }
+
+    /// <summary>
+    /// Query the volume at a specific world position
+    /// </summary>
+    public GameObject GetVolumeAtPosition(Vector3 worldPos)
+    {
+        Vector2Int gridCell = WorldToGridPosition(worldPos);
+
+        if (spawnedVolumes.TryGetValue(gridCell, out GameObject volumeObj))
+        {
+            return volumeObj;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Get the saturation value at a specific world position
+    /// </summary>
+    public float GetSaturationAtPosition(Vector3 worldPos)
+    {
+        GameObject volumeObj = GetVolumeAtPosition(worldPos);
+
+        if (volumeObj != null)
+        {
+            Volume volume = volumeObj.GetComponent<Volume>();
+            if (volume != null && volume.profile != null)
+            {
+                UnityEngine.Rendering.Universal.ColorAdjustments colorAdj;
+                if (volume.profile.TryGet(out colorAdj))
+                {
+                    return colorAdj.saturation.value;
+                }
+            }
+        }
+
+        return globalBaselineSaturation; // Return baseline if no local volume found
+    }
+
+    /// <summary>
+    /// Get total number of active volumes
+    /// </summary>
+    public int GetActiveVolumeCount()
+    {
+        return spawnedVolumes.Count;
+    }
+
+    /// <summary>
+    /// Check if a volume exists at a specific grid position
+    /// </summary>
+    public bool HasVolumeAtGridPosition(Vector2Int gridCell)
+    {
+        return spawnedVolumes.ContainsKey(gridCell) && spawnedVolumes[gridCell] != null;
     }
 
     void OnDestroy()

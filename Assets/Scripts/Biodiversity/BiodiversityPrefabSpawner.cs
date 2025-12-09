@@ -5,23 +5,41 @@ using Mapbox.Unity.Utilities;
 using System.Collections.Generic;
 
 /// <summary>
-/// Spawns prefabs on Mapbox terrain tiles with density based on biodiversity scores.
-/// High biodiversity areas get MORE objects spawned (trees, plants, rocks, etc.)
-/// Low biodiversity areas get FEWER objects spawned.
+/// Mapbox terrain modifier that spawns environmental objects based on biodiversity
+/// Integrates with BiodiversityScoreManager to create visually distinct ecosystems
 ///
-/// INTEGRATION:
-/// - Add as GameObjectModifier to Mapbox terrain in Unity Inspector
-/// - Assign prefab arrays (trees, plants, decorations)
-/// - Automatically queries BiodiversityScoreManager for spawn density
+/// FUNCTIONALITY:
+/// - Spawns prefabs on Mapbox terrain tiles as they generate
+/// - Density controlled by Simpson's Biodiversity Index
+/// - Uses AnimationCurve to map biodiversity (0-1) to spawn density multiplier
+/// - Samples biodiversity across 3x3 grid per tile for average
+/// - Raycasts objects to terrain surface for proper placement
 ///
-/// VISUAL EFFECT:
-/// - High Simpson's Index (0.8-1.0) → Dense vegetation, many objects
-/// - Medium Simpson's Index (0.4-0.7) → Moderate decoration
-/// - Low Simpson's Index (0.0-0.3) → Sparse, barren terrain
+/// PREFAB CATEGORIES:
+/// - High Biodiversity (>0.6): Lush vegetation, trees, flowering plants
+/// - Medium Biodiversity (>0.3): Moderate decoration, bushes, grass
+/// - Low Biodiversity (<0.3): Sparse vegetation, rocks, dead trees
+/// - Universal: Objects that spawn everywhere, scaled by biodiversity
 ///
-/// SOURCE: Based on Mapbox SpawnInsideModifier pattern
-/// AI CONTRIBUTION: ~90% - System design, density calculation, biodiversity integration
-/// HUMAN CONTRIBUTION: ~10% - Prefab selection, artistic tuning
+/// TECHNICAL APPROACH:
+/// - Inherits from Mapbox GameObjectModifier
+/// - Runs during tile generation (OnEnable callback)
+/// - Random spawn positioning with configurable density
+/// - Random rotation and scale variation for natural look
+/// - Performance limit: maxObjectsPerTile (default 50)
+///
+/// VISUAL STORYTELLING:
+/// - High biodiversity → Dense, vibrant ecosystems
+/// - Low biodiversity → Barren, sparse environments
+/// - Creates emergent environmental narrative from real data
+///
+/// SOURCE:
+/// - Mapbox Unity SDK GameObjectModifier pattern
+/// - Reference: https://docs.mapbox.com/unity/maps/guides/modifiers/
+/// - Custom biodiversity integration layer
+///
+/// AI CONTRIBUTION: ~80% - System design, density calculation, Mapbox integration, spawn logic
+/// HUMAN CONTRIBUTION: ~20% - Prefab selection, artistic tuning, biodiversity thresholds
 /// </summary>
 [CreateAssetMenu(menuName = "Mapbox/Modifiers/Biodiversity Prefab Spawner")]
 public class BiodiversityPrefabSpawner : GameObjectModifier

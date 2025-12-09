@@ -39,8 +39,53 @@ public enum SortDirection
     Asc     // "asc" - ascending (oldest first)
 }
 
-// Controller for displaying iNaturalist observations on a Mapbox map
-
+/// <summary>
+/// iNaturalist API integration for displaying real biodiversity observations on Mapbox terrain
+/// Fetches observation data from iNaturalist.org and spawns 3D representations in Unity
+///
+/// FUNCTIONALITY:
+/// - Queries iNaturalist API for observations within radius (~50km default)
+/// - Filters by quality grade, photos, captive/cultivated status
+/// - Sorts observations by distance from player spawn point
+/// - Spawns taxon-specific prefabs (plants, animals, birds, fungi, insects)
+/// - Raycasts to terrain for accurate placement
+/// - Optional bird audio integration via Xeno-Canto API
+///
+/// API DATA STRUCTURE:
+/// - ObservationData: id, location (lat/long), photos[], user, observed_on, quality_grade
+/// - Taxon: id, name, preferred_common_name, iconic_taxon_name (classification)
+/// - Photos: url, attribution, license_code
+///
+/// FILTERING OPTIONS:
+/// - Quality Grade: Research (verified), Needs ID, Casual
+/// - Has Photos: Only observations with images
+/// - Captive/Cultivated: Exclude non-wild observations
+/// - Species-level only: Filter out higher taxonomic ranks
+///
+/// INTEGRATION:
+/// - Primary data source for BiodiversityScoreManager
+/// - Spawned observations have ObservationDisplay component for UI
+/// - Works with Mapbox coordinate system (lat/long to Unity world space)
+/// - Updates when player position changes significantly
+///
+/// API ENDPOINTS:
+/// - Base URL: https://api.inaturalist.org/v1/observations
+/// - Parameters: lat, lng, radius, quality_grade, has[], iconic_taxa, per_page
+/// - Response: JSON with observation array
+///
+/// SOURCE:
+/// - iNaturalist API v1 documentation: https://api.inaturalist.org/v1/docs/
+/// - Mapbox Unity SDK for coordinate conversion
+/// - Unity Networking (UnityWebRequest) for API calls
+///
+/// DATA SOURCE CREDIT:
+/// - All observation data © iNaturalist.org contributors
+/// - Licensed under Creative Commons (varies by observation)
+/// - Must provide attribution as per iNaturalist API terms
+///
+/// AI CONTRIBUTION: ~65% - API integration, JSON parsing, prefab spawning, coordinate conversion
+/// HUMAN CONTRIBUTION: ~35% - API parameter selection, filtering logic, prefab assignment, UI integration
+/// </summary>
 public class INaturalistMapController : MonoBehaviour
 {
     [Header("Map References")]

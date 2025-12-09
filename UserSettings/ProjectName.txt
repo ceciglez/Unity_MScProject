@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-MSC_THESIS_PROTOTYPE_V2
-=======
-MSCPROJECTBACKUP
->>>>>>> da2b9a467 (had to load backup file and change location because of iCloud issues)
+MULTISPECIES ENVIRONMENTS MSC FINAL PROJECT V3

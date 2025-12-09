@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +6,33 @@ using System.Linq;
 /// <summary>
 /// Manages biodiversity scoring across the terrain using Simpson's Biodiversity Index
 /// Calculates species diversity in grid cells and updates terrain materials accordingly
-/// Now supports post-processing pipeline for global biodiversity visualization
+///
+/// FUNCTIONALITY:
+/// - Divides terrain into grid cells (default 50m x 50m)
+/// - Monitors ObservationDisplay objects from INaturalistMapController
+/// - Calculates Simpson's Diversity Index per cell: D = 1 - Σ[n_i(n_i-1)] / [N(N-1)]
+/// - Generates biodiversity hotspots (areas with Simpson's Index > 0.1)
+/// - Updates terrain materials and global shader properties
+/// - Provides public API for querying biodiversity at any position
+///
+/// SIMPSON'S INDEX EXPLAINED:
+/// - Range: 0 (no diversity) to 1 (maximum diversity)
+/// - Measures species evenness: higher value = more diverse species distribution
+/// - Used in ecology to quantify biodiversity in ecosystems
+///
+/// INTEGRATION:
+/// - Works with iNaturalist real-world observation data
+/// - Updates every 3 seconds (configurable)
+/// - Supports BiodiversityVolumeSpawner for post-processing effects
+/// - Applies material saturation based on calculated diversity
+///
+/// SOURCE:
+/// - Simpson's Diversity Index formula: Standard ecological measure (Simpson, 1949)
+/// - Unity implementation: Custom grid-based spatial partitioning
+/// - Reference: https://en.wikipedia.org/wiki/Diversity_index#Simpson_index
+///
+/// AI CONTRIBUTION: ~70% - Grid system, Simpson's calculation, hotspot generation, material updates
+/// HUMAN CONTRIBUTION: ~30% - iNaturalist integration, parameter tuning, biodiversity thresholds
 /// </summary>
 [System.Serializable]
 public class BiodiversityHotspot

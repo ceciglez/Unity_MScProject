@@ -1,9 +1,39 @@
 using UnityEngine;
 
 /// <summary>
-/// Simple biodiversity material controller
-/// Uses the existing BiodiversityScoreManager material effects
-/// No camera filters needed - works with URP!
+/// Material-based biodiversity visualization controller
+/// Applies saturation effects directly to terrain materials without post-processing
+///
+/// FUNCTIONALITY:
+/// - Alternative to full-screen post-processing effects
+/// - Reads global biodiversity saturation from BiodiversityScoreManager
+/// - Applies saturation to assigned materials or auto-detected terrain materials
+/// - Modifies material _Saturation and _BaseColor properties
+/// - Supports manual override for testing
+///
+/// APPROACH:
+/// - Direct material property modification (no camera effects)
+/// - Compatible with URP and built-in render pipeline
+/// - Lighter weight than full-screen post-processing
+/// - Affects only assigned materials (more control)
+///
+/// USE CASE:
+/// - When you want material-level saturation control
+/// - Alternative to BiodiversityVolumeSpawner (local volumes)
+/// - Good for specific terrain pieces or objects
+/// - Simpler than full post-processing stack
+///
+/// SHADER PROPERTIES:
+/// - _GlobalDiversitySaturation: Read from BiodiversityScoreManager
+/// - _Saturation: Applied to material
+/// - _BaseColor: Modified based on saturation
+///
+/// SOURCE:
+/// - Unity Material system documentation
+/// - Shader property manipulation via MaterialPropertyBlock
+///
+/// AI CONTRIBUTION: ~65% - Material detection, property application, auto-discovery
+/// HUMAN CONTRIBUTION: ~35% - Material selection, saturation mapping, manual controls
 /// </summary>
 public class BiodiversityMaterialController : MonoBehaviour
 {

@@ -7,13 +7,13 @@ public class NetworkConnection : MonoBehaviour
     [Header("Line Styling")]
     [Tooltip("Width of the connection lines")]
     public float lineWidth = 0.5f;
-    
+
     [Tooltip("Opacity of the connection lines (0-1)")]
     [Range(0f, 1f)]
     public float lineOpacity = 0.3f;
-    
+
     [Tooltip("Height above terrain for lines")]
-    public float terrainOffset = 0.1f;
+    public float terrainOffset = 0.1f; // Keep lines close to ground
     
     [Tooltip("Number of points for terrain-following curves")]
     public int curveResolution = 10;
@@ -44,33 +44,37 @@ public class NetworkConnection : MonoBehaviour
         // Create transparent material using reliable Sprites/Default shader
         Material lineMaterial = new Material(Shader.Find("Sprites/Default"));
         lineMaterial.color = new Color(0f, 1f, 1f, lineOpacity); // Cyan with custom opacity
-        
-        // Simple transparency setup
-        lineMaterial.SetFloat("_Mode", 2); // Fade mode
+
+        // Use OPAQUE rendering with alpha blending to avoid transparent sorting issues
+        // This renders lines in the opaque pass but with transparency
         lineMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
         lineMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        lineMaterial.SetInt("_ZWrite", 0);
-        lineMaterial.DisableKeyword("_ALPHATEST_ON");
-        lineMaterial.EnableKeyword("_ALPHABLEND_ON");
-        lineMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        lineMaterial.renderQueue = 3000; // Standard transparent queue
-        
+        lineMaterial.SetInt("_ZWrite", 1); // Write to depth buffer
+        lineMaterial.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.LessEqual);
+
+        // Render in Geometry queue (2000) - before all transparent objects
+        // This ensures lines are drawn first and other transparent effects blend on top
+        lineMaterial.renderQueue = 2000;
+
         lineRenderer.material = lineMaterial;
         lineRenderer.useWorldSpace = true;
+
+        // Keep occlusion disabled - lines should always show network connections
         lineRenderer.allowOcclusionWhenDynamic = false;
-        
-        // Set rendering order to be behind other objects but still visible
-        lineRenderer.sortingOrder = -10; // Less negative to ensure visibility
-        lineRenderer.sortingLayerName = "Default"; // Use default layer for now
-        
+
+        // Set rendering order - lower values render first (behind other transparents)
+        // This makes lines render before volume overlays and glow effects
+        lineRenderer.sortingOrder = -100; // Very low to render first
+        lineRenderer.sortingLayerName = "Default";
+
         // Disable shadows to prevent lines from casting/receiving shadows
         lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         lineRenderer.receiveShadows = false;
-        
+
         // Set the GameObject layer to Network
         gameObject.layer = LayerMask.NameToLayer("Network");
-        
-        Debug.Log($"[NetworkConnection] Created terrain-following LineRenderer with width: {lineWidth}, opacity: {lineOpacity}, layer: Network, sortingOrder: -100");
+
+        Debug.Log($"[NetworkConnection] Created LineRenderer: renderQueue 3000, occlusion disabled for visibility");
     }
 
     
@@ -187,9 +191,20 @@ public class NetworkConnection : MonoBehaviour
         // Single raycast with simplified layer filtering
         int excludeMask = LayerMask.GetMask("UI", "Network", "TransparentFX");
         int layerMask = ~excludeMask;
-        
+
         if (Physics.Raycast(rayStart, Vector3.down, out hit, 100f, layerMask))
         {
+            // Skip biodiversity volume colliders - check by name
+            if (hit.collider.gameObject.name.Contains("BiodiversityVolume"))
+            {
+                // Cast ray from just below this hit to find actual terrain
+                Vector3 continueFrom = hit.point + Vector3.down * 0.1f;
+                if (Physics.Raycast(continueFrom, Vector3.down, out RaycastHit terrainHit, 100f, layerMask))
+                {
+                    return terrainHit.point.y;
+                }
+            }
+
             return hit.point.y;
         }
         
@@ -223,9 +238,10 @@ public class NetworkConnection : MonoBehaviour
         int allExceptExcluded = ~excludeMask;
         if (Physics.Raycast(rayStart, Vector3.down, out hit, raycastDistance, allExceptExcluded))
         {
-            // Skip objects that are clearly not terrain (observation prefabs, etc.)
-            if (hit.collider.gameObject.name.ToLower().Contains("observation") || 
-                hit.collider.gameObject.name.ToLower().Contains("prefab"))
+            // Skip objects that are clearly not terrain (observation prefabs, volumes, etc.)
+            if (hit.collider.gameObject.name.ToLower().Contains("observation") ||
+                hit.collider.gameObject.name.ToLower().Contains("prefab") ||
+                hit.collider.gameObject.name.Contains("BiodiversityVolume"))
             {
                 // Continue raycast from this hit point to find terrain underneath
                 Vector3 continueStart = hit.point + Vector3.down * 0.1f;
