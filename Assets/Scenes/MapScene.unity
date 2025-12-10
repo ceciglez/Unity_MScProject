@@ -955,45 +955,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!21 &414965088
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/DarkBringerRefined_1_2
-  m_Shader: {fileID: 4800000, guid: 99d80d0fdb7c6724c89e77d81bbc026a, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BayerTex:
-        m_Texture: {fileID: 2800000, guid: eac7505667530464e91debe0b4a8492b, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Lut2D:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &423414325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,8 +1459,8 @@ GameObject:
   - component: {fileID: 583617923}
   - component: {fileID: 583617925}
   m_Layer: 9
-  m_Name: ExampleCharacter
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2893,7 +2854,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v2.6
+  m_text: v2.7
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4885,11 +4846,11 @@ MonoBehaviour:
   maxCalculationDistance: 200
   updateInterval: 3
   minSaturation: 0.1
-  maxSaturation: 3
-  diversitySmoothness: 2
+  maxSaturation: 1
+  diversitySmoothness: 6.96
   useSpotlightEffect: 1
   spotlightIntensity: 4
-  showDebugGizmos: 1
+  showDebugGizmos: 0
   enableDebugLogging: 1
   forceConstantUpdates: 1
   testMaterials: []
@@ -4912,6 +4873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   biodiversityManager: {fileID: 1175304067}
   volumePrefab: {fileID: 1716441067889977862, guid: 7ba7f8d2d1c2b481784a5ad78902dccc, type: 3}
+  playerOrCameraTransform: {fileID: 0}
   lowBiodiversitySaturation: -0.8
   highBiodiversitySaturation: 0.5
   globalBaselineSaturation: -0.5
@@ -4922,6 +4884,7 @@ MonoBehaviour:
   updateInterval: 5
   maxVolumes: 100
   spawnRadius: 0
+  playerMovementThreshold: 50
   enableDebugLogging: 1
   showVolumeGizmos: 1
   manualUpdateKey: 118
@@ -4962,7 +4925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c2c7efc5576424488dc38800101eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biodiversityManager: {fileID: 0}
+  biodiversityManager: {fileID: 1175304067}
   enableColorization: 1
   overlayHeight: 0.05
   overlayOpacity: 0.6
@@ -5375,7 +5338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sha: {fileID: 4800000, guid: 99d80d0fdb7c6724c89e77d81bbc026a, type: 3}
-  mat: {fileID: 414965088}
+  mat: {fileID: 1828601335}
   flatLut: {fileID: 2800000, guid: b536a29ef1c463b4a894cf616766d37b, type: 3}
   bayerTexture: {fileID: 2800000, guid: eac7505667530464e91debe0b4a8492b, type: 3}
   ColorBleed: 0.25
@@ -6941,6 +6904,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804244443}
   m_CullTransparentMesh: 1
+--- !u!21 &1828601335
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/DarkBringerRefined_1_2
+  m_Shader: {fileID: 4800000, guid: 99d80d0fdb7c6724c89e77d81bbc026a, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BayerTex:
+        m_Texture: {fileID: 2800000, guid: eac7505667530464e91debe0b4a8492b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Lut2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1 &1845036048
 GameObject:
   m_ObjectHideFlags: 0
@@ -7550,7 +7552,7 @@ GameObject:
   - component: {fileID: 1913343634}
   - component: {fileID: 1913343635}
   m_Layer: 0
-  m_Name: ExampleCamera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7728,13 +7730,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b30aba7db0d40c5816e0aba5e64bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biodiversityMaterial: {fileID: 2100000, guid: 9e97c347d6b73441aba5fcba5a15c258, type: 2}
-  effectStrength: 2.51
-  edgeSharpness: 2
-  showDebugOverlay: 1
-  hotspotsDetected: 0
-  biodiversityManagerFound: 0
-  biodiversityManager: {fileID: 0}
 --- !u!1 &1987907806
 GameObject:
   m_ObjectHideFlags: 0
@@ -7779,88 +7774,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2013799307
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2013799309}
-  - component: {fileID: 2013799308}
-  - component: {fileID: 2013799310}
-  m_Layer: 0
-  m_Name: BiodiversityScore
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2013799308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013799307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a5eb89ffa2fc4a1e8e1f963451edffa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellSize: 50
-  maxCalculationDistance: 200
-  updateInterval: 3
-  minSaturation: 0.1
-  maxSaturation: 3
-  diversitySmoothness: 2
-  useSpotlightEffect: 1
-  spotlightIntensity: 4
-  showDebugGizmos: 1
-  enableDebugLogging: 1
-  forceConstantUpdates: 1
-  testMaterials:
-  - {fileID: 2100000, guid: 03f87985dee9f7f43a176465df3b8693, type: 2}
-  testRenderers: []
-  totalObservationsFound: 0
-  totalSpeciesFound: 0
-  averageDiversityIndex: 0
-  currentGlobalSaturation: 1
---- !u!4 &2013799309
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013799307}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6927.2124, y: -2623.027, z: -1964.1146}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2013799310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013799307}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3294e412d884e4a928ad0c4f791688c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetMaterials:
-  - {fileID: 2100000, guid: 03f87985dee9f7f43a176465df3b8693, type: 2}
-  - {fileID: 2100000, guid: 5d4ca0bec0e86ee4a858cc8fd64368c3, type: 2}
-  biodiversityMultiplier: 1
-  manualSaturation: 1.41
-  materialsAffected: 0
-  currentBiodiversityScore: 0
 --- !u!1 &2038795529
 GameObject:
   m_ObjectHideFlags: 0
@@ -8800,7 +8713,6 @@ SceneRoots:
   - {fileID: 1729413984}
   - {fileID: 369941902}
   - {fileID: 657199782}
-  - {fileID: 2013799309}
   - {fileID: 819880870}
   - {fileID: 1905610301}
   - {fileID: 1175304066}
