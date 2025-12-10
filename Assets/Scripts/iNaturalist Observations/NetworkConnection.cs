@@ -41,31 +41,31 @@ public class NetworkConnection : MonoBehaviour
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
         
-        // Create transparent material using reliable Sprites/Default shader
-        Material lineMaterial = new Material(Shader.Find("Sprites/Default"));
+        // Use Unlit shader to bypass post-processing (Global Volume desaturation won't affect it)
+        Shader lineShader = Shader.Find("Universal Render Pipeline/Unlit");
+        if (lineShader == null)
+        {
+            lineShader = Shader.Find("Unlit/Transparent");
+            Debug.LogWarning("[NetworkConnection] URP/Unlit not found, using Unlit/Transparent");
+        }
+        if (lineShader == null)
+        {
+            lineShader = Shader.Find("Sprites/Default");
+            Debug.LogWarning("[NetworkConnection] Unlit/Transparent not found, falling back to Sprites/Default");
+        }
+
+        Material lineMaterial = new Material(lineShader);
         lineMaterial.color = new Color(0f, 1f, 1f, lineOpacity); // Cyan with custom opacity
 
-        // Use OPAQUE rendering with alpha blending to avoid transparent sorting issues
-        // This renders lines in the opaque pass but with transparency
+        // Standard transparency setup
         lineMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
         lineMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        lineMaterial.SetInt("_ZWrite", 1); // Write to depth buffer
-        lineMaterial.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.LessEqual);
-
-        // Render in Geometry queue (2000) - before all transparent objects
-        // This ensures lines are drawn first and other transparent effects blend on top
-        lineMaterial.renderQueue = 2000;
+        lineMaterial.SetInt("_ZWrite", 0); // Don't write to depth buffer
+        lineMaterial.renderQueue = 3000; // Transparent queue
 
         lineRenderer.material = lineMaterial;
         lineRenderer.useWorldSpace = true;
-
-        // Keep occlusion disabled - lines should always show network connections
         lineRenderer.allowOcclusionWhenDynamic = false;
-
-        // Set rendering order - lower values render first (behind other transparents)
-        // This makes lines render before volume overlays and glow effects
-        lineRenderer.sortingOrder = -100; // Very low to render first
-        lineRenderer.sortingLayerName = "Default";
 
         // Disable shadows to prevent lines from casting/receiving shadows
         lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;

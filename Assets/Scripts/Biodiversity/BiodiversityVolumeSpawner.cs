@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
 
 /// <summary>
@@ -37,6 +38,9 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
     [Tooltip("Volume prefab with Post-Processing Volume component and Color Adjustments")]
     public GameObject volumePrefab;
 
+    [Tooltip("Player/Camera transform for position tracking (auto-found if not set)")]
+    public Transform playerOrCameraTransform;
+
     [Header("Saturation Settings")]
     [Tooltip("Saturation for low biodiversity areas (Simpson's Index = 0)")]
     [Range(-1f, 0f)]
@@ -57,11 +61,11 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
 
     [Tooltip("Blend distance for volume effects (meters)")]
     [Range(5f, 100f)]
-    public float blendDistance = 25f;
+    public float blendDistance = 100f;
 
     [Tooltip("Volume height (how tall the volume trigger is)")]
     [Range(10f, 500f)]
-    public float volumeHeight = 100f;
+    public float volumeHeight = 50f;
 
     [Header("Update Settings")]
     [Tooltip("Automatically update volumes when biodiversity recalculates")]
@@ -78,7 +82,11 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
 
     [Tooltip("Only spawn volumes near player (meters, 0 = unlimited)")]
     [Range(0f, 500f)]
-    public float spawnRadius = 0f;
+    public float spawnRadius = 200f; // Default to 200m radius around player
+
+    [Tooltip("Update volumes when player moves this distance (meters)")]
+    [Range(10f, 100f)]
+    public float playerMovementThreshold = 50f; // Update when player moves 50m
 
     [Header("Debugging")]
     public bool enableDebugLogging = true;
@@ -90,6 +98,7 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
     private GameObject volumeContainer;
     private float lastUpdateTime;
     private Transform playerTransform;
+    private Vector3 lastPlayerPosition;
 
     void Start()
     {
@@ -105,16 +114,92 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
             }
         }
 
-        // Find player
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        // Find player/camera transform - prioritize manually assigned reference
+        if (playerOrCameraTransform != null)
         {
-            playerTransform = player.transform;
+            playerTransform = playerOrCameraTransform;
+            lastPlayerPosition = playerTransform.position;
+            Debug.Log($"[BiodiversityVolumeSpawner] ✅ Using manually assigned transform: {playerTransform.name}");
+        }
+        else
+        {
+            // Try to find Player tag
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                playerTransform = player.transform;
+                lastPlayerPosition = playerTransform.position;
+                Debug.Log($"[BiodiversityVolumeSpawner] ✅ Player found: {player.name}");
+            }
+            else
+            {
+                // Fallback to main camera if no Player tag found
+                Camera mainCam = Camera.main;
+                if (mainCam != null)
+                {
+                    playerTransform = mainCam.transform;
+                    lastPlayerPosition = playerTransform.position;
+                    Debug.LogWarning($"[BiodiversityVolumeSpawner] No 'Player' tag found! Using Main Camera '{mainCam.name}' for movement tracking instead.");
+                }
+                else
+                {
+                    Debug.LogError("[BiodiversityVolumeSpawner] ❌ No Player OR Main Camera found! Volumes won't update with movement.");
+                }
+            }
         }
 
         // Create container for spawned volumes
         volumeContainer = new GameObject("BiodiversityVolumes");
         volumeContainer.transform.SetParent(transform);
+
+        // Check camera setup for volume detection
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null)
+        {
+            var cameraData = mainCamera.GetUniversalAdditionalCameraData();
+            if (cameraData != null)
+            {
+                Debug.Log($"[BiodiversityVolumeSpawner] 📷 Camera Volume Layer Mask (raw value): {cameraData.volumeLayerMask.value}");
+                Debug.Log($"[BiodiversityVolumeSpawner] 📷 Camera Rendering Post-Processing: {cameraData.renderPostProcessing}");
+
+                // Check if TransparentFX layer is included (volumes are now on this layer)
+                int transparentFXLayerMask = 1 << LayerMask.NameToLayer("TransparentFX");
+                bool hasTransparentFXLayer = (cameraData.volumeLayerMask.value & transparentFXLayerMask) != 0;
+
+                Debug.Log($"[BiodiversityVolumeSpawner] 📷 TransparentFX layer included in volume mask: {hasTransparentFXLayer}");
+
+                // Also check Default layer for backward compatibility
+                int defaultLayerMask = 1 << LayerMask.NameToLayer("Default");
+                bool hasDefaultLayer = (cameraData.volumeLayerMask.value & defaultLayerMask) != 0;
+                Debug.Log($"[BiodiversityVolumeSpawner] 📷 Default layer included in volume mask: {hasDefaultLayer}");
+
+                // Add TransparentFX layer to camera's volume mask if not present
+                if (!hasTransparentFXLayer)
+                {
+                    Debug.LogWarning("[BiodiversityVolumeSpawner] ⚠️ Camera's Volume Layer Mask doesn't include 'TransparentFX' layer!");
+                    Debug.LogWarning("[BiodiversityVolumeSpawner] 🔧 AUTO-FIX: Adding 'TransparentFX' layer to camera's volume layer mask...");
+
+                    // Add TransparentFX layer to the volume mask
+                    cameraData.volumeLayerMask |= transparentFXLayerMask;
+
+                    Debug.Log($"[BiodiversityVolumeSpawner] ✅ Fixed! Camera Volume Layer Mask now: {cameraData.volumeLayerMask.value}");
+                }
+                else
+                {
+                    Debug.Log("[BiodiversityVolumeSpawner] ✅ Camera is correctly configured to detect volumes on TransparentFX layer");
+                }
+
+                // Also check if post-processing is enabled
+                if (!cameraData.renderPostProcessing)
+                {
+                    Debug.LogError("[BiodiversityVolumeSpawner] ❌ CRITICAL: Camera Post-Processing is DISABLED!");
+                    Debug.LogError("[BiodiversityVolumeSpawner] Volumes won't work. Enable 'Post Processing' on camera's URP settings.");
+                }
+            }
+        }
+
+        // Check for Global Volume and its priority
+        CheckGlobalVolumePriority();
 
         if (enableDebugLogging)
         {
@@ -122,7 +207,8 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
                      $"  Saturation range: {lowBiodiversitySaturation:F2} to {highBiodiversitySaturation:F2}\n" +
                      $"  Global baseline: {globalBaselineSaturation:F2}\n" +
                      $"  Volume priority: {volumePriority}, Blend distance: {blendDistance}m\n" +
-                     $"  Max volumes: {maxVolumes}, Spawn radius: {spawnRadius}m");
+                     $"  Max volumes: {maxVolumes}, Spawn radius: {spawnRadius}m\n" +
+                     $"  Player movement threshold: {playerMovementThreshold}m");
         }
 
         // Initial spawn
@@ -134,12 +220,43 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         // Manual update
         if (Input.GetKeyDown(manualUpdateKey))
         {
-            Debug.Log("[BiodiversityVolumeSpawner] Manual update triggered!");
+            Debug.Log("========================================");
+            Debug.Log("[BiodiversityVolumeSpawner] ⚡ MANUAL UPDATE TRIGGERED (V key pressed)");
+            Debug.Log($"[BiodiversityVolumeSpawner] Player position: {(playerTransform != null ? playerTransform.position.ToString() : "No player found")}");
+            Debug.Log($"[BiodiversityVolumeSpawner] Current active volumes: {spawnedVolumes.Count}");
             SpawnBiodiversityVolumes();
+            Debug.Log("========================================");
+            return;
         }
 
-        // Auto update
-        if (autoUpdate && updateInterval > 0f && Time.time - lastUpdateTime >= updateInterval)
+        if (!autoUpdate) return;
+
+        bool shouldUpdate = false;
+
+        // Check if player has moved significantly (like INaturalistMapController and grass spawner)
+        if (playerTransform != null)
+        {
+            float playerMovement = Vector3.Distance(lastPlayerPosition, playerTransform.position);
+
+            if (playerMovement > playerMovementThreshold)
+            {
+                shouldUpdate = true;
+                lastPlayerPosition = playerTransform.position;
+
+                if (enableDebugLogging)
+                {
+                    Debug.Log($"[BiodiversityVolumeSpawner] Player moved {playerMovement:F0}m - updating volumes");
+                }
+            }
+        }
+
+        // Also update on interval (backup update method)
+        if (updateInterval > 0f && Time.time - lastUpdateTime >= updateInterval)
+        {
+            shouldUpdate = true;
+        }
+
+        if (shouldUpdate)
         {
             SpawnBiodiversityVolumes();
             lastUpdateTime = Time.time;
@@ -152,27 +269,37 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
     /// </summary>
     public void SpawnBiodiversityVolumes()
     {
+        Debug.Log("[BiodiversityVolumeSpawner] 🔄 SpawnBiodiversityVolumes() called");
+
         if (biodiversityManager == null)
         {
-            Debug.LogWarning("[BiodiversityVolumeSpawner] No BiodiversityScoreManager reference!");
+            Debug.LogError("[BiodiversityVolumeSpawner] ❌ No BiodiversityScoreManager reference!");
             return;
         }
 
+        Debug.Log($"[BiodiversityVolumeSpawner] ✓ BiodiversityScoreManager found: {biodiversityManager.name}");
+
         if (volumePrefab == null)
         {
-            Debug.LogError("[BiodiversityVolumeSpawner] No volume prefab assigned!");
+            Debug.LogError("[BiodiversityVolumeSpawner] ❌ No volume prefab assigned! Assign a prefab in the Inspector.");
             return;
         }
+
+        Debug.Log($"[BiodiversityVolumeSpawner] ✓ Volume prefab assigned: {volumePrefab.name}");
 
         // Get biodiversity hotspots from manager
         List<BiodiversityHotspot> hotspots = biodiversityManager.GetBiodiversityHotspots();
 
+        Debug.Log($"[BiodiversityVolumeSpawner] Hotspots retrieved: {(hotspots != null ? hotspots.Count.ToString() : "NULL")}");
+
         if (hotspots == null || hotspots.Count == 0)
         {
-            if (enableDebugLogging)
-                Debug.Log("[BiodiversityVolumeSpawner] No biodiversity hotspots available yet");
+            Debug.LogWarning("[BiodiversityVolumeSpawner] ⚠️ No biodiversity hotspots available yet");
+            Debug.LogWarning("[BiodiversityVolumeSpawner] Tip: Wait for observations to load or move to an area with observations");
             return;
         }
+
+        Debug.Log($"[BiodiversityVolumeSpawner] ✓ Found {hotspots.Count} biodiversity hotspots");
 
         // Get player position for radius filtering
         Vector3 playerPos = playerTransform != null ? playerTransform.position : Vector3.zero;
@@ -258,17 +385,44 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
             }
         }
 
-        if (enableDebugLogging)
+        // Check camera position relative to volumes
+        Camera cam = Camera.main;
+        string cameraInfo = "No camera";
+        if (cam != null)
         {
-            Debug.Log($"[BiodiversityVolumeSpawner] ✅ Volume Update Complete\n" +
-                     $"  New volumes: {spawnedCount}\n" +
-                     $"  Updated volumes: {updatedCount}\n" +
-                     $"  Removed volumes: {cellsToRemove.Count}\n" +
-                     $"  Total active: {spawnedVolumes.Count}\n" +
-                     $"  Skipped (distance): {skippedDistance}\n" +
-                     $"  Skipped (limit): {skippedLimit}\n" +
-                     $"  Total hotspots: {hotspots.Count}");
+            cameraInfo = $"Camera at {cam.transform.position}, looking at volumes";
+
+            // Check if camera is inside any volume bounds
+            foreach (var kvp in spawnedVolumes)
+            {
+                if (kvp.Value != null)
+                {
+                    BoxCollider col = kvp.Value.GetComponent<BoxCollider>();
+                    if (col != null && col.bounds.Contains(cam.transform.position))
+                    {
+                        Volume vol = kvp.Value.GetComponent<Volume>();
+                        UnityEngine.Rendering.Universal.ColorAdjustments colorAdj;
+                        float sat = 0f;
+                        if (vol != null && vol.profile != null && vol.profile.TryGet(out colorAdj))
+                        {
+                            sat = colorAdj.saturation.value;
+                        }
+                        Debug.Log($"[BiodiversityVolumeSpawner] 🎥 CAMERA IS INSIDE VOLUME: {kvp.Value.name}, Saturation={sat:F2}");
+                    }
+                }
+            }
         }
+
+        // ALWAYS log the summary for debugging
+        Debug.Log($"[BiodiversityVolumeSpawner] ✅ Volume Update Complete\n" +
+                 $"  🆕 New volumes spawned: {spawnedCount}\n" +
+                 $"  🔄 Updated volumes: {updatedCount}\n" +
+                 $"  🗑️  Removed volumes: {cellsToRemove.Count}\n" +
+                 $"  📊 Total active volumes: {spawnedVolumes.Count}\n" +
+                 $"  ⏭️  Skipped (too far from player): {skippedDistance}\n" +
+                 $"  ⏭️  Skipped (max limit reached): {skippedLimit}\n" +
+                 $"  🌍 Total biodiversity hotspots: {hotspots.Count}\n" +
+                 $"  📷 {cameraInfo}");
     }
 
     /// <summary>
@@ -303,9 +457,16 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         GameObject volumeObj = Instantiate(volumePrefab, worldPos, Quaternion.identity, volumeContainer.transform);
         volumeObj.name = $"BiodiversityVolume_{gridCell.x}_{gridCell.y}";
 
-        // Keep on Default layer - volumes are filtered out of raycasts by name in NetworkConnection
-        // This ensures camera can still detect triggers for post-processing activation
-        volumeObj.layer = LayerMask.NameToLayer("Default");
+        // Put volumes on TransparentFX layer (or create a dedicated "Volumes" layer)
+        // This layer is already excluded from terrain raycasts in NetworkConnection
+        // Camera can still detect volumes for post-processing on any layer
+        int volumeLayer = LayerMask.NameToLayer("TransparentFX");
+        if (volumeLayer == -1)
+        {
+            volumeLayer = LayerMask.NameToLayer("Default");
+            Debug.LogWarning("[BiodiversityVolumeSpawner] TransparentFX layer not found, using Default (lines may raycast volumes)");
+        }
+        volumeObj.layer = volumeLayer;
 
         // Get or add Volume component
         Volume volume = volumeObj.GetComponent<Volume>();
@@ -332,31 +493,46 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
             return volumeObj;
         }
 
-        // Add box collider for local volume trigger
+        // Calculate saturation based on Simpson's Index
+        float saturation = CalculateSaturation(hotspot.simpsonsIndex);
+
+        // Add box collider to define volume bounds
+        // CRITICAL: isTrigger must be TRUE for volume detection but collider should be on a separate layer
+        // to avoid physics interactions
         BoxCollider boxCollider = volumeObj.GetComponent<BoxCollider>();
         if (boxCollider == null)
         {
             boxCollider = volumeObj.AddComponent<BoxCollider>();
         }
+
+        // For URP Volumes: isTrigger=true works, but we need to ensure proper bounds
         boxCollider.isTrigger = true;
         boxCollider.size = new Vector3(biodiversityManager.cellSize, volumeHeight, biodiversityManager.cellSize);
-        // Center adjusted: volume is at y=0.5f, so collider extends from 0.5f to (0.5f + volumeHeight)
-        boxCollider.center = new Vector3(0f, volumeHeight / 2f, 0f);
 
-        // Calculate saturation based on Simpson's Index
-        float saturation = CalculateSaturation(hotspot.simpsonsIndex);
+        // CRITICAL FIX: Center the collider properly
+        // Volume is at y=0.5, and should extend UP from there
+        // If volumeHeight=50, collider should go from y=0.5 to y=50.5
+        // So center should be at y=0 (relative to volume GameObject which is at y=0.5)
+        // which puts the collider center at world y=0.5, extending from 0.5-25 to 0.5+25
+        boxCollider.center = Vector3.zero; // Center relative to GameObject (which is already at y=0.5)
 
         // Apply color adjustment with the cloned profile
         UnityEngine.Rendering.Universal.ColorAdjustments colorAdj;
         if (volume.profile.TryGet(out colorAdj))
         {
             colorAdj.saturation.Override(saturation);
+            Debug.Log($"[BiodiversityVolumeSpawner] 📦 Volume created at {worldPos}: " +
+                     $"Simpson's Index={hotspot.simpsonsIndex:F3}, Saturation={saturation:F2}, " +
+                     $"Priority={volume.priority}, IsGlobal={volume.isGlobal}, Weight={volume.weight}, " +
+                     $"BlendDistance={volume.blendDistance}, Layer={LayerMask.LayerToName(volumeObj.layer)}");
         }
         else
         {
             // Add new ColorAdjustments if not present
             colorAdj = volume.profile.Add<UnityEngine.Rendering.Universal.ColorAdjustments>();
             colorAdj.saturation.Override(saturation);
+            Debug.Log($"[BiodiversityVolumeSpawner] 📦 Volume created (NEW ColorAdj) at {worldPos}: " +
+                     $"Simpson's Index={hotspot.simpsonsIndex:F3}, Saturation={saturation:F2}");
         }
 
         return volumeObj;
@@ -528,6 +704,53 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
     public bool HasVolumeAtGridPosition(Vector2Int gridCell)
     {
         return spawnedVolumes.ContainsKey(gridCell) && spawnedVolumes[gridCell] != null;
+    }
+
+    /// <summary>
+    /// Diagnostic: Check Global Volume priority to ensure local volumes will override it
+    /// </summary>
+    private void CheckGlobalVolumePriority()
+    {
+        Debug.Log("[BiodiversityVolumeSpawner] 🔍 Searching for Global Volume in scene...");
+
+        Volume[] allVolumes = FindObjectsOfType<Volume>();
+        Debug.Log($"[BiodiversityVolumeSpawner] Found {allVolumes.Length} total Volume components in scene");
+
+        foreach (Volume vol in allVolumes)
+        {
+            if (vol.isGlobal)
+            {
+                Debug.Log($"[BiodiversityVolumeSpawner] 🌍 GLOBAL VOLUME FOUND: {vol.gameObject.name}");
+                Debug.Log($"[BiodiversityVolumeSpawner]   Priority: {vol.priority}");
+                Debug.Log($"[BiodiversityVolumeSpawner]   Weight: {vol.weight}");
+                Debug.Log($"[BiodiversityVolumeSpawner]   Layer: {LayerMask.LayerToName(vol.gameObject.layer)}");
+
+                // Check if profile has ColorAdjustments
+                if (vol.profile != null)
+                {
+                    UnityEngine.Rendering.Universal.ColorAdjustments colorAdj;
+                    if (vol.profile.TryGet(out colorAdj))
+                    {
+                        Debug.Log($"[BiodiversityVolumeSpawner]   Global Saturation: {colorAdj.saturation.value:F2}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[BiodiversityVolumeSpawner]   ⚠️ Global Volume has no ColorAdjustments!");
+                    }
+                }
+
+                // Warn if priority conflict
+                if (vol.priority >= volumePriority)
+                {
+                    Debug.LogWarning($"[BiodiversityVolumeSpawner] ⚠️ WARNING: Global Volume priority ({vol.priority}) is >= local volume priority ({volumePriority})!");
+                    Debug.LogWarning("[BiodiversityVolumeSpawner]   Local volumes won't override global! Increase 'Volume Priority' in BiodiversityVolumeSpawner.");
+                }
+                else
+                {
+                    Debug.Log($"[BiodiversityVolumeSpawner] ✅ Priority check OK: Global ({vol.priority}) < Local ({volumePriority})");
+                }
+            }
+        }
     }
 
     void OnDestroy()
