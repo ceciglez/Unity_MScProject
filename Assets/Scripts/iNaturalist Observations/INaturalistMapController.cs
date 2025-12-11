@@ -189,6 +189,10 @@ public class INaturalistMapController : MonoBehaviour
     [SerializeField] private SortDirection sortDirection = SortDirection.Desc;
     [Tooltip("Sort by distance to player after receiving API response")]
     [SerializeField] private bool sortByDistanceToPlayer = true;
+
+    [Header("User Filter")]
+    [Tooltip("Filter observations by specific iNaturalist username (leave empty for no filter)")]
+    public string filterByUsername = "";
     
 
     
@@ -917,6 +921,64 @@ public class INaturalistMapController : MonoBehaviour
     {
         StartCoroutine(LoadiNaturalistData());
     }
+
+    /// <summary>
+    /// Set username filter and reload observations (user's observations will appear first)
+    /// </summary>
+    public void SetUsernameFilter(string username)
+    {
+        filterByUsername = username;
+        if (showDebugInfo)
+            Debug.Log($"[iNaturalist] Username filter set to: {username}");
+        ReloadData();
+    }
+
+    /// <summary>
+    /// Clear username filter and reload all observations
+    /// </summary>
+    public void ClearUsernameFilter()
+    {
+        filterByUsername = "";
+        if (showDebugInfo)
+            Debug.Log($"[iNaturalist] Username filter cleared");
+        ReloadData();
+    }
+
+    /// <summary>
+    /// Load observations with user priority - loads user's observations first, then area observations
+    /// </summary>
+    public IEnumerator LoadObservationsWithUserPriority(string username, float lat, float lng, float radiusKm = 5f)
+    {
+        if (showDebugInfo)
+            Debug.Log($"[iNaturalist] Loading observations with user priority: {username} at {lat},{lng}");
+
+        // Store original settings
+        string originalUsername = filterByUsername;
+        float originalRadius = fixedSearchRadiusKm;
+
+        // First, load user's observations in the area
+        filterByUsername = username;
+        fixedSearchRadiusKm = radiusKm;
+
+        yield return StartCoroutine(LoadiNaturalistData());
+
+        int userObservationCount = observations.Count;
+
+        if (showDebugInfo)
+            Debug.Log($"[iNaturalist] Loaded {userObservationCount} observations from user: {username}");
+
+        // Then, load all observations in the area (will be merged)
+        filterByUsername = "";
+
+        yield return StartCoroutine(LoadiNaturalistData());
+
+        if (showDebugInfo)
+            Debug.Log($"[iNaturalist] Total observations after area load: {observations.Count}");
+
+        // Restore original settings
+        filterByUsername = originalUsername;
+        fixedSearchRadiusKm = originalRadius;
+    }
     
     /// <summary>
     /// Clear all observation prefabs
@@ -941,7 +1003,15 @@ public class INaturalistMapController : MonoBehaviour
         string url = $"{INATURALIST_API_URL}?" +
                      $"swlng={swlng}&swlat={swlat}&nelng={nelng}&nelat={nelat}" +
                      $"&per_page={actualLimit}";
-        
+
+        // Add username filter if specified
+        if (!string.IsNullOrEmpty(filterByUsername))
+        {
+            url += $"&user_login={filterByUsername}";
+            if (showDebugInfo)
+                Debug.Log($"[iNaturalist] Adding user filter: {filterByUsername}");
+        }
+
         // Add quality grades
         if (qualityGrades != null && qualityGrades.Length > 0)
         {
@@ -953,7 +1023,7 @@ public class INaturalistMapController : MonoBehaviour
             }
             url += $"&quality_grade={qualityGradeStr}";
         }
-        
+
         // Add photo requirement
         if (requirePhotos && !includeObservationsWithoutPhotos)
         {
@@ -963,8 +1033,8 @@ public class INaturalistMapController : MonoBehaviour
         {
             url += "&photos=any";
         }
-        
-        // Add captive filter - FIXED: was only excluding, now includes too  
+
+        // Add captive filter - FIXED: was only excluding, now includes too
         if (includeCaptive)
         {
             url += "&captive=any"; // Include both captive and wild
@@ -973,10 +1043,10 @@ public class INaturalistMapController : MonoBehaviour
         {
             url += "&captive=false"; // Only wild observations
         }
-        
+
         // Add ordering
         url += $"&order={SortDirectionToString(sortDirection)}&order_by={OrderByToString(orderBy)}";
-        
+
         return url;
     }
     

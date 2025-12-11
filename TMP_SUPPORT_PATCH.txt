@@ -1,0 +1,39 @@
+=== TEXTMESHPRO SUPPORT PATCH ===
+
+To add TextMeshPro support to Biodiversity UI.cs, make these changes:
+
+1. ADD THIS IMPORT at line 3:
+   using TMPro;
+
+2. ADD THESE FIELDS after line 49 (after "public InputField usernameSearchInput;"):
+   public TMP_InputField usernameSearchInputTMP;   // TextMeshPro version
+
+3. ADD THESE FIELDS after "public Text searchStatusText;":
+   public TMP_Text searchStatusTextTMP;            // TextMeshPro version
+
+4. REPLACE ALL "usernameSearchInput == null" with:
+   (usernameSearchInput == null && usernameSearchInputTMP == null)
+
+5. REPLACE ALL "usernameSearchInput.text" with:
+   (usernameSearchInputTMP != null ? usernameSearchInputTMP.text : usernameSearchInput.text)
+
+6. REPLACE ALL "usernameSearchInput.ActivateInputField()" with:
+   if (usernameSearchInputTMP != null) usernameSearchInputTMP.ActivateInputField();
+   else if (usernameSearchInput != null) usernameSearchInput.ActivateInputField();
+
+7. REPLACE ALL "usernameSearchInput.Select()" with:
+   if (usernameSearchInputTMP != null) usernameSearchInputTMP.Select();
+   else if (usernameSearchInput != null) usernameSearchInput.Select();
+
+8. REPLACE ALL "usernameSearchInput.gameObject" with:
+   (usernameSearchInputTMP != null ? usernameSearchInputTMP.gameObject : usernameSearchInput.gameObject)
+
+9. REPLACE ALL "searchStatusText.text = " with:
+   if (searchStatusTextTMP != null) searchStatusTextTMP.text =
+   else if (searchStatusText != null) searchStatusText.text =
+
+===================================
+
+EASIER SOLUTION:
+Just use the BiodiversityUI_TMP_Helper.cs I created!
+See TEXTMESHPRO_QUICK_FIX.md for instructions.

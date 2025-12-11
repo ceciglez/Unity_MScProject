@@ -48,7 +48,7 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
 
     [Tooltip("Saturation for high biodiversity areas (Simpson's Index = 1)")]
     [Range(0f, 1f)]
-    public float highBiodiversitySaturation = 0.5f;
+    public float highBiodiversitySaturation = 0.3f;
 
     [Tooltip("Global baseline saturation (applied everywhere, overridden by local volumes)")]
     [Range(-1f, 0f)]
