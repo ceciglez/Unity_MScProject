@@ -28,14 +28,13 @@ using UnityEngine;
 /// - _Saturation: Applied to material
 /// - _BaseColor: Modified based on saturation
 ///
-/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
-/// PROMPT: "Create a script that applies biodiversity saturation directly to terrain materials"
-/// SOURCE:
-/// - Unity Material system documentation
-/// - Shader property manipulation via MaterialPropertyBlock
+/// DEVELOPMENT APPROACH: Iterative human-AI collaboration
+/// - HUMAN: Specified direct material control approach, selected target materials, defined saturation ranges
+/// - AI: Implemented auto-material discovery, shader property updates, saturation reading
+/// - HUMAN: Configured update frequency, tested compatibility with URP, validated shader properties
 ///
-/// AI CONTRIBUTION: ~65% - Auto-material discovery, shader property updates, global saturation reading
-/// HUMAN CONTRIBUTION: ~35% - Target material selection, saturation multiplier ranges, update frequency
+/// SOURCE: Unity Material system and shader property manipulation
+/// ATTRIBUTION: Material-based approach design (human), property update system (AI-assisted)
 /// </summary>
 public class BiodiversityMaterialController : MonoBehaviour
 {

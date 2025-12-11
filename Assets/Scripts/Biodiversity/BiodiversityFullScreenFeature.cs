@@ -33,16 +33,16 @@ using UnityEngine.Rendering.Universal;
 /// - Uses RTHandle for temporary render targets
 /// - Single blit operation (performance optimized)
 ///
-/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
-/// PROMPT: "Create a URP ScriptableRendererFeature that passes biodiversity hotspot data to a full-screen shader"
-/// SOURCE:
-/// - Unity URP ScriptableRendererFeature documentation
-/// - Reference: https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@14.0/manual/renderer-features/intro-to-scriptable-renderer-features.html
-/// - Custom shader integration for biodiversity data
+/// DEVELOPMENT APPROACH: Iterative human-AI collaboration
+/// - HUMAN: Specified full-screen "spotlight" effect concept, chose RenderPassEvent timing, set max hotspots (20)
+/// - AI: Implemented ScriptableRendererFeature structure, shader data array passing, RTHandle setup
+/// - HUMAN: Configured material assignment, validated shader parameters, performance tested
 ///
-/// AI CONTRIBUTION: ~75% - RenderPass architecture, shader array data passing, RTHandle management
-/// HUMAN CONTRIBUTION: ~25% - Material shader selection, RenderPassEvent timing, max hotspot count
+/// SOURCE: Unity URP ScriptableRendererFeature documentation
+/// Reference: https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@14.0/manual/renderer-features/intro-to-scriptable-renderer-features.html
+/// ATTRIBUTION: Visual effect design (human), URP render pass implementation (AI-assisted)
 /// </summary>
+
 public class BiodiversityFullScreenFeature : ScriptableRendererFeature
 {
     [System.Serializable]

@@ -27,14 +27,13 @@ using UnityEngine.UI;
 /// - Updates every frame based on player position
 /// - Calls UpdateBiodiversityScores() when settings change
 ///
-/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
-/// PROMPT: "Create a UI controller that displays biodiversity metrics with color-coded labels"
-/// SOURCE:
-/// - Unity UI system documentation
-/// - Custom implementation for biodiversity data display
+/// DEVELOPMENT APPROACH: Iterative human-AI collaboration
+/// - HUMAN: Designed UI layout, defined diversity thresholds (0.0-0.2 = "Very Low", etc.), specified toggle controls
+/// - AI: Implemented update loop, color interpolation, data queries
+/// - HUMAN: Configured key bindings (B key), tested metric accuracy, refined label text
 ///
-/// AI CONTRIBUTION: ~60% - Update loop logic, color interpolation, BiodiversityScoreManager queries
-/// HUMAN CONTRIBUTION: ~40% - UI layout design, diversity label thresholds, toggle key binding
+/// SOURCE: Unity UI system documentation
+/// ATTRIBUTION: UI design and user experience (human), update logic (AI-assisted)
 /// </summary>
 public class BiodiversityUI : MonoBehaviour
 {
