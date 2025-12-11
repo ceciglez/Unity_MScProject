@@ -26,13 +26,15 @@ using System.Linq;
 /// - Supports BiodiversityVolumeSpawner for post-processing effects
 /// - Applies material saturation based on calculated diversity
 ///
+/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
+/// PROMPT: "Implement Simpson's Biodiversity Index calculation across a grid system that monitors iNaturalist observations"
 /// SOURCE:
 /// - Simpson's Diversity Index formula: Standard ecological measure (Simpson, 1949)
 /// - Unity implementation: Custom grid-based spatial partitioning
 /// - Reference: https://en.wikipedia.org/wiki/Diversity_index#Simpson_index
 ///
-/// AI CONTRIBUTION: ~70% - Grid system, Simpson's calculation, hotspot generation, material updates
-/// HUMAN CONTRIBUTION: ~30% - iNaturalist integration, parameter tuning, biodiversity thresholds
+/// AI CONTRIBUTION: ~70% - Grid spatial partitioning, Simpson's Index calculation algorithm, hotspot detection
+/// HUMAN CONTRIBUTION: ~30% - iNaturalist observation integration, cell size/threshold parameters, testing
 /// </summary>
 [System.Serializable]
 public class BiodiversityHotspot

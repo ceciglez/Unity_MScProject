@@ -24,9 +24,11 @@ using System.Collections.Generic;
 /// - Local volumes have Priority = volumePriority (default 5), override in biodiverse areas
 /// - Smooth blending controlled by blendDistance parameter
 ///
+/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
+/// PROMPT: "Create a system that spawns URP Post-Processing Volumes based on Simpson's biodiversity index grid cells"
 /// SOURCE: Unity URP Post-Processing documentation
-/// AI CONTRIBUTION: ~85% - System design, optimization, profile management
-/// HUMAN CONTRIBUTION: ~15% - Parameters, biodiversity integration, testing
+/// AI CONTRIBUTION: ~85% - Grid alignment system, volume pooling optimization, profile cloning
+/// HUMAN CONTRIBUTION: ~15% - Saturation ranges, biodiversity integration, player radius culling
 /// </summary>
 
 public class BiodiversityVolumeSpawner : MonoBehaviour

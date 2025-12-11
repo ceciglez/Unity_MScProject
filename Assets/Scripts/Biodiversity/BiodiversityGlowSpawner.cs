@@ -23,12 +23,14 @@ using System.Collections.Generic;
 /// - Provide navigation aids for exploration
 /// - Enhance environmental storytelling
 ///
+/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
+/// PROMPT: "Create glowing visual markers at biodiversity hotspots visible from distance"
 /// SOURCE:
 /// - Unity particle system and material emission
 /// - HDR color for glow/bloom effects
 ///
-/// AI CONTRIBUTION: ~90% - System design, glow implementation, color mapping
-/// HUMAN CONTRIBUTION: ~10% - Visual tuning, artistic direction
+/// AI CONTRIBUTION: ~90% - Hotspot spawning system, color interpolation, HDR intensity calculation
+/// HUMAN CONTRIBUTION: ~10% - Glow color palette, intensity ranges, particle effects toggle
 /// </summary>
 public class BiodiversityGlowSpawner : MonoBehaviour
 {

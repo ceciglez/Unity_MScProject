@@ -22,12 +22,14 @@ using System.Collections.Generic;
 /// - Queries BiodiversityScoreManager for hotspot data
 /// - Creates visual "stains" of color on terrain
 ///
+/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
+/// PROMPT: "Create colored overlay quads on terrain that show biodiversity hotspots visible from any distance"
 /// SOURCE:
 /// - Unity quad mesh generation
 /// - Material blending modes for terrain overlay
 ///
-/// AI CONTRIBUTION: ~90% - Quad generation, color mapping, terrain overlay system
-/// HUMAN CONTRIBUTION: ~10% - Visual tuning, color choices
+/// AI CONTRIBUTION: ~90% - Procedural quad mesh generation, color gradient mapping, hotspot positioning
+/// HUMAN CONTRIBUTION: ~10% - Color palette selection, quad scale/height offset tuning
 /// </summary>
 public class BiodiversityTerrainColorizer : MonoBehaviour
 {

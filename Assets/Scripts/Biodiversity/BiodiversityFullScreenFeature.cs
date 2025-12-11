@@ -33,13 +33,15 @@ using UnityEngine.Rendering.Universal;
 /// - Uses RTHandle for temporary render targets
 /// - Single blit operation (performance optimized)
 ///
+/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
+/// PROMPT: "Create a URP ScriptableRendererFeature that passes biodiversity hotspot data to a full-screen shader"
 /// SOURCE:
 /// - Unity URP ScriptableRendererFeature documentation
 /// - Reference: https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@14.0/manual/renderer-features/intro-to-scriptable-renderer-features.html
 /// - Custom shader integration for biodiversity data
 ///
-/// AI CONTRIBUTION: ~75% - URP integration, render pass setup, shader data passing, hotspot system
-/// HUMAN CONTRIBUTION: ~25% - Material assignment, render event timing, performance tuning
+/// AI CONTRIBUTION: ~75% - RenderPass architecture, shader array data passing, RTHandle management
+/// HUMAN CONTRIBUTION: ~25% - Material shader selection, RenderPassEvent timing, max hotspot count
 /// </summary>
 public class BiodiversityFullScreenFeature : ScriptableRendererFeature
 {

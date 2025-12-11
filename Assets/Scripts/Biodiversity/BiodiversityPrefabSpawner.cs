@@ -33,13 +33,15 @@ using System.Collections.Generic;
 /// - Low biodiversity → Barren, sparse environments
 /// - Creates emergent environmental narrative from real data
 ///
+/// CODE LOGIC SUGGESTED BY: Claude Sonnet 4.5, Dec 2025
+/// PROMPT: "Create a Mapbox modifier that spawns prefabs with density controlled by Simpson's biodiversity index"
 /// SOURCE:
 /// - Mapbox Unity SDK GameObjectModifier pattern
 /// - Reference: https://docs.mapbox.com/unity/maps/guides/modifiers/
 /// - Custom biodiversity integration layer
 ///
-/// AI CONTRIBUTION: ~80% - System design, density calculation, Mapbox integration, spawn logic
-/// HUMAN CONTRIBUTION: ~20% - Prefab selection, artistic tuning, biodiversity thresholds
+/// AI CONTRIBUTION: ~80% - Mapbox GameObjectModifier integration, density calculation curves, raycast placement
+/// HUMAN CONTRIBUTION: ~20% - Prefab asset selection, biodiversity threshold tuning, spawn count limits
 /// </summary>
 [CreateAssetMenu(menuName = "Mapbox/Modifiers/Biodiversity Prefab Spawner")]
 public class BiodiversityPrefabSpawner : GameObjectModifier
