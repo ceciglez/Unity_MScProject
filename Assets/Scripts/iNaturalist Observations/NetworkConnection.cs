@@ -147,9 +147,6 @@ public class NetworkConnection : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Optimized terrain position detection with caching for web performance
-    /// </summary>
     private Vector3 GetOptimizedTerrainPosition(Vector3 worldPos)
     {
         // Use caching to reduce raycast calls
@@ -180,9 +177,6 @@ public class NetworkConnection : MonoBehaviour
         return terrainPos;
     }
     
-    /// <summary>
-    /// Fast terrain height detection with fewer raycasts
-    /// </summary>
     private float GetTerrainHeightFast(Vector3 worldPos)
     {
         RaycastHit hit;
@@ -212,9 +206,6 @@ public class NetworkConnection : MonoBehaviour
         return 0f;
     }
     
-    /// <summary>
-    /// Get terrain position using multiple raycast strategies (legacy method for compatibility)
-    /// </summary>
     private Vector3 GetTerrainPosition(Vector3 worldPos)
     {
         float raycastDistance = 200f;

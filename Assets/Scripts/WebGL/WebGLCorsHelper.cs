@@ -1,20 +1,8 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-/// <summary>
-/// Helper class to configure UnityWebRequest for WebGL CORS compatibility
-/// Fixes Chrome-specific issues with cross-origin requests
-///
-/// IMPORTANT: This fixes Unity's UnityWebRequest limitations in WebGL.
-/// The real issue is that UnityWebRequest in WebGL sometimes doesn't properly
-/// handle CORS, even when the APIs support it.
-/// </summary>
 public static class WebGLCorsHelper
 {
-    /// <summary>
-    /// Creates a UnityWebRequest with proper configuration for WebGL
-    /// Use this instead of UnityWebRequest.Get() for external APIs
-    /// </summary>
     public static UnityWebRequest CreateCorsRequest(string url)
     {
         UnityWebRequest request = new UnityWebRequest(url, "GET");
@@ -43,10 +31,6 @@ public static class WebGLCorsHelper
         return request;
     }
 
-    /// <summary>
-    /// Creates a UnityWebRequest for texture downloads with WebGL compatibility
-    /// Use this for Mapbox Static Images API
-    /// </summary>
     public static UnityWebRequest CreateCorsTextureRequest(string url)
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -75,9 +59,6 @@ public static class WebGLCorsHelper
 #endif
     }
 
-    /// <summary>
-    /// Certificate handler for WebGL - browsers handle SSL validation
-    /// </summary>
     private class WebGLCertificateHandler : CertificateHandler
     {
         protected override bool ValidateCertificate(byte[] certificateData)
@@ -88,9 +69,6 @@ public static class WebGLCorsHelper
         }
     }
 
-    /// <summary>
-    /// Log detailed error information for debugging
-    /// </summary>
     public static void LogRequestError(UnityWebRequest request, string context)
     {
         Debug.LogError($"[WebGLCorsHelper] {context} FAILED");

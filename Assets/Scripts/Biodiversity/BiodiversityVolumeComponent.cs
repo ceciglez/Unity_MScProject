@@ -2,17 +2,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-/// <summary>
-/// URP-compatible biodiversity visualization using Volume system
-/// This works with Universal Render Pipeline instead of Built-in
-///
-/// DEVELOPMENT APPROACH: Standard URP VolumeComponent structure
-/// - HUMAN: Specified parameter types (intensity, debug toggle)
-/// - AI: Generated URP VolumeComponent boilerplate code
-///
-/// SOURCE: Unity URP VolumeComponent documentation
-/// ATTRIBUTION: Simple data structure with standard URP patterns
-/// </summary>
 [System.Serializable, VolumeComponentMenu("Custom/Biodiversity Effect")]
 public class BiodiversityVolumeComponent : VolumeComponent, IPostProcessComponent
 {

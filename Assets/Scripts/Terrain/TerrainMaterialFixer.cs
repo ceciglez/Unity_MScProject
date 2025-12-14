@@ -1,10 +1,6 @@
 using UnityEngine;
 using Mapbox.Unity.Map;
 
-/// <summary>
-/// Diagnostic and fix script for terrain tile material issues.
-/// Attach to MapContainer to diagnose why tiles are invisible.
-/// </summary>
 public class TerrainMaterialFixer : MonoBehaviour
 {
     [Header("Diagnostic Info")]

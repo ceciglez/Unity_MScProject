@@ -2,9 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Main menu controller with Start, Exit, About, and Credits sections
-/// </summary>
+// Main menu system with panel navigation and scene loading
+// Handles about, credits, controls panels and URP shader compatibility
+//
+// DEVELOPMENT NOTE:
+// - Implementation aided by Claude Sonnet 3.5 for URP shader fixes and panel management
+// - UI design and menu structure developed independently
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Menu Panels")]

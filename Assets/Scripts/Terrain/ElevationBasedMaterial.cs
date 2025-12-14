@@ -3,10 +3,6 @@ using Mapbox.Unity.Map;
 using Mapbox.Unity.MeshGeneration.Modifiers;
 using Mapbox.Unity.MeshGeneration.Data;
 
-/// <summary>
-/// Applies vertex colors to terrain based on elevation for shader blending
-/// Works with HeightBasedTerrain shader to blend three textures by height
-/// </summary>
 [CreateAssetMenu(menuName = "Mapbox/Modifiers/Elevation Based Material")]
 public class ElevationBasedMaterial : GameObjectModifier
 {

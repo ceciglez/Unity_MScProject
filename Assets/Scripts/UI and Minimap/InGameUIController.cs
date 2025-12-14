@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// In-game UI controller for controls guidance and escape menu
-/// </summary>
 public class InGameUIController : MonoBehaviour
 {
     [Header("UI Panels")]

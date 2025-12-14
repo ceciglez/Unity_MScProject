@@ -3,40 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-/// <summary>
-/// Manages biodiversity scoring across the terrain using Simpson's Biodiversity Index
-/// Calculates species diversity in grid cells and updates terrain materials accordingly
-///
-/// FUNCTIONALITY:
-/// - Divides terrain into grid cells (default 50m x 50m)
-/// - Monitors ObservationDisplay objects from INaturalistMapController
-/// - Calculates Simpson's Diversity Index per cell: D = 1 - Σ[n_i(n_i-1)] / [N(N-1)]
-/// - Generates biodiversity hotspots (areas with Simpson's Index > 0.1)
-/// - Updates terrain materials and global shader properties
-/// - Provides public API for querying biodiversity at any position
-///
-/// SIMPSON'S INDEX EXPLAINED:
-/// - Range: 0 (no diversity) to 1 (maximum diversity)
-/// - Measures species evenness: higher value = more diverse species distribution
-/// - Used in ecology to quantify biodiversity in ecosystems
-///
-/// INTEGRATION:
-/// - Works with iNaturalist real-world observation data
-/// - Updates every 3 seconds (configurable)
-/// - Supports BiodiversityVolumeSpawner for post-processing effects
-/// - Applies material saturation based on calculated diversity
-///
-/// DEVELOPMENT APPROACH: Iterative human-AI collaboration
-/// - HUMAN: Selected Simpson's Index algorithm, defined grid-based approach, specified iNaturalist integration
-/// - AI: Implemented calculation logic, grid system structure, material update patterns
-/// - HUMAN: Tuned parameters (cell size 50m, update intervals), debugged observation tracking, validated accuracy
-///
-/// SOURCE:
-/// - Simpson's Diversity Index formula: Standard ecological measure (Simpson, 1949)
-/// - Reference: https://en.wikipedia.org/wiki/Diversity_index#Simpson_index
-///
-/// ATTRIBUTION: Algorithm selection and architecture (human), implementation patterns (AI-assisted)
-/// </summary>
+// Calculates biodiversity metrics using Simpson's Diversity Index across spatial cells
+// Creates hotspot data for visual effects and scoring systems
+// Analyzes species distribution from iNaturalist observations
+//
+// DEVELOPMENT NOTE:
+// - Implementation aided by Claude Sonnet 3.5 for Simpson's Index calculations and spatial analysis
+// - Biodiversity scoring concept and integration design developed independently
+
 [System.Serializable]
 public class BiodiversityHotspot
 {
@@ -70,10 +44,6 @@ public class BiodiversityScoreManager : MonoBehaviour
 
     // ...existing fields...
 
-    /// <summary>
-    /// Returns the Simpson's Index (biodiversity score) for a given world position.
-    /// Looks up the closest grid cell, or returns average/global if not found.
-    /// </summary>
     public float GetSimpsonsIndexAtPosition(Vector3 position)
     {
         // Convert world position to grid cell
@@ -130,9 +100,6 @@ public class BiodiversityScoreManager : MonoBehaviour
     // Shader property for global diversity saturation
     private static readonly int DiversitySaturationProperty = Shader.PropertyToID("_GlobalDiversitySaturation");
     
-    /// <summary>
-    /// Gets current biodiversity hotspots for post-processing system
-    /// </summary>
     public List<BiodiversityHotspot> GetBiodiversityHotspots()
     {
         return new List<BiodiversityHotspot>(currentHotspots);
@@ -169,9 +136,6 @@ public class BiodiversityScoreManager : MonoBehaviour
                      $"Spotlight effect: {useSpotlightEffect}, Intensity: {spotlightIntensity:F1}");
     }
     
-    /// <summary>
-    /// Monitor for when observations are loaded and trigger biodiversity calculation
-    /// </summary>
     private IEnumerator MonitorObservationLoading()
     {
         int lastObservationCount = 0;
@@ -217,9 +181,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Main update function that recalculates Simpson's biodiversity index and applies to materials
-    /// </summary>
     public void UpdateBiodiversityScores()
     {
         // Find all observations in the scene
@@ -276,9 +237,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Finds all observation objects with ObservationDisplay components in the scene
-    /// </summary>
     private void FindAllObservations()
     {
         allObservations.Clear();
@@ -341,10 +299,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Calculates Simpson's biodiversity index for each grid cell
-    /// Formula: D = Σ[n_i × (n_i-1)] / [N × (N-1)], where Diversity = 1 - D
-    /// </summary>
     private void CalculateSimpsonsIndex()
     {
         // Focus calculation around player position if available
@@ -417,9 +371,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Gets species identifier from observation data
-    /// </summary>
     private string GetSpeciesIdentifier(ObservationDisplay observation)
     {
         var data = observation.GetData();
@@ -446,9 +397,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         return "unknown_species";
     }
     
-    /// <summary>
-    /// Calculates smoothed diversity by considering neighboring grid cells
-    /// </summary>
     private float CalculateSmoothedDiversity(Vector2Int centerGrid)
     {
         float totalDiversity = 0f;
@@ -485,9 +433,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         return cellCount > 0 ? totalDiversity / cellCount : 0f;
     }
     
-    /// <summary>
-    /// Generates biodiversity hotspots for the post-processing system
-    /// </summary>
     private void GenerateBiodiversityHotspots()
     {
         currentHotspots.Clear();
@@ -532,9 +477,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Applies Simpson's biodiversity index to terrain materials through saturation
-    /// </summary>
     private void ApplyBiodiversityToTerrain()
     {
         // Calculate average diversity for global effects
@@ -570,9 +512,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Applies regional Simpson's diversity effects to specific terrain areas
-    /// </summary>
     private void ApplyRegionalDiversityEffects()
     {
         List<Renderer> renderersToProcess = new List<Renderer>();
@@ -663,9 +602,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Checks if a material is a terrain material that should be affected by biodiversity
-    /// </summary>
     private bool IsTerrainMaterial(Material material)
     {
         // Check shader name or material name patterns
@@ -679,9 +615,6 @@ public class BiodiversityScoreManager : MonoBehaviour
                materialName.Contains("ground");
     }
     
-    /// <summary>
-    /// Converts world position to grid position
-    /// </summary>
     private Vector2Int WorldToGridPosition(Vector3 worldPos)
     {
         int x = Mathf.FloorToInt(worldPos.x / cellSize);
@@ -689,9 +622,6 @@ public class BiodiversityScoreManager : MonoBehaviour
         return new Vector2Int(x, z);
     }
     
-    /// <summary>
-    /// Converts grid position back to world position (center of cell)
-    /// </summary>
     private Vector3 GridToWorldPosition(Vector2Int gridPos)
     {
         float x = (gridPos.x + 0.5f) * cellSize;
@@ -699,27 +629,18 @@ public class BiodiversityScoreManager : MonoBehaviour
         return new Vector3(x, 0f, z);
     }
     
-    /// <summary>
-    /// Get Simpson's diversity index at a specific world position
-    /// </summary>
     public float GetBiodiversityAtPosition(Vector3 worldPos)
     {
         Vector2Int gridPos = WorldToGridPosition(worldPos);
         return biodiversityGrid.ContainsKey(gridPos) ? biodiversityGrid[gridPos] : 0f;
     }
     
-    /// <summary>
-    /// Get total observation count at a specific world position
-    /// </summary>
     public int GetObservationCountAtPosition(Vector3 worldPos)
     {
         Vector2Int gridPos = WorldToGridPosition(worldPos);
         return totalObservationsGrid.ContainsKey(gridPos) ? totalObservationsGrid[gridPos] : 0;
     }
     
-    /// <summary>
-    /// Get species count at a specific world position
-    /// </summary>
     public int GetSpeciesCountAtPosition(Vector3 worldPos)
     {
         Vector2Int gridPos = WorldToGridPosition(worldPos);

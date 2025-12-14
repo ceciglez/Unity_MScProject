@@ -3,11 +3,6 @@ using UnityEngine;
 using Mapbox.Unity.Map;
 using KinematicCharacterController;
 
-/// <summary>
-/// Ensures the Kinematic Character Controller works properly with Mapbox terrain
-/// Handles terrain height sampling and proper positioning
-/// Adapted for KCC instead of Unity's CharacterController
-/// </summary>
 public class MapboxKCCAdapter : MonoBehaviour
 {
     [Header("Map Reference")]
@@ -201,10 +196,6 @@ public class MapboxKCCAdapter : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Raycast down to find the terrain below the player
-    /// Uses player's XZ position but raycasts from high above
-    /// </summary>
     private Vector3 GetTerrainPositionBelow()
     {
         // Start raycast from high above the player's XZ position
@@ -236,34 +227,22 @@ public class MapboxKCCAdapter : MonoBehaviour
         return Vector3.zero;
     }
     
-    /// <summary>
-    /// Get terrain height at current position
-    /// </summary>
     public float GetTerrainHeight()
     {
         Vector3 terrainPos = GetTerrainPositionBelow();
         return terrainPos != Vector3.zero ? terrainPos.y : motor.Transform.position.y;
     }
     
-    /// <summary>
-    /// Check if player is above valid terrain
-    /// </summary>
     public bool IsAboveTerrain()
     {
         return GetTerrainPositionBelow() != Vector3.zero;
     }
     
-    /// <summary>
-    /// Manually trigger player repositioning on terrain
-    /// </summary>
     public void RepositionOnTerrain()
     {
         StartCoroutine(WaitAndPositionOnTerrain());
     }
     
-    /// <summary>
-    /// Get the player's current position relative to terrain
-    /// </summary>
     public float GetDistanceAboveTerrain()
     {
         Vector3 terrainPos = GetTerrainPositionBelow();

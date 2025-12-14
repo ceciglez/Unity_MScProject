@@ -1,10 +1,6 @@
 using UnityEngine;
 using KinematicCharacterController;
 
-/// <summary>
-/// Simple collision-based interaction with observations
-/// Shows canvas when player enters trigger, hides when exits or too far
-/// </summary>
 [RequireComponent(typeof(Collider))]
 public class ObservationTriggerInteraction : MonoBehaviour
 {

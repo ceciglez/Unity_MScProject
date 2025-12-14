@@ -2,15 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-/// <summary>
-/// Bridge between Unity C# and JavaScript for WebGL networking
-/// Uses browser's native Fetch API instead of UnityWebRequest to avoid CORS issues
-///
-/// This is THE SOLUTION to WebGL CORS problems:
-/// - Unity's UnityWebRequest has limitations in WebGL
-/// - Browser's Fetch API handles CORS properly
-/// - This bridge connects them together
-/// </summary>
 public class WebGLNetworkBridge : MonoBehaviour
 {
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -62,10 +53,6 @@ public class WebGLNetworkBridge : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Fetch JSON data from a URL
-    /// Uses browser's Fetch API in WebGL, falls back to UnityWebRequest in Editor
-    /// </summary>
     public void FetchJSON(string url, Action<string> onSuccess, Action<string> onError)
     {
         Debug.Log($"[WebGLNetworkBridge] FetchJSON called for: {url}");
@@ -95,10 +82,6 @@ public class WebGLNetworkBridge : MonoBehaviour
 #endif
     }
 
-    /// <summary>
-    /// Fetch texture/image from a URL
-    /// Returns base64 data URL in WebGL
-    /// </summary>
     public void FetchTexture(string url, Action<string> onSuccess, Action<string> onError)
     {
         Debug.Log($"[WebGLNetworkBridge] FetchTexture called for: {url}");
@@ -205,9 +188,6 @@ public class WebGLNetworkBridge : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Convert base64 data URL to Texture2D
-    /// </summary>
     public static Texture2D Base64ToTexture(string base64Data)
     {
         try

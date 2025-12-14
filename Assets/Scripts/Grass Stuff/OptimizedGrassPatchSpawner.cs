@@ -5,11 +5,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 
-/// <summary>
-/// Optimized grass spawner using object pooling and incremental spawning to prevent frame drops.
-/// Spawns grass in grid chunks around player for seamless streaming.
-/// Now supports multiple grass prefab variations for natural diversity.
-/// </summary>
 public class OptimizedGrassPatchSpawner : MonoBehaviour
 {
     [Header("References")]
@@ -560,9 +555,6 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Find the ground position using multiple detection strategies
-    /// </summary>
     Vector3 FindGroundPosition(Vector3 worldPos)
     {
         // Strategy 1: Raycast from above
@@ -641,9 +633,6 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
         return new Vector3(worldPos.x, worldPos.y + heightOffset, worldPos.z);
     }
     
-    /// <summary>
-    /// Get surface normal for terrain alignment
-    /// </summary>
     Vector3 GetSurfaceNormal(Vector3 position)
     {
         RaycastHit hit;
@@ -668,9 +657,6 @@ public class OptimizedGrassPatchSpawner : MonoBehaviour
     }
 }
 
-/// <summary>
-/// Simple component to tag grass patches with their prefab index for pool management
-/// </summary>
 public class GrassPrefabTag : MonoBehaviour
 {
     public int prefabIndex;

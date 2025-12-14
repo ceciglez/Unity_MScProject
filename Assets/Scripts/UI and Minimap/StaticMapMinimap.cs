@@ -4,11 +4,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using Mapbox.Utils;
 
-/// <summary>
-/// Displays a static Mapbox map image as a minimap with player position marker.
-/// Uses Mapbox Static Images API for 2D overhead view.
-/// Much more performant than rendering a second 3D map.
-/// </summary>
 public class StaticMapMinimap : MonoBehaviour
 {
     [Header("Map References")]

@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mapbox.Utils;
 
-/// <summary>
-/// Manages image-based markers on the minimap for iNaturalist observations.
-/// Uses sprites/images for proper emoji/icon display with color.
-/// </summary>
+// Manages minimap markers for observations, displaying taxon-specific icons on the map
+// Handles coordinate conversion from world space to minimap UI space
+//
+// DEVELOPMENT NOTE:
+// - Implementation aided by Claude Sonnet 3.5 for coordinate transformations and icon management
+// - Minimap design and marker system developed independently
 public class MinimapImageMarkerManager : MonoBehaviour
 {
     [Header("References")]
@@ -164,9 +166,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Initialize the icon mapping dictionary
-    /// </summary>
     private void InitializeIconMap()
     {
         iconMap = new Dictionary<string, TaxonIconData>();
@@ -231,9 +230,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Get icon data for a taxon category
-    /// </summary>
     private TaxonIconData GetIconDataForTaxon(string iconicTaxonName)
     {
         if (string.IsNullOrEmpty(iconicTaxonName))
@@ -272,9 +268,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         return new TaxonIconData { sprite = defaultIcon, color = Color.white };
     }
     
-    /// <summary>
-    /// Coroutine that periodically checks for new/removed observations
-    /// </summary>
     private System.Collections.IEnumerator UpdateMarkersCoroutine()
     {
         while (true)
@@ -288,9 +281,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Sync minimap markers with current observations
-    /// </summary>
     public void UpdateMarkers()
     {
         if (observationController == null) return;
@@ -344,9 +334,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Create a new minimap marker for an observation
-    /// </summary>
     private void CreateMarkerForObservation(ObservationData obs)
     {
         if (markerPrefab == null || markerContainer == null) return;
@@ -389,9 +376,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Remove a marker by observation ID
-    /// </summary>
     private void RemoveMarker(int observationId)
     {
         if (activeMarkers.ContainsKey(observationId))
@@ -404,9 +388,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Update positions of all active markers
-    /// </summary>
     private void UpdateAllMarkerPositions()
     {
         if (minimap == null || minimap.minimapImage == null) return;
@@ -434,9 +415,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Clear all markers
-    /// </summary>
     public void ClearAllMarkers()
     {
         foreach (var kvp in activeMarkers)
@@ -449,9 +427,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         activeMarkers.Clear();
     }
     
-    /// <summary>
-    /// Create a basic marker prefab
-    /// </summary>
     private GameObject CreateMarkerPrefab()
     {
         GameObject prefab = new GameObject("MarkerPrefab");
@@ -463,17 +438,11 @@ public class MinimapImageMarkerManager : MonoBehaviour
         return prefab;
     }
     
-    /// <summary>
-    /// Force update all markers immediately
-    /// </summary>
     public void ForceUpdate()
     {
         UpdateMarkers();
     }
     
-    /// <summary>
-    /// Create 2D line connections between minimap markers
-    /// </summary>
     public void CreateMinimapConnections()
     {
         if (!enableConnections)
@@ -566,9 +535,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Create a 2D line between two minimap markers
-    /// </summary>
     private void CreateConnectionLine(MinimapImageMarker marker1, MinimapImageMarker marker2)
     {
         GameObject lineObj = new GameObject("MinimapConnection");
@@ -605,9 +571,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         Debug.Log($"[MinimapImageMarkerManager] Created UI line from {pos1} to {pos2}, distance: {distance}, angle: {angle}");
     }
     
-    /// <summary>
-    /// Clear all existing connection lines
-    /// </summary>
     private void ClearConnections()
     {
         int previousCount = connectionLines.Count;
@@ -623,9 +586,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         hasConnectionsActive = false;
     }
     
-    /// <summary>
-    /// Check if player has moved far enough to warrant updating connections
-    /// </summary>
     private void CheckPlayerMovement()
     {
         if (playerTransform == null)
@@ -652,9 +612,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Find the player transform using various methods
-    /// </summary>
     private void FindPlayerTransform()
     {
         if (playerTransform != null) return;
@@ -680,9 +637,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         Debug.LogWarning("[MinimapImageMarkerManager] Could not find player transform for auto-updates");
     }
     
-    /// <summary>
-    /// Get the player's position on the minimap UI
-    /// </summary>
     private Vector2 GetPlayerMinimapPosition()
     {
         if (playerTransform == null)
@@ -730,9 +684,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         return playerMinimapPos;
     }
     
-    /// <summary>
-    /// Get world position of marker's associated observation
-    /// </summary>
     private Vector3 GetMarkerWorldPosition(MinimapImageMarker marker)
     {
         if (marker.latLng.x != 0 || marker.latLng.y != 0)
@@ -746,9 +697,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
         return Vector3.zero;
     }
     
-    /// <summary>
-    /// Create a default material for line connections
-    /// </summary>
     private Material CreateDefaultLineMaterial()
     {
         Material mat = new Material(Shader.Find("UI/Default"));
@@ -757,9 +705,6 @@ public class MinimapImageMarkerManager : MonoBehaviour
     }
 }
 
-/// <summary>
-/// Serializable class for custom icon mappings
-/// </summary>
 [System.Serializable]
 public class TaxonIconMapping
 {
@@ -776,9 +721,6 @@ public class TaxonIconMapping
     public Color customColor = Color.white;
 }
 
-/// <summary>
-/// Internal data structure for icon information
-/// </summary>
 public class TaxonIconData
 {
     public Sprite sprite;

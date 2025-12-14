@@ -3,9 +3,6 @@ using UnityEngine.UI;
 using Mapbox.Unity.Map;
 using Mapbox.Utils;
 
-/// <summary>
-/// Debug overlay showing player and observation coordinates
-/// </summary>
 public class DebugCoordinateOverlay : MonoBehaviour
 {
     [Header("References")]

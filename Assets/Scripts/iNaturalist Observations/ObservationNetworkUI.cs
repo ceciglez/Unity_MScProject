@@ -2,9 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Simple network UI with just network toggle and taxon category filters
-/// </summary>
 public class ObservationNetworkUI : MonoBehaviour
 {
     [Header("Main Controls")]

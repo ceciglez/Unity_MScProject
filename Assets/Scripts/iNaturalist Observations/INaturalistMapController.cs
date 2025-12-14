@@ -9,9 +9,6 @@ using Mapbox.Utils;
 using Mapbox.Unity.Utilities;
 // using StylizedGrass; // DISABLED - For grass masking
 
-/// <summary>
-/// iNaturalist API quality grades
-/// </summary>
 public enum QualityGrade
 {
     Research,   // "research" - verified by community
@@ -19,9 +16,6 @@ public enum QualityGrade
     Casual      // "casual" - doesn't meet research criteria
 }
 
-/// <summary>
-/// iNaturalist API observation ordering options
-/// </summary>
 public enum ObservationOrder
 {
     CreatedAt,      // "created_at" - when observation was created
@@ -30,62 +24,58 @@ public enum ObservationOrder
     Votes          // "votes" - by community votes
 }
 
-/// <summary>
-/// Sort direction for observations
-/// </summary>
 public enum SortDirection
 {
     Desc,   // "desc" - descending (newest first)
     Asc     // "asc" - ascending (oldest first)
 }
 
-/// <summary>
-/// iNaturalist API integration for displaying real biodiversity observations on Mapbox terrain
-/// Fetches observation data from iNaturalist.org and spawns 3D representations in Unity
-///
-/// FUNCTIONALITY:
-/// - Queries iNaturalist API for observations within radius (~50km default)
-/// - Filters by quality grade, photos, captive/cultivated status
-/// - Sorts observations by distance from player spawn point
-/// - Spawns taxon-specific prefabs (plants, animals, birds, fungi, insects)
-/// - Raycasts to terrain for accurate placement
-/// - Optional bird audio integration via Xeno-Canto API
-///
-/// API DATA STRUCTURE:
-/// - ObservationData: id, location (lat/long), photos[], user, observed_on, quality_grade
-/// - Taxon: id, name, preferred_common_name, iconic_taxon_name (classification)
-/// - Photos: url, attribution, license_code
-///
-/// FILTERING OPTIONS:
-/// - Quality Grade: Research (verified), Needs ID, Casual
-/// - Has Photos: Only observations with images
-/// - Captive/Cultivated: Exclude non-wild observations
-/// - Species-level only: Filter out higher taxonomic ranks
-///
-/// INTEGRATION:
-/// - Primary data source for BiodiversityScoreManager
-/// - Spawned observations have ObservationDisplay component for UI
-/// - Works with Mapbox coordinate system (lat/long to Unity world space)
-/// - Updates when player position changes significantly
-///
-/// API ENDPOINTS:
-/// - Base URL: https://api.inaturalist.org/v1/observations
-/// - Parameters: lat, lng, radius, quality_grade, has[], iconic_taxa, per_page
-/// - Response: JSON with observation array
-///
-/// SOURCE:
-/// - iNaturalist API v1 documentation: https://api.inaturalist.org/v1/docs/
-/// - Mapbox Unity SDK for coordinate conversion
-/// - Unity Networking (UnityWebRequest) for API calls
-///
-/// DATA SOURCE CREDIT:
-/// - All observation data © iNaturalist.org contributors
-/// - Licensed under Creative Commons (varies by observation)
-/// - Must provide attribution as per iNaturalist API terms
-///
-/// AI CONTRIBUTION: ~65% - API integration, JSON parsing, prefab spawning, coordinate conversion
-/// HUMAN CONTRIBUTION: ~35% - API parameter selection, filtering logic, prefab assignment, UI integration
-/// </summary>
+// iNaturalist API integration for displaying real biodiversity observations on Mapbox terrain
+// Fetches observation data from iNaturalist.org and spawns 3D representations in Unity
+//
+// FUNCTIONALITY:
+// - Queries iNaturalist API for observations within radius (~50km default)
+// - Filters by quality grade, photos, captive/cultivated status
+// - Sorts observations by distance from player spawn point
+// - Spawns taxon-specific prefabs (plants, animals, birds, fungi, insects)
+// - Raycasts to terrain for accurate placement
+// - Optional bird audio integration via Xeno-Canto API
+//
+// API DATA STRUCTURE:
+// - ObservationData: id, location (lat/long), photos[], user, observed_on, quality_grade
+// - Taxon: id, name, preferred_common_name, iconic_taxon_name (classification)
+// - Photos: url, attribution, license_code
+//
+// FILTERING OPTIONS:
+// - Quality Grade: Research (verified), Needs ID, Casual
+// - Has Photos: Only observations with images
+// - Captive/Cultivated: Exclude non-wild observations
+// - Species-level only: Filter out higher taxonomic ranks
+//
+// INTEGRATION:
+// - Primary data source for BiodiversityScoreManager
+// - Spawned observations have ObservationDisplay component for UI
+// - Works with Mapbox coordinate system (lat/long to Unity world space)
+// - Updates when player position changes significantly
+//
+// API ENDPOINTS:
+// - Base URL: https://api.inaturalist.org/v1/observations
+// - Parameters: lat, lng, radius, quality_grade, has[], iconic_taxa, per_page
+// - Response: JSON with observation array
+//
+// SOURCE:
+// - iNaturalist API v1 documentation: https://api.inaturalist.org/v1/docs/
+// - Mapbox Unity SDK for coordinate conversion
+// - Unity Networking (UnityWebRequest) for API calls
+//
+// DATA SOURCE CREDIT:
+// - All observation data © iNaturalist.org contributors
+// - Licensed under Creative Commons (varies by observation)
+// - Must provide attribution as per iNaturalist API terms
+//
+// DEVELOPMENT NOTE:
+// - Implementation aided by Claude Sonnet 3.5 for API integration, JSON parsing, and debugging
+// - Core design, feature requirements, and integration logic developed independently
 public class INaturalistMapController : MonoBehaviour
 {
     [Header("Map References")]
@@ -363,9 +353,6 @@ public class INaturalistMapController : MonoBehaviour
         yield return StartCoroutine(LoadiNaturalistData());
     }
     
-    /// <summary>
-    /// Loads iNaturalist observation data based on current map bounds
-    /// </summary>
     public IEnumerator LoadiNaturalistData()
     {
         if (isLoading)
@@ -847,9 +834,6 @@ public class INaturalistMapController : MonoBehaviour
         return Vector2d.zero;
     }
     
-    /// <summary>
-    /// Calculate distance between two lat/lng points in meters
-    /// </summary>
     private double CalculateDistance(Vector2d pos1, Vector2d pos2)
     {
         // Haversine formula for distance calculation
@@ -869,10 +853,6 @@ public class INaturalistMapController : MonoBehaviour
         return earthRadius * c;
     }
     
-    /// <summary>
-    /// Create an invisible sphere around observation to exclude grass rendering
-    /// Uses GrassMaskingSphere from Stylized Grass Shader
-    /// </summary>
     private void CreateGrassExclusionZone(Vector3 position, float radius)
     {
         GameObject exclusionZone = new GameObject($"GrassExclusion_{Time.time}");
@@ -910,17 +890,11 @@ public class INaturalistMapController : MonoBehaviour
     
 
     
-    /// <summary>
-    /// Manually trigger a data reload
-    /// </summary>
     public void ReloadData()
     {
         StartCoroutine(LoadiNaturalistData());
     }
     
-    /// <summary>
-    /// Clear all observation prefabs
-    /// </summary>
     public void ClearObservations()
     {
         foreach (var prefab in spawnedPrefabs)
@@ -932,9 +906,6 @@ public class INaturalistMapController : MonoBehaviour
         observations.Clear();
     }
     
-    /// <summary>
-    /// Build iNaturalist API URL with all configured filters
-    /// </summary>
     private string BuildApiUrl(float swlng, float swlat, float nelng, float nelat, int limit = -1)
     {
         int actualLimit = limit > 0 ? Mathf.Min(limit, 200) : 200; // iNaturalist max is 200 per page
@@ -1013,9 +984,6 @@ public class INaturalistMapController : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Set layer recursively for GameObject and all children
-    /// </summary>
     private void SetLayerRecursively(GameObject obj, int layer)
     {
         obj.layer = layer;
@@ -1025,9 +993,6 @@ public class INaturalistMapController : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Get the appropriate prefab for an observation based on its taxon
-    /// </summary>
     private GameObject GetPrefabForObservation(ObservationData obs)
     {
         if (!useTaxonSpecificPrefabs)
@@ -1071,9 +1036,6 @@ public class INaturalistMapController : MonoBehaviour
         return observationPrefab;
     }
     
-    /// <summary>
-    /// Get the taxon category for an observation
-    /// </summary>
     private string GetTaxonCategory(ObservationData obs)
     {
         if (obs.taxon != null && !string.IsNullOrEmpty(obs.taxon.iconic_taxon_name))
@@ -1083,9 +1045,6 @@ public class INaturalistMapController : MonoBehaviour
         return "unknown";
     }
     
-    /// <summary>
-    /// Get the appropriate scale for an observation based on its taxon
-    /// </summary>
     private float GetScaleForObservation(ObservationData obs)
     {
         if (!useTaxonSpecificPrefabs)
@@ -1121,9 +1080,6 @@ public class INaturalistMapController : MonoBehaviour
         return baseScale + variation;
     }
     
-    /// <summary>
-    /// Advanced ground detection with multiple raycast attempts and fallback strategies
-    /// </summary>
     private Vector3 FindGroundPositionAdvanced(Vector3 worldPosition, ObservationData obs = null)
     {
         float yOffset = GetYOffsetForObservation(obs);
@@ -1280,9 +1236,6 @@ public class INaturalistMapController : MonoBehaviour
     
 
     
-    /// <summary>
-    /// Get random Y rotation for more natural placement
-    /// </summary>
     private Quaternion GetRandomYRotation()
     {
         return Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
@@ -1290,9 +1243,6 @@ public class INaturalistMapController : MonoBehaviour
     
 
     
-    /// <summary>
-    /// Get the appropriate Y offset for an observation based on its taxon
-    /// </summary>
     private float GetYOffsetForObservation(ObservationData obs)
     {
         if (!useTaxonSpecificPrefabs || !useCustomYOffset || obs == null)
@@ -1320,9 +1270,6 @@ public class INaturalistMapController : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Update scaling for all currently spawned observations (useful for runtime adjustments)
-    /// </summary>
     [ContextMenu("Update All Observation Scales")]
     public void UpdateAllObservationScales()
     {
@@ -1341,9 +1288,6 @@ public class INaturalistMapController : MonoBehaviour
             Debug.Log($"[iNaturalist] Updated scales for {spawnedPrefabs.Count} observation prefabs");
     }
     
-    /// <summary>
-    /// Reposition all observations with improved ground detection
-    /// </summary>
     [ContextMenu("Reposition All Observations")]
     public void RepositionAllObservations()
     {
@@ -1368,9 +1312,6 @@ public class INaturalistMapController : MonoBehaviour
             Debug.Log($"[iNaturalist] Repositioned {spawnedPrefabs.Count} observation prefabs");
     }
     
-    /// <summary>
-    /// Debug method to analyze ground detection issues
-    /// </summary>
     [ContextMenu("Debug Ground Detection")]
     public void DebugGroundDetection()
     {
@@ -1415,41 +1356,35 @@ public class INaturalistMapController : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Remove ObservationPositionTracker from all existing observation prefabs
-    /// Call this to clean up old prefabs that might have the tracker
-    /// </summary>
     [ContextMenu("Remove Position Trackers")]
     public void RemoveObservationPositionTrackers()
     {
-        int removedCount = 0;
-        
-        foreach (var prefab in spawnedPrefabs)
-        {
-            if (prefab != null)
-            {
-                ObservationPositionTracker tracker = prefab.GetComponent<ObservationPositionTracker>();
-                if (tracker != null)
-                {
-                    if (Application.isPlaying)
-                    {
-                        Destroy(tracker);
-                    }
-                    else
-                    {
-                        DestroyImmediate(tracker);
-                    }
-                    removedCount++;
-                }
-            }
-        }
-        
-        Debug.Log($"[iNaturalist] Removed {removedCount} ObservationPositionTracker components");
+        // ObservationPositionTracker component has been removed from the project
+        Debug.Log($"[iNaturalist] ObservationPositionTracker component no longer exists - this method is deprecated");
+
+        // int removedCount = 0;
+        // foreach (var prefab in spawnedPrefabs)
+        // {
+        //     if (prefab != null)
+        //     {
+        //         ObservationPositionTracker tracker = prefab.GetComponent<ObservationPositionTracker>();
+        //         if (tracker != null)
+        //         {
+        //             if (Application.isPlaying)
+        //             {
+        //                 Destroy(tracker);
+        //             }
+        //             else
+        //             {
+        //                 DestroyImmediate(tracker);
+        //             }
+        //             removedCount++;
+        //         }
+        //     }
+        // }
+        // Debug.Log($"[iNaturalist] Removed {removedCount} ObservationPositionTracker components");
     }
     
-    /// <summary>
-    /// Debug method to analyze Y offset issues in spawned prefabs
-    /// </summary>
     [ContextMenu("Debug Y Offset Issues")]
     public void DebugYOffsetIssues()
     {
@@ -1471,8 +1406,9 @@ public class INaturalistMapController : MonoBehaviour
                 ObservationData obs = observations[i];
                 
                 // Check for ObservationPositionTracker
-                ObservationPositionTracker tracker = prefab.GetComponent<ObservationPositionTracker>();
-                string trackerInfo = tracker != null ? $"TRACKER(offset={tracker.GetComponent<ObservationPositionTracker>()})" : "NO TRACKER";
+                // ObservationPositionTracker tracker = prefab.GetComponent<ObservationPositionTracker>();
+                // string trackerInfo = tracker != null ? $"TRACKER(offset={tracker.GetComponent<ObservationPositionTracker>()})" : "NO TRACKER";
+                string trackerInfo = "NO TRACKER"; // ObservationPositionTracker removed
                 
                 // Get expected Y offset
                 float expectedYOffset = GetYOffsetForObservation(obs);
@@ -1498,9 +1434,6 @@ public class INaturalistMapController : MonoBehaviour
         Debug.Log($"  - unknownYOffset: {unknownYOffset}");
     }
     
-    /// <summary>
-    /// Test ground detection at a specific position
-    /// </summary>
     [ContextMenu("Test Ground Detection At Player")]
     public void TestGroundDetectionAtPlayer()
     {
@@ -1525,9 +1458,6 @@ public class INaturalistMapController : MonoBehaviour
         showDebugRays = oldRays;
     }
     
-    /// <summary>
-    /// Load bird audio from Xeno-Canto API for bird observations
-    /// </summary>
     private IEnumerator LoadBirdAudio(ObservationData obs, GameObject birdPrefab)
     {
         if (showDebugInfo) 

@@ -3,36 +3,12 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
 
-/// <summary>
-/// Spawns Unity Post-Processing Volumes in a grid aligned with BiodiversityScoreManager
-/// Applies color saturation effects based on Simpson's Biodiversity Index per cell
-///
-/// APPROACH: Grid-Based Volumes with Dynamic Updates
-/// - Aligns with existing BiodiversityScoreManager grid system (cellSize)
-/// - Spawns one volume per grid cell with biodiversity data
-/// - Sets color saturation based on Simpson's Index (low bio = low sat, high bio = high sat)
-/// - Global volume provides baseline low saturation
-///
-/// OPTIMIZATIONS (v2):
-/// - Dynamic volume updates: Updates existing volumes instead of destroying/recreating
-/// - Profile cloning: Each volume gets unique profile instance to prevent conflicts
-/// - Smart culling: Only spawns volumes near player and removes distant ones
-/// - Public API: Query methods for saturation values and volume data
-///
-/// INTEGRATION WITH GLOBAL VOLUME:
-/// - Global Volume should have Priority = 0, Is Global = true, low saturation
-/// - Local volumes have Priority = volumePriority (default 5), override in biodiverse areas
-/// - Smooth blending controlled by blendDistance parameter
-///
-/// DEVELOPMENT APPROACH: Iterative human-AI collaboration
-/// - HUMAN: Designed saturation-based visualization system, defined grid alignment with BiodiversityScoreManager
-/// - AI: Implemented URP Volume spawning, profile cloning, spatial culling logic
-/// - HUMAN: Configured saturation ranges, player radius settings, integrated with biodiversity data, performance testing
-///
-/// SOURCE: Unity URP Post-Processing documentation
-/// ATTRIBUTION: Visual design and system integration (human), URP implementation (AI-assisted)
-/// </summary>
-
+// Spawns post-processing volumes around observations to create biodiversity-based color effects
+// Adjusts saturation and color grading based on Simpson's Diversity Index in each area
+//
+// DEVELOPMENT NOTE:
+// - Implementation aided by Claude Sonnet 3.5 for URP volume management and color calculations
+// - Visual design concept and biodiversity mapping developed independently
 public class BiodiversityVolumeSpawner : MonoBehaviour
 {
     [Header("References")]
@@ -267,10 +243,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Main method: Spawns/updates volumes based on current biodiversity data
-    /// NOW OPTIMIZED: Updates existing volumes instead of destroying and recreating
-    /// </summary>
     public void SpawnBiodiversityVolumes()
     {
         Debug.Log("[BiodiversityVolumeSpawner] 🔄 SpawnBiodiversityVolumes() called");
@@ -429,9 +401,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
                  $"  📷 {cameraInfo}");
     }
 
-    /// <summary>
-    /// Updates an existing volume's saturation value without recreating it
-    /// </summary>
     private void UpdateVolumeData(GameObject volumeObj, BiodiversityHotspot hotspot)
     {
         Volume volume = volumeObj.GetComponent<Volume>();
@@ -447,10 +416,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Spawns a single volume at grid position with biodiversity-based saturation
-    /// IMPROVED: Creates unique profile instance to avoid shared profile conflicts
-    /// </summary>
     private GameObject SpawnVolume(Vector2Int gridCell, BiodiversityHotspot hotspot)
     {
         // Calculate world position (center of cell)
@@ -542,10 +507,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         return volumeObj;
     }
 
-    /// <summary>
-    /// Calculates saturation value from Simpson's Biodiversity Index
-    /// Maps Simpson's Index (0-1) to saturation range (low to high)
-    /// </summary>
     private float CalculateSaturation(float simpsonsIndex)
     {
         // Linear interpolation from low to high biodiversity saturation
@@ -553,9 +514,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         return saturation;
     }
 
-    /// <summary>
-    /// Clears all spawned volumes
-    /// </summary>
     public void ClearAllVolumes()
     {
         foreach (var kvp in spawnedVolumes)
@@ -571,9 +529,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
             Debug.Log("[BiodiversityVolumeSpawner] Cleared all volumes");
     }
 
-    /// <summary>
-    /// Converts world position to grid cell (matches BiodiversityScoreManager)
-    /// </summary>
     private Vector2Int WorldToGridPosition(Vector3 worldPos)
     {
         float cellSize = biodiversityManager.cellSize;
@@ -582,9 +537,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         return new Vector2Int(x, z);
     }
 
-    /// <summary>
-    /// Converts grid cell to world position (center of cell)
-    /// </summary>
     private Vector3 GridToWorldPosition(Vector2Int gridCell)
     {
         float cellSize = biodiversityManager.cellSize;
@@ -633,17 +585,11 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
 
     // ==================== PUBLIC API METHODS ====================
 
-    /// <summary>
-    /// Manually refresh volumes without full respawn (calls the optimized update)
-    /// </summary>
     public void RefreshVolumes()
     {
         SpawnBiodiversityVolumes();
     }
 
-    /// <summary>
-    /// Runtime adjustment of saturation range
-    /// </summary>
     public void SetSaturationRange(float low, float high)
     {
         lowBiodiversitySaturation = Mathf.Clamp(low, -1f, 0f);
@@ -656,9 +602,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         RefreshVolumes();
     }
 
-    /// <summary>
-    /// Query the volume at a specific world position
-    /// </summary>
     public GameObject GetVolumeAtPosition(Vector3 worldPos)
     {
         Vector2Int gridCell = WorldToGridPosition(worldPos);
@@ -671,9 +614,6 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// Get the saturation value at a specific world position
-    /// </summary>
     public float GetSaturationAtPosition(Vector3 worldPos)
     {
         GameObject volumeObj = GetVolumeAtPosition(worldPos);
@@ -694,25 +634,16 @@ public class BiodiversityVolumeSpawner : MonoBehaviour
         return globalBaselineSaturation; // Return baseline if no local volume found
     }
 
-    /// <summary>
-    /// Get total number of active volumes
-    /// </summary>
     public int GetActiveVolumeCount()
     {
         return spawnedVolumes.Count;
     }
 
-    /// <summary>
-    /// Check if a volume exists at a specific grid position
-    /// </summary>
     public bool HasVolumeAtGridPosition(Vector2Int gridCell)
     {
         return spawnedVolumes.ContainsKey(gridCell) && spawnedVolumes[gridCell] != null;
     }
 
-    /// <summary>
-    /// Diagnostic: Check Global Volume priority to ensure local volumes will override it
-    /// </summary>
     private void CheckGlobalVolumePriority()
     {
         Debug.Log("[BiodiversityVolumeSpawner] 🔍 Searching for Global Volume in scene...");

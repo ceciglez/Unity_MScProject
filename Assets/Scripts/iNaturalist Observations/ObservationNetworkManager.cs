@@ -2,6 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// Manages network of connections between observations based on proximity and species similarity
+// Creates visual network lines showing relationships between nearby biodiversity observations
+// Optimizes rendering by focusing on observations near the player
+//
+// DEVELOPMENT NOTE:
+// - Implementation aided by Claude Sonnet 3.5 for spatial algorithms and performance optimization
+// - Core network logic and visualization design developed independently
 public class ObservationNetworkManager : MonoBehaviour
 {
     [Header("Network Settings")]
@@ -914,17 +921,11 @@ public class ObservationNetworkManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Get count of currently active connections for UI display
-    /// </summary>
     public int GetActiveConnectionCount()
     {
         return activeConnections.Count(c => c != null && c.IsActive());
     }
     
-    /// <summary>
-    /// Clear all network connections (for returning to main menu)
-    /// </summary>
     public void ClearAllConnections()
     {
         foreach (var connection in activeConnections)

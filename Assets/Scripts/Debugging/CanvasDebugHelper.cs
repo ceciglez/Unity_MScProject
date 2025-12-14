@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Helper script to find and disable unwanted screen-space canvases
-/// </summary>
 public class CanvasDebugHelper : MonoBehaviour
 {
     [Header("Debug Actions")]

@@ -2,10 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mapbox.Utils;
 
-/// <summary>
-/// Displays an image marker on the minimap for an iNaturalist observation.
-/// Uses Unity UI Image instead of text for proper emoji/icon display.
-/// </summary>
 public class MinimapImageMarker : MonoBehaviour
 {
     [Header("References")]
@@ -22,9 +18,6 @@ public class MinimapImageMarker : MonoBehaviour
     private StaticMapMinimap minimap;
     private bool isInitialized = false;
     
-    /// <summary>
-    /// Initialize the marker with observation data and icon sprite
-    /// </summary>
     public void Initialize(ObservationData obs, StaticMapMinimap minimapRef, Sprite iconSprite, Color tintColor)
     {
         minimap = minimapRef;
@@ -59,9 +52,6 @@ public class MinimapImageMarker : MonoBehaviour
         isInitialized = true;
     }
     
-    /// <summary>
-    /// Update the marker's position on the minimap based on current map center
-    /// </summary>
     public void UpdatePosition(Vector2d mapCenter, float metersPerPixel, RectTransform mapImageRect)
     {
         if (!isInitialized || latLng == Vector2d.zero) return;
@@ -87,9 +77,6 @@ public class MinimapImageMarker : MonoBehaviour
         gameObject.SetActive(isVisible);
     }
     
-    /// <summary>
-    /// Parse "lat,lng" string into Vector2d
-    /// </summary>
     private Vector2d ParseLocation(string location)
     {
         if (string.IsNullOrEmpty(location)) return Vector2d.zero;
@@ -108,27 +95,18 @@ public class MinimapImageMarker : MonoBehaviour
         return Vector2d.zero;
     }
     
-    /// <summary>
-    /// Change the marker's sprite
-    /// </summary>
     public void SetSprite(Sprite sprite)
     {
         if (markerImage != null && sprite != null)
             markerImage.sprite = sprite;
     }
     
-    /// <summary>
-    /// Change the marker's color tint
-    /// </summary>
     public void SetColor(Color color)
     {
         if (markerImage != null)
             markerImage.color = color;
     }
     
-    /// <summary>
-    /// Get debug info about this marker
-    /// </summary>
     public string GetDebugInfo()
     {
         return $"{commonName} ({taxonCategory}) - Lat: {latLng.x:F6}, Lng: {latLng.y:F6}";

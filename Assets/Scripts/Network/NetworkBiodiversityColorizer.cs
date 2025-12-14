@@ -1,34 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Dynamically adjusts NetworkConnection line colors based on biodiversity at their endpoints
-/// Creates visual feedback that makes biodiverse areas visible from distance
-///
-/// FUNCTIONALITY:
-/// - Monitors all NetworkConnection LineRenderers
-/// - Queries BiodiversityScoreManager for Simpson's Index at line endpoints
-/// - Interpolates line color from gray (low diversity) to vibrant cyan/green (high diversity)
-/// - Updates colors in real-time as player moves through terrain
-///
-/// VISUAL EFFECT:
-/// - Low biodiversity areas: Gray desaturated network lines
-/// - High biodiversity areas: Vibrant colored network lines
-/// - Creates distance-visible "heatmap" effect across terrain
-/// - More performant than terrain overlays or additional volumes
-///
-/// INTEGRATION:
-/// - Attach to same GameObject as INaturalistMapController
-/// - Auto-finds BiodiversityScoreManager
-/// - Updates line colors every updateInterval seconds
-///
-/// SOURCE:
-/// - Unity LineRenderer color gradient system
-/// - Color interpolation based on Simpson's Diversity Index
-///
-/// AI CONTRIBUTION: ~95% - System design, color interpolation, performance optimization
-/// HUMAN CONTRIBUTION: ~5% - Concept, visual direction
-/// </summary>
 public class NetworkBiodiversityColorizer : MonoBehaviour
 {
     [Header("References")]
@@ -161,9 +133,6 @@ public class NetworkBiodiversityColorizer : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Updates all network line colors based on biodiversity
-    /// </summary>
     private IEnumerator UpdateLineColorsCoroutine()
     {
         // Find all NetworkConnection objects
@@ -216,9 +185,6 @@ public class NetworkBiodiversityColorizer : MonoBehaviour
             Debug.Log($"[NetworkBiodiversityColorizer] Updated {updatedCount} lines, skipped {skippedCount}");
     }
 
-    /// <summary>
-    /// Updates color for a single NetworkConnection based on biodiversity at endpoints
-    /// </summary>
     private void UpdateConnectionColor(NetworkConnection connection)
     {
         Vector3[] points = connection.GetConnectionPoints();
@@ -273,9 +239,6 @@ public class NetworkBiodiversityColorizer : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Gets Simpson's Biodiversity Index at a world position
-    /// </summary>
     private float GetBiodiversityAtPosition(Vector3 worldPos)
     {
         if (biodiversityManager == null)
@@ -307,9 +270,6 @@ public class NetworkBiodiversityColorizer : MonoBehaviour
         return biodiversity;
     }
 
-    /// <summary>
-    /// Force immediate update of all line colors
-    /// </summary>
     public void ForceUpdate()
     {
         StopAllCoroutines();

@@ -3,8 +3,12 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-/// Displays observation data 
-
+// Displays observation data in worldspace UI above each observation prefab
+// Handles photo loading, text display, and player proximity-based visibility
+//
+// DEVELOPMENT NOTE:
+// - Implementation aided by Claude Sonnet 3.5 for UI layout and texture loading
+// - UI design and interaction logic developed independently
 public class ObservationDisplay : MonoBehaviour
 {
     [Header("UI Components")]
@@ -515,9 +519,6 @@ public class ObservationDisplay : MonoBehaviour
         Debug.Log($"  Canvas ready but hidden - waiting for player interaction");
     }
     
-    /// <summary>
-    /// Called when player enters interaction range
-    /// </summary>
     public void OnPlayerEnterRange()
     {
         playerInRange = true;
@@ -557,9 +558,6 @@ public class ObservationDisplay : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Called when player exits interaction range
-    /// </summary>
     public void OnPlayerExitRange()
     {
         playerInRange = false;
@@ -621,9 +619,7 @@ public class ObservationDisplay : MonoBehaviour
         }
     }
     
-    // /// <summary>
-    // /// Apply color to observation prefab based on organism type
-    // /// </summary>
+    // Apply color to observation prefab based on organism type
     // private void ApplyOrganismColor(ObservationData data)
     // {
     //     if (data?.taxon == null) return;
@@ -675,9 +671,6 @@ public class ObservationDisplay : MonoBehaviour
     
     public bool IsCanvasVisible() => infoCanvas != null && infoCanvas.gameObject.activeSelf;
     
-    /// <summary>
-    /// Add audio indicator emoji to the display text when bird audio is available
-    /// </summary>
     public void AddAudioIndicator()
     {
         if (commonNameText != null && !commonNameText.text.Contains("🔊"))
@@ -687,9 +680,6 @@ public class ObservationDisplay : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Set UI canvas scale independently from prefab scale
-    /// </summary>
     public void SetUICanvasScale(float scale, float yOffset)
     {
         if (infoCanvas != null)
@@ -705,9 +695,6 @@ public class ObservationDisplay : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Configure UI display settings for proximity-based visibility
-    /// </summary>
     public void SetUIDisplaySettings(bool enabled, float distance, bool alwaysVisible)
     {
         uiDisplayEnabled = enabled;
@@ -733,9 +720,6 @@ public class ObservationDisplay : MonoBehaviour
         UpdateCanvasVisibility();
     }
     
-    /// <summary>
-    /// Update canvas visibility based on player proximity
-    /// </summary>
     private void UpdateCanvasVisibility()
     {
         if (infoCanvas == null) return;

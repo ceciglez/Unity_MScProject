@@ -1,40 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// UI controller for biodiversity visualization system
-/// Displays real-time biodiversity metrics and provides user controls
-///
-/// FUNCTIONALITY:
-/// - Displays Simpson's Diversity Index at player position with qualitative labels
-/// - Shows observation count and species count in current grid cell
-/// - Provides diversity intensity slider (0-2x multiplier)
-/// - Manual recalculation button for biodiversity system
-/// - Toggle UI visibility with 'B' key (configurable)
-///
-/// UI ELEMENTS:
-/// - Simpson's Index text with color-coded labels:
-///   * 0.0-0.2: "Very Low Diversity" (red)
-///   * 0.2-0.4: "Low Diversity" (orange)
-///   * 0.4-0.6: "Moderate Diversity" (yellow)
-///   * 0.6-0.8: "High Diversity" (light green)
-///   * 0.8-1.0: "Very High Diversity" (green)
-/// - Observation count (total iNaturalist observations in cell)
-/// - Species count (unique species in cell)
-///
-/// INTEGRATION:
-/// - Queries BiodiversityScoreManager for real-time data
-/// - Updates every frame based on player position
-/// - Calls UpdateBiodiversityScores() when settings change
-///
-/// DEVELOPMENT APPROACH: Iterative human-AI collaboration
-/// - HUMAN: Designed UI layout, defined diversity thresholds (0.0-0.2 = "Very Low", etc.), specified toggle controls
-/// - AI: Implemented update loop, color interpolation, data queries
-/// - HUMAN: Configured key bindings (B key), tested metric accuracy, refined label text
-///
-/// SOURCE: Unity UI system documentation
-/// ATTRIBUTION: UI design and user experience (human), update logic (AI-assisted)
-/// </summary>
 public class BiodiversityUI : MonoBehaviour
 {
     [Header("UI Elements")]

@@ -1,10 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-/// <summary>
-/// Spawns and manages VFX particle systems in specific areas around the player.
-/// Can be triggered by location, altitude, or manual zones.
-/// </summary>
 public class AreaVFXManager : MonoBehaviour
 {
     [System.Serializable]
@@ -294,9 +290,6 @@ public class AreaVFXManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Manually add a VFX zone at runtime
-    /// </summary>
     public void AddVFXZone(string name, GameObject vfxPrefab, Vector3 center, float radius)
     {
         VFXZone newZone = new VFXZone
@@ -317,9 +310,6 @@ public class AreaVFXManager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Remove all VFX zones
-    /// </summary>
     public void ClearZones()
     {
         foreach (var zone in vfxZones)

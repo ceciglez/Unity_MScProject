@@ -3,9 +3,6 @@ using UnityEditor;
 using TMPro;
 
 #if UNITY_EDITOR
-/// <summary>
-/// Custom Editor for INaturalistMapController to add helpful buttons and info
-/// </summary>
 [CustomEditor(typeof(INaturalistMapController))]
 public class INaturalistMapControllerEditor : Editor
 {
